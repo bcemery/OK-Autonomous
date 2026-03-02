@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OK Autonomous — Oklahoma's Autonomous Systems Sales Force</title>
+<meta name="description" content="OK Autonomous is Tulsa's dedicated commercial representative for the autonomous systems era — sourcing contracts, facilitating buyer introductions, and translating Oklahoma manufacturing strengths into revenue.">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="OK Autonomous — Oklahoma's Autonomous Systems Sales Force">
+<meta property="og:description" content="The dedicated sales force connecting drone OEMs and autonomous systems buyers with Oklahoma's proven manufacturing base.">
+<meta property="og:image" content="images/logo-icon.jpg">
+<meta property="og:url" content="https://www.ok-as.com">
+<meta property="og:site_name" content="OK Autonomous">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:      #f0f6ff;
+    --white:    #ffffff;
+    --cloud:    #e8f0fb;
+    --ink:      #0e1624;
+    --navy:     #152035;
+    --mid:      #3a4f6e;
+    --muted:    #7a8fa8;
+    --rule:     #d0daea;
+    --teal:     #00b894;
+    --teal-dim: rgba(0,184,148,0.12);
+    --teal-glow:rgba(0,184,148,0.25);
+    --amber:    #f39c12;
+    --panel:    rgba(255,255,255,0.72);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sky);
+    color: var(--ink);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+  }
+
+  /* ─── CURSOR ─────────────────────────────────── */
+  #cur  { position:fixed; width:10px; height:10px; background:var(--teal); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:multiply; transition:width .15s,height .15s; }
+  #cur2 { position:fixed; width:32px; height:32px; border:1.5px solid rgba(0,184,148,.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .1s ease; }
+  body.cursor-big #cur  { width:18px; height:18px; }
+  body.cursor-big #cur2 { width:56px; height:56px; }
+
+  /* ─── ATMOSPHERIC BG ──────────────────────────── */
+  /* Subtle dot grid */
+  .dot-grid {
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image: radial-gradient(circle, rgba(0,100,200,.065) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  /* Top left horizon glow */
+  .horizon-glow {
+    position:fixed; top:-200px; left:-200px; width:800px; height:800px;
+    background: radial-gradient(circle, rgba(0,184,148,.07) 0%, transparent 65%);
+    pointer-events:none; z-index:0;
+  }
+  /* Bottom right glow */
+  .horizon-glow-2 {
+    position:fixed; bottom:-300px; right:-200px; width:900px; height:900px;
+    background: radial-gradient(circle, rgba(21,32,53,.06) 0%, transparent 65%);
+    pointer-events:none; z-index:0;
+  }
+
+  /* ─── FLOATING PARTICLES ─────────────────────── */
+  .particle {
+    position:fixed; border-radius:50%; pointer-events:none; z-index:1; opacity:0;
+    animation: pfloat linear infinite;
+  }
+  @keyframes pfloat {
+    0%   { opacity:0; transform:translateY(0) scale(1); }
+    10%  { opacity:.7; }
+    90%  { opacity:.2; }
+    100% { opacity:0; transform:translateY(-100vh) scale(.4); }
+  }
+
+  /* ─── NAV ─────────────────────────────────────── */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    background: rgba(240,246,255,.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 52px;
+    height: 66px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+
+  .nav-logo {
+    display:flex; align-items:center; gap:12px; text-decoration:none;
+  }
+  .nav-logo img {
+    height:34px; width:auto;
+    filter: drop-shadow(0 2px 8px rgba(0,184,148,.2));
+    transition: filter .3s;
+  }
+  .nav-logo:hover img { filter: drop-shadow(0 2px 16px rgba(0,184,148,.5)); }
+
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s;
+    position:relative; padding-bottom:2px;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px;
+    background:var(--teal); transition:width .3s;
+  }
+  .nav-links a:hover { color:var(--teal); }
+  .nav-links a:hover::after { width:100%; }
+
+  .nav-cta {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--white); background:var(--teal);
+    padding:10px 22px; text-decoration:none; border-radius:2px;
+    transition:all .2s; box-shadow:0 4px 16px var(--teal-glow);
+  }
+  .nav-cta:hover { background:#00a07f; transform:translateY(-1px); box-shadow:0 6px 24px var(--teal-glow); }
+
+  /* ─── MOBILE MENU ─────────────────────────── */
+  .nav-burger {
+    display:none; background:none; border:none; padding:8px;
+    flex-direction:column; gap:5px; cursor:pointer;
+  }
+  .nav-burger span {
+    display:block; width:24px; height:2px; background:var(--navy);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity:0; }
+  .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display:none; position:fixed; top:66px; left:0; right:0; bottom:0;
+    background:rgba(240,246,255,.97); backdrop-filter:blur(20px);
+    z-index:99; flex-direction:column; align-items:center;
+    justify-content:center; gap:32px;
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a {
+    font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:2px;
+    color:var(--navy); text-decoration:none; transition:color .2s;
+  }
+  .mobile-menu a:hover { color:var(--teal); }
+  .mobile-menu .mobile-cta {
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; background:var(--teal); color:var(--white);
+    padding:14px 28px; border-radius:2px; text-decoration:none;
+    margin-top:16px;
+  }
+
+  @media (max-width:768px) {
+    .nav-burger { display:flex; }
+  }
+
+  /* ─── HERO ─────────────────────────────────────── */
+  #hero {
+    position:relative; min-height:100vh; padding-top:66px;
+    display:flex; flex-direction:column; overflow:hidden; z-index:2;
+  }
+
+  /* big hero image */
+  .hero-img-wrap {
+    position:relative; width:100%; height:62vh; overflow:hidden;
+  }
+  .hero-img-wrap img {
+    width:100%; height:100%; object-fit:cover; object-position:center 60%;
+    filter: brightness(.88) saturate(1.1);
+    transform:scale(1.04);
+    animation: hero-zoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes hero-zoom {
+    from { transform:scale(1.04) translateY(0); }
+    to   { transform:scale(1.10) translateY(-10px); }
+  }
+
+  /* overlay on hero image */
+  .hero-img-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(
+      to bottom,
+      rgba(240,246,255,0) 0%,
+      rgba(240,246,255,0) 40%,
+      rgba(240,246,255,.7) 75%,
+      rgba(240,246,255,1) 100%
+    );
+  }
+
+  /* Radar rings on hero image */
+  .radar-wrap {
+    position:absolute; bottom:-60px; right:8%;
+    width:320px; height:320px; pointer-events:none;
+  }
+  .r-ring {
+    position:absolute; border-radius:50%; border:1px solid rgba(0,184,148,.18);
+    animation:rexpand 5s ease-out infinite;
+  }
+  .r-ring:nth-child(1) { inset:25%; animation-delay:0s; }
+  .r-ring:nth-child(2) { inset:10%; animation-delay:1.2s; }
+  .r-ring:nth-child(3) { inset:0; animation-delay:2.4s; }
+  @keyframes rexpand {
+    0%   { opacity:.8; transform:scale(.6); }
+    100% { opacity:0;  transform:scale(1.4); }
+  }
+  .r-dot {
+    position:absolute; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 10px var(--teal);
+    animation:bdot 4s ease-in-out infinite;
+  }
+  .r-dot:nth-child(4) { width:7px; height:7px; top:32%; right:28%; animation-delay:.5s; }
+  .r-dot:nth-child(5) { width:5px; height:5px; top:52%; right:18%; animation-delay:2s; }
+  .r-dot:nth-child(6) { width:6px; height:6px; top:22%; right:42%; animation-delay:3.5s; }
+  @keyframes bdot {
+    0%,100% { opacity:0; transform:scale(0); }
+    30%,70% { opacity:1; transform:scale(1); }
+  }
+
+  /* Hero text block — sits below image, over fade */
+  .hero-text-block {
+    position:relative; z-index:3; margin-top:-120px;
+    padding: 0 52px 64px;
+    display:flex; flex-direction:column; gap:0;
+  }
+
+  .hero-eyebrow {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:4px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+    opacity:0; animation:fadeUp .8s .2s forwards;
+  }
+  .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--teal); }
+
+  .hero-h1 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(72px,9vw,140px);
+    line-height:.92; letter-spacing:1px; color:var(--navy);
+    margin-bottom:10px;
+    opacity:0; animation:fadeUp .9s .35s forwards;
+  }
+  .hero-h1 .teal { color:var(--teal); }
+
+  .hero-sub {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(36px,4.5vw,64px);
+    line-height:1; letter-spacing:1px; color:var(--mid);
+    margin-bottom:32px;
+    opacity:0; animation:fadeUp .9s .5s forwards;
+  }
+
+  .hero-row {
+    display:flex; align-items:center; gap:40px; flex-wrap:wrap;
+    opacity:0; animation:fadeUp .8s .65s forwards;
+  }
+
+  .hero-body {
+    font-size:18px; line-height:1.7; color:var(--mid);
+    max-width:500px; font-weight:300;
+  }
+  .hero-body strong { color:var(--navy); font-weight:500; }
+
+  .hero-actions { display:flex; gap:16px; align-items:center; flex-shrink:0; }
+
+  .btn-teal {
+    font-family:'Space Mono', monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; background:var(--teal); color:var(--white);
+    padding:14px 28px; text-decoration:none; border-radius:2px;
+    transition:all .2s; box-shadow:0 4px 20px var(--teal-glow);
+  }
+  .btn-teal:hover { background:#00a07f; transform:translateY(-2px); box-shadow:0 8px 28px var(--teal-glow); }
+
+  .btn-ghost {
+    font-family:'Space Mono', monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--navy); text-decoration:none;
+    display:flex; align-items:center; gap:6px; transition:color .2s;
+  }
+  .btn-ghost:hover { color:var(--teal); }
+  .btn-ghost::after { content:'→'; transition:transform .2s; }
+  .btn-ghost:hover::after { transform:translateX(4px); }
+
+  /* ─── STATS ──────────────────────────────────── */
+  .stats-strip {
+    position:relative; z-index:2;
+    background:var(--white); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .stat-cell {
+    padding:32px 40px; border-right:1px solid var(--rule);
+    opacity:0; transform:translateY(14px);
+    transition:opacity .6s,transform .6s;
+  }
+  .stat-cell:last-child { border-right:none; }
+  .stat-cell.vis { opacity:1; transform:translateY(0); }
+  .stat-n {
+    font-family:'Bebas Neue', sans-serif; font-size:52px; color:var(--teal); line-height:1;
+  }
+  .stat-l {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); margin-top:4px;
+  }
+
+  /* ─── SECTION BASE ───────────────────────────── */
+  section { position:relative; z-index:2; padding:96px 52px; }
+
+  .sec-eyebrow {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:4px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .sec-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+
+  .sec-h2 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(48px,5vw,76px); line-height:.95; letter-spacing:1px;
+    color:var(--navy); margin-bottom:20px;
+  }
+
+  .sec-body {
+    font-size:17px; line-height:1.75; color:var(--mid);
+    max-width:560px; font-weight:300; margin-bottom:56px;
+  }
+
+  /* ─── MISSION ────────────────────────────────── */
+  #mission { background:var(--white); }
+
+  .mission-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:80px;
+    align-items:center; max-width:1240px; margin:0 auto;
+  }
+
+  .mission-img-wrap {
+    position:relative; border-radius:4px; overflow:hidden;
+    box-shadow:0 24px 64px rgba(21,32,53,.12);
+  }
+  .mission-img-wrap img {
+    width:100%; display:block;
+    transition:transform .6s ease;
+  }
+  .mission-img-wrap:hover img { transform:scale(1.03); }
+
+  /* floating badge on image */
+  .img-badge {
+    position:absolute; bottom:24px; left:24px;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--rule);
+    padding:12px 18px; border-radius:3px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .img-badge-dot { width:8px; height:8px; background:var(--teal); border-radius:50%; flex-shrink:0; animation:pulse-dot 2s infinite; }
+  @keyframes pulse-dot {
+    0%,100% { box-shadow:0 0 0 0 rgba(0,184,148,.5); }
+    50% { box-shadow:0 0 0 8px rgba(0,184,148,0); }
+  }
+  .img-badge-text { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--mid); }
+
+  .mission-text p {
+    font-size:17px; line-height:1.8; color:var(--mid); margin-bottom:20px; font-weight:300;
+  }
+  .mission-text p strong { color:var(--navy); font-weight:500; }
+
+  /* dam analogy callout */
+  .dam-callout {
+    margin-top:32px; padding:20px 24px;
+    border-left:3px solid var(--teal);
+    background:var(--teal-dim);
+    border-radius:0 4px 4px 0;
+  }
+  .dam-callout p {
+    font-size:15px; font-style:italic; color:var(--navy); font-weight:400;
+    margin:0;
+  }
+
+  /* ─── SERVICES ───────────────────────────────── */
+  #services { background:var(--sky); }
+
+  .services-inner { max-width:1240px; margin:0 auto; }
+
+  .services-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    border:1px solid var(--rule); background:var(--rule);
+  }
+
+  .svc {
+    background:var(--white); padding:44px 36px;
+    position:relative; overflow:hidden;
+    opacity:0; transform:translateY(20px);
+    transition:opacity .6s,transform .6s,background .25s;
+  }
+  .svc.vis { opacity:1; transform:translateY(0); }
+  .svc:hover { background:#f7fcfa; }
+
+  .svc::before {
+    content:''; position:absolute; top:0; left:0;
+    width:100%; height:3px; background:var(--teal);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .svc:hover::before { transform:scaleX(1); }
+
+  .svc-num {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:3px;
+    color:var(--teal); margin-bottom:22px; opacity:.6;
+  }
+  .svc-icon { font-size:28px; margin-bottom:16px; display:block; }
+  .svc-title {
+    font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:.5px;
+    color:var(--navy); margin-bottom:14px;
+  }
+  .svc-text { font-size:15px; line-height:1.75; color:var(--mid); font-weight:300; margin-bottom:22px; }
+
+  .svc-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tag {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--teal);
+    background:var(--teal-dim); padding:4px 10px; border-radius:2px;
+    border:1px solid rgba(0,184,148,.18);
+  }
+
+  /* ─── TEAM ───────────────────────────────────── */
+  #team { background:var(--white); }
+
+  .team-inner { max-width:1240px; margin:0 auto; }
+  .team-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:24px; }
+
+  .team-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+  }
+
+  .tcard {
+    background:var(--sky); border:1px solid var(--rule);
+    border-radius:4px; overflow:hidden;
+    opacity:0; transform:translateY(20px);
+    transition:opacity .6s,transform .6s,box-shadow .3s;
+  }
+  .tcard.vis { opacity:1; transform:translateY(0); }
+  .tcard:hover { box-shadow:0 16px 48px rgba(21,32,53,.1); transform:translateY(-4px) !important; }
+
+  .tcard-img {
+    width:100%; aspect-ratio:1/1; overflow:hidden; background:var(--cloud);
+    position:relative;
+  }
+  .tcard-img img {
+    width:100%; height:100%; object-fit:cover; object-position:center 20%;
+    transition:transform .5s ease;
+  }
+  .tcard:hover .tcard-img img { transform:scale(1.05); }
+
+  /* Initials fallback — only visible when photo fails to load */
+  .tcard-initials {
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Bebas Neue', sans-serif; font-size:64px; color:var(--teal); opacity:.18;
+    letter-spacing:2px; pointer-events:none;
+    z-index:0;
+  }
+  .tcard-img img { position:relative; z-index:1; }
+
+  .tcard-body { padding:22px 20px 24px; }
+  .tcard-name {
+    font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:.5px;
+    color:var(--navy); margin-bottom:2px;
+  }
+  .tcard-role {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:14px;
+    padding-bottom:14px; border-bottom:1px solid var(--rule);
+  }
+  .tcard-bio { font-size:13px; line-height:1.7; color:var(--mid); font-weight:300; margin-bottom:14px; }
+  .tcard-prev {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px;
+    color:var(--muted); line-height:1.7;
+  }
+
+  /* ─── PIPELINE / DAM ─────────────────────────── */
+  #pipeline { background:var(--navy); }
+
+  .pipeline-inner { max-width:1240px; margin:0 auto; }
+  .pipeline-inner .sec-h2 { color:var(--white); }
+  .pipeline-inner .sec-body { color:rgba(240,246,255,.65); }
+
+  .dam-bars {
+    display:grid; grid-template-columns:repeat(5,1fr); gap:0;
+    height:220px; align-items:flex-end;
+    border-bottom:2px solid rgba(255,255,255,.1);
+    margin-top:64px; margin-bottom:32px;
+  }
+  .dam-col {
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:flex-end; position:relative;
+    border-right:1px solid rgba(255,255,255,.06); padding:0 12px 28px;
+    opacity:0; transform:translateY(16px);
+    transition:opacity .5s,transform .5s;
+  }
+  .dam-col:last-child { border-right:none; }
+  .dam-col.vis { opacity:1; transform:translateY(0); }
+
+  .dam-fill {
+    width:100%; background:linear-gradient(to top, var(--teal), rgba(0,184,148,.25));
+    border-radius:2px 2px 0 0;
+    width:60%; margin:0 auto; min-width:40px;
+    transition:height 1.2s cubic-bezier(.16,1,.3,1);
+    height:0;
+  }
+  .dam-fill.go { /* heights set by JS */ }
+
+  .dam-yr {
+    position:absolute; bottom:4px;
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    color:rgba(240,246,255,.4); text-transform:uppercase;
+  }
+  .dam-rev {
+    position:absolute; top:-28px;
+    font-family:'Bebas Neue', sans-serif; font-size:22px; color:var(--teal);
+    white-space:nowrap;
+  }
+
+  .pipeline-note {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(240,246,255,.25); text-align:center;
+  }
+
+  /* ─── TRADESHOWS ─────────────────────────────── */
+  #shows { background:var(--sky); }
+
+  .shows-inner { max-width:1240px; margin:0 auto; }
+
+  .shows-intro { display:flex; justify-content:space-between; align-items:flex-start; gap:48px; margin-bottom:56px; flex-wrap:wrap; }
+  .shows-intro-right { font-size:15px; line-height:1.8; color:var(--mid); max-width:380px; font-weight:300; font-style:italic; padding-top:56px; }
+
+  .shows-list { display:flex; flex-direction:column; gap:0; }
+
+  .show-row {
+    display:grid; grid-template-columns:100px 1fr auto;
+    align-items:center; gap:32px;
+    padding:22px 0; border-bottom:1px solid var(--rule);
+    opacity:0; transform:translateX(-16px);
+    transition:opacity .5s,transform .5s,background .2s;
+    border-radius:2px;
+  }
+  .show-row:first-child { border-top:1px solid var(--rule); }
+  .show-row.vis { opacity:1; transform:translateX(0); }
+  .show-row:hover { background:rgba(0,184,148,.04); padding-left:12px; }
+
+  .show-date {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:1px;
+    color:var(--teal); text-align:right; line-height:1.5;
+  }
+  .show-name {
+    font-family:'Bebas Neue', sans-serif; font-size:20px; letter-spacing:.5px;
+    color:var(--navy); margin-bottom:2px;
+    transition:color .2s;
+  }
+  .show-row:hover .show-name { color:var(--teal); }
+  .show-loc {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:1px;
+    color:var(--muted);
+  }
+  .show-focus {
+    font-size:13px; color:var(--muted); text-align:right; max-width:220px; line-height:1.5;
+    font-style:italic;
+  }
+
+  /* ─── TESTIMONIALS ───────────────────────────── */
+  #references { background:var(--white); }
+  .ref-inner { max-width:1240px; margin:0 auto; }
+
+  .ref-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--rule); border:1px solid var(--rule); }
+
+  .ref-card {
+    background:var(--white); padding:40px 36px;
+    opacity:0; transform:translateY(14px);
+    transition:opacity .6s,transform .6s;
+  }
+  .ref-card.vis { opacity:1; transform:translateY(0); }
+
+  .ref-quote {
+    font-size:16px; line-height:1.8; color:var(--mid); font-style:italic; font-weight:300;
+    margin-bottom:24px; position:relative; padding-top:20px;
+  }
+  .ref-quote::before {
+    content:'"'; position:absolute; top:-8px; left:0;
+    font-family:'Bebas Neue', sans-serif; font-size:60px;
+    color:var(--teal); opacity:.25; line-height:1;
+  }
+  .ref-author {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--navy);
+  }
+  .ref-co { color:var(--muted); display:block; margin-top:3px; }
+
+  /* ─── EMAIL CAPTURE ──────────────────────────── */
+  #report { background:var(--navy); overflow:hidden; position:relative; }
+
+  .report-inner {
+    max-width:1240px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+  }
+  .report-orb {
+    position:absolute; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(0,184,148,.12) 0%, transparent 70%);
+    right:-100px; top:50%; transform:translateY(-50%);
+    pointer-events:none;
+    animation:orb-pulse 6s ease-in-out infinite alternate;
+  }
+  @keyframes orb-pulse {
+    from { transform:translateY(-50%) scale(1); opacity:.7; }
+    to   { transform:translateY(-50%) scale(1.15); opacity:1; }
+  }
+  .report-left { position:relative; z-index:2; }
+  .report-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(0,184,148,.15); border:1px solid rgba(0,184,148,.3);
+    padding:6px 14px; border-radius:2px; margin-bottom:24px;
+  }
+  .report-badge-dot { width:6px; height:6px; background:var(--teal); border-radius:50%; animation:pulse-dot 2s infinite; }
+  .report-badge-text {
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--teal);
+  }
+  .report-h2 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,5vw,72px);
+    line-height:.95; letter-spacing:1px; color:var(--white); margin-bottom:20px;
+  }
+  .report-h2 .teal { color:var(--teal); }
+  .report-body {
+    font-size:16px; line-height:1.75; color:rgba(240,246,255,.6);
+    font-weight:300; margin-bottom:28px; max-width:440px;
+  }
+  .report-includes { display:flex; flex-direction:column; gap:10px; }
+  .report-include-item {
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:14px; color:rgba(240,246,255,.55); font-weight:300; line-height:1.5;
+  }
+  .report-include-item::before {
+    content:'→'; color:var(--teal); font-family:'Space Mono',monospace;
+    font-size:11px; flex-shrink:0; margin-top:2px;
+  }
+  .report-right { position:relative; z-index:2; }
+  .report-form-card {
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(12px); border-radius:4px; padding:40px;
+  }
+  .rfc-title {
+    font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:.5px;
+    color:var(--white); margin-bottom:4px;
+  }
+  .rfc-sub {
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(240,246,255,.3);
+    margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .rfc-row { margin-bottom:14px; }
+  .rfc-label {
+    display:block; font-family:'Space Mono',monospace; font-size:9px;
+    letter-spacing:3px; text-transform:uppercase; color:rgba(240,246,255,.35); margin-bottom:6px;
+  }
+  .rfc-input {
+    width:100%; padding:11px 14px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    border-radius:2px; color:var(--white);
+    font-family:'Barlow',sans-serif; font-size:15px; outline:none; transition:border-color .2s;
+  }
+  .rfc-input::placeholder { color:rgba(240,246,255,.25); }
+  .rfc-input:focus { border-color:var(--teal); background:rgba(0,184,148,.06); }
+  .rfc-select {
+    width:100%; padding:11px 14px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    border-radius:2px; color:var(--white);
+    font-family:'Barlow',sans-serif; font-size:15px; outline:none; cursor:pointer; -webkit-appearance:none;
+    transition:border-color .2s;
+  }
+  .rfc-select option { background:var(--navy); color:var(--white); }
+  .rfc-select:focus { border-color:var(--teal); }
+  .rfc-submit {
+    width:100%; padding:15px; margin-top:8px;
+    background:var(--teal); color:var(--navy); border:none; border-radius:2px;
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:3px;
+    text-transform:uppercase; font-weight:700; cursor:none; transition:all .2s;
+    box-shadow:0 4px 24px rgba(0,184,148,.35);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .rfc-submit:hover { background:#00d4aa; transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,184,148,.5); }
+  .rfc-success { display:none; text-align:center; padding:32px 0; }
+  .rfc-success-icon { font-size:48px; margin-bottom:16px; }
+  .rfc-success-title {
+    font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--teal);
+    letter-spacing:1px; margin-bottom:8px;
+  }
+  .rfc-success-body { font-size:14px; color:rgba(240,246,255,.5); font-weight:300; line-height:1.6; }
+  .rfc-privacy {
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px;
+    color:rgba(240,246,255,.2); text-align:center; margin-top:14px; line-height:1.6;
+  }
+
+  /* ─── CONTACT ────────────────────────────────── */
+  #contact { background:var(--sky); }
+
+  .contact-inner { max-width:1240px; margin:0 auto; }
+
+  .contact-grid { display:grid; grid-template-columns:1fr 440px; gap:80px; margin-top:64px; align-items:start; }
+
+  .contact-big {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(52px,6vw,90px); line-height:.95; letter-spacing:1px; color:var(--navy);
+    margin-bottom:28px;
+  }
+  .contact-big .teal { color:var(--teal); }
+
+  .contact-blurb { font-size:17px; line-height:1.75; color:var(--mid); font-weight:300; margin-bottom:40px; }
+
+  .contact-details { display:flex; flex-direction:column; gap:0; }
+  .cdet {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-bottom:1px solid var(--rule);
+  }
+  .cdet:first-child { border-top:1px solid var(--rule); }
+  .cdet-l {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .cdet-r { font-size:15px; color:var(--navy); text-decoration:none; transition:color .2s; }
+  .cdet-r:hover { color:var(--teal); }
+
+  .contact-form {
+    background:var(--white); border:1px solid var(--rule); border-radius:4px; padding:36px;
+    box-shadow:0 8px 40px rgba(21,32,53,.06);
+  }
+  .cf-title {
+    font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:.5px;
+    color:var(--navy); margin-bottom:4px;
+  }
+  .cf-sub {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); margin-bottom:28px;
+    padding-bottom:20px; border-bottom:1px solid var(--rule);
+  }
+  .cf-row { margin-bottom:16px; }
+  .cf-label {
+    display:block; font-family:'Space Mono', monospace; font-size:9px;
+    letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:6px;
+  }
+  .cf-input {
+    width:100%; padding:11px 14px; border:1px solid var(--rule); border-radius:2px;
+    background:var(--sky); font-family:'Barlow', sans-serif; font-size:15px;
+    color:var(--navy); outline:none; transition:border-color .2s;
+  }
+  .cf-input:focus { border-color:var(--teal); background:var(--white); }
+  .cf-select {
+    width:100%; padding:11px 14px; border:1px solid var(--rule); border-radius:2px;
+    background:var(--sky); font-family:'Barlow', sans-serif; font-size:15px;
+    color:var(--navy); outline:none; cursor:pointer; -webkit-appearance:none;
+    transition:border-color .2s;
+  }
+  .cf-select:focus { border-color:var(--teal); }
+  textarea.cf-input { height:90px; resize:none; }
+  .cf-submit {
+    width:100%; padding:14px; background:var(--teal); color:var(--white);
+    border:none; border-radius:2px; font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:3px; text-transform:uppercase; font-weight:700;
+    cursor:none; margin-top:8px;
+    transition:background .2s,transform .2s,box-shadow .2s;
+    box-shadow:0 4px 16px var(--teal-glow);
+  }
+  .cf-submit:hover { background:#00a07f; transform:translateY(-1px); box-shadow:0 8px 24px var(--teal-glow); }
+
+  /* ─── PARTNER STRIP ──────────────────────────── */
+  .partner-strip {
+    background:var(--white); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    padding:20px 52px; display:flex; align-items:center; gap:48px; overflow:hidden;
+    position:relative; z-index:2;
+  }
+  .ps-label {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--muted); white-space:nowrap; flex-shrink:0;
+  }
+  .ps-rule { width:1px; height:20px; background:var(--rule); flex-shrink:0; }
+  .ps-list { display:flex; gap:36px; align-items:center; flex-wrap:wrap; }
+  .ps-item {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--mid); white-space:nowrap; opacity:.7;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────── */
+  footer {
+    background:var(--navy); padding:40px 52px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    position:relative; z-index:2;
+  }
+  .ft-logo { display:flex; flex-direction:column; gap:4px; }
+  .ft-wordmark {
+    font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:3px; color:var(--white);
+  }
+  .ft-wordmark span { color:var(--teal); }
+  .ft-tagline {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(240,246,255,.3);
+  }
+  .ft-links { display:flex; gap:28px; }
+  .ft-links a {
+    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s;
+  }
+  .ft-links a:hover { color:var(--teal); }
+  .ft-copy {
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px;
+    color:rgba(240,246,255,.2);
+  }
+
+  /* ─── CURSOR HIDE ON TOUCH ─────────────────── */
+  @media (hover: none) {
+    #cur, #cur2 { display:none !important; }
+  }
+
+  /* ─── EASTER EGGS ────────────────────────────── */
+  /* Konami overlay */
+  #konami {
+    position:fixed; inset:0; background:rgba(14,22,36,.97); z-index:10000;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;
+    opacity:0; pointer-events:none; transition:opacity .4s;
+  }
+  #konami.on { opacity:1; pointer-events:all; }
+  .k-title {
+    font-family:'Bebas Neue', sans-serif; font-size:clamp(40px,6vw,80px); color:var(--teal);
+    text-align:center; letter-spacing:3px;
+    animation:glitch 2s infinite;
+  }
+  @keyframes glitch {
+    0%,100% { text-shadow:none; }
+    15% { text-shadow:-4px 0 rgba(255,50,100,.7),4px 0 rgba(0,255,200,.7); }
+    35% { text-shadow:4px 0 rgba(255,50,100,.7),-4px 0 rgba(0,255,200,.7); }
+  }
+  .k-sub {
+    font-family:'Space Mono', monospace; font-size:13px; letter-spacing:2px;
+    color:rgba(240,246,255,.5); text-align:center;
+  }
+  .k-close {
+    font-family:'Space Mono', monospace; font-size:11px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--teal); border:1px solid var(--teal);
+    background:none; padding:12px 28px; cursor:none; transition:all .2s; margin-top:8px;
+  }
+  .k-close:hover { background:var(--teal); color:var(--navy); }
+
+  /* Flying drone */
+  #drone {
+    position:fixed; font-size:36px; z-index:9990; pointer-events:none;
+    top:50%; left:-60px;
+    filter:drop-shadow(0 0 10px rgba(0,184,148,.7));
+  }
+
+  /* ─── ANIMATIONS ──────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(22px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────── */
+  @media (max-width:1024px) {
+    .mission-grid { grid-template-columns:1fr; }
+    .team-grid { grid-template-columns:repeat(2,1fr); }
+    .contact-grid { grid-template-columns:1fr; }
+  }
+  @media (max-width:768px) {
+    nav { padding:0 20px; }
+    .nav-links { display:none; }
+    #hero, section { padding-left:20px; padding-right:20px; }
+    .hero-text-block { padding:0 20px 48px; }
+    .stats-strip { grid-template-columns:repeat(2,1fr); }
+    .services-grid { grid-template-columns:1fr; }
+    .team-grid { grid-template-columns:1fr; }
+    .ref-grid { grid-template-columns:1fr; }
+    .show-row { grid-template-columns:80px 1fr; }
+    .show-focus { display:none; }
+    footer { flex-direction:column; gap:16px; text-align:center; }
+    .ft-links { justify-content:center; }
+    .partner-strip { padding:16px 20px; }
+    .dam-bars { height:160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- Backgrounds -->
+<div class="dot-grid"></div>
+<div class="horizon-glow"></div>
+<div class="horizon-glow-2"></div>
+
+<!-- Easter eggs -->
+<div id="konami">
+  <div class="k-title">DRONE CAPITAL<br>OF THE WORLD</div>
+  <div class="k-sub">Oklahoma. The flood is coming. 🌊</div>
+  <button class="k-close" onclick="document.getElementById('konami').classList.remove('on')">CLOSE TRANSMISSION</button>
+</div>
+<div id="drone">🚁</div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="images/logo-horizontal.png"
+         alt="OK Autonomous">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="#shows">Events</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Partner With Us</a>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#mission" onclick="closeMobile()">Mission</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="team.html">Team</a>
+  <a href="#shows" onclick="closeMobile()">Events</a>
+  <a href="#contact" class="mobile-cta" onclick="closeMobile()">Partner With Us</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<div id="hero">
+  <div class="hero-img-wrap">
+    <!-- Hero image 1: drones over Tulsa skyline -->
+    <img
+      src="images/hero-tulsa-drones.png"
+      alt="Autonomous air vehicles over Tulsa skyline">
+    <div class="hero-img-overlay"></div>
+    <!-- Radar animation -->
+    <div class="radar-wrap">
+      <div class="r-ring"></div>
+      <div class="r-ring"></div>
+      <div class="r-ring"></div>
+      <div class="r-dot"></div>
+      <div class="r-dot"></div>
+      <div class="r-dot"></div>
+    </div>
+  </div>
+
+  <div class="hero-text-block">
+    <div class="hero-eyebrow">Tulsa, Oklahoma · Est. 2025</div>
+    <h1 class="hero-h1"><span class="teal">OK</span>LAHOMA<br>AUTONOMOUS</h1>
+    <div class="hero-sub">Empowering Oklahoma's<br>Autonomous Revolution</div>
+    <div class="hero-row">
+      <p class="hero-body">
+        The <strong>dedicated sales force</strong> connecting drone OEMs and autonomous systems buyers with Oklahoma's proven manufacturing base — bridging local capability to national and international markets.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-teal">Partner With Us</a>
+        <a href="#mission" class="btn-ghost">Our Mission</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-strip" id="stats">
+  <div class="stat-cell">
+    <div class="stat-n">$1.28<span style="font-size:32px">B</span></div>
+    <div class="stat-l">In Contracts Negotiated</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">40<span style="font-size:32px">+</span></div>
+    <div class="stat-l">Years Aerospace Experience</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">40<span style="font-size:32px">%</span></div>
+    <div class="stat-l">Win Rate on Qualified Pursuits</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n">$15<span style="font-size:32px">M+</span></div>
+    <div class="stat-l">Pipeline Built in Prior Roles</div>
+  </div>
+</div>
+
+<!-- ═══ PARTNER STRIP ═══ -->
+<div class="partner-strip">
+  <span class="ps-label">Backed By</span>
+  <div class="ps-rule"></div>
+  <div class="ps-list">
+    <span class="ps-item">Tulsa Innovation Labs</span>
+    <span class="ps-item">TARMAC DC</span>
+    <span class="ps-item">Oklahoma Manufacturers Alliance</span>
+    <span class="ps-item">OSU Smart Supply Chain</span>
+    <span class="ps-item">OAIRE</span>
+    <span class="ps-item">AUVSI</span>
+  </div>
+</div>
+
+<!-- ═══ MISSION ═══ -->
+<section id="mission">
+  <div class="mission-grid">
+
+    <!-- Image: second hero photo from homepage -->
+    <div class="mission-img-wrap">
+      <img
+        src="images/mission-manufacturing.png"
+        alt="Oklahoma manufacturing and autonomous systems">
+      <div class="img-badge">
+        <div class="img-badge-dot"></div>
+        <span class="img-badge-text">Active · Tulsa, Oklahoma</span>
+      </div>
+    </div>
+
+    <div class="mission-text">
+      <div class="sec-eyebrow">Our Mission</div>
+      <h2 class="sec-h2">Built to Win<br>Contracts for<br>Oklahoma</h2>
+      <p>OK Autonomous is Tulsa's dedicated commercial representative for the autonomous systems era. We serve as the <strong>shared sales force</strong> for Oklahoma's small and midsized manufacturers — sourcing qualified opportunities, facilitating buyer introductions, and translating manufacturing strengths into revenue.</p>
+      <p>We're not consultants. We're <strong>operators</strong> — rooted in the Tulsa innovation ecosystem, with 40+ years of aerospace sales, CNC and manufacturing leadership, and proven startup scaling behind us.</p>
+      <p>Our vision: <strong>Oklahoma as the drone capital of the world.</strong> The groundwork is being laid right now. When the flood comes, our manufacturers will be ready.</p>
+      <div class="dam-callout">
+        <p>"A patient investment in sales and marketing will first produce a few drips, then a light trickle — followed by a flood. If the groundwork isn't in place, the flood will occur and NE Oklahoma manufacturers will miss the rewards."</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="services-inner">
+    <div class="sec-eyebrow">What We Do</div>
+    <h2 class="sec-h2">Three Core Services</h2>
+    <p class="sec-body">We act as your dedicated commercial engine — not a consulting report, but an active sales force with skin in the game.</p>
+    <div class="services-grid">
+      <div class="svc">
+        <div class="svc-num">01</div>
+        <span class="svc-icon">🎯</span>
+        <h3 class="svc-title">Market Access & Revenue</h3>
+        <p class="svc-text">We open doors that Oklahoma manufacturers couldn't access alone. OEM introductions, defense prime relationships, and commercial drone buyer engagements — sourced, screened, and facilitated into signed contracts.</p>
+        <div class="svc-tags">
+          <span class="tag">Defense Primes</span>
+          <span class="tag">Drone OEMs</span>
+          <span class="tag">Commercial UAS</span>
+          <span class="tag">Buyer Introductions</span>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-num">02</div>
+        <span class="svc-icon">🔍</span>
+        <h3 class="svc-title">Opportunity Capture</h3>
+        <p class="svc-text">We screen every pursuit for fit, readiness, and win probability. We advise on certifications (AS9100, ITAR), competitive positioning, and proposal structure so manufacturers invest effort where it counts.</p>
+        <div class="svc-tags">
+          <span class="tag">AS9100</span>
+          <span class="tag">ITAR</span>
+          <span class="tag">Pipeline Strategy</span>
+          <span class="tag">Proposal Support</span>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="svc-num">03</div>
+        <span class="svc-icon">📡</span>
+        <h3 class="svc-title">Capability Translation</h3>
+        <p class="svc-text">Manufacturing capability means nothing if buyers can't understand it. We develop buyer-relevant value propositions and capability profiles that communicate Oklahoma manufacturing in language that closes deals.</p>
+        <div class="svc-tags">
+          <span class="tag">Value Proposition</span>
+          <span class="tag">Proposal Writing</span>
+          <span class="tag">SMM Advocacy</span>
+          <span class="tag">Marketing Materials</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEAM ═══ -->
+<section id="team">
+  <div class="team-inner">
+    <div class="team-header">
+      <div>
+        <div class="sec-eyebrow">Founding Partners</div>
+        <h2 class="sec-h2">Operators,<br>Not Consultants</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <p style="font-size:16px;line-height:1.75;color:var(--mid);max-width:380px;font-weight:300;font-style:italic;">
+          "As entrepreneurs we were trained that we eat what we kill. We de-risk through effort and attitude. Our careers and experiences are performance based — not theoretical, but practical."
+        </p>
+        <a href="team.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--teal);color:var(--white);padding:12px 22px;text-decoration:none;border-radius:2px;transition:all .2s;box-shadow:0 4px 16px var(--teal-glow);width:fit-content;">Meet the Full Team →</a>
+      </div>
+    </div>
+    <div class="team-grid">
+
+      <!-- Brian Carpenter -->
+      <div class="tcard">
+        <div class="tcard-img">
+          <img src="images/headshot-brian-carpenter.jpg"
+               alt="Brian Carpenter">
+          <div class="tcard-initials">BC</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-name">Brian Carpenter</div>
+          <div class="tcard-role">Sales Force Architecture</div>
+          <p class="tcard-bio">Built and scaled Didasko, a B2B sales org for tech and manufacturing. Coached 100+ C-suite executives. Serves on OSU Spears Executive Vision Council for Smart Supply Chain.</p>
+          <div class="tcard-prev">IBM · Hitachi · SABRE Group · Dollar Thrifty · 4D Sales</div>
+        </div>
+      </div>
+
+      <!-- Brian Emery -->
+      <div class="tcard">
+        <div class="tcard-img">
+          <img src="images/headshot-brian-emery.jpg"
+               alt="Brian Emery">
+          <div class="tcard-initials">BE</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-name">Brian Emery</div>
+          <div class="tcard-role">Aerospace & Operations</div>
+          <p class="tcard-bio">15+ years owning aerospace and CNC machining operations. Board director at $100M+ firms. Contracts with Lufthansa, Boeing, KLM, Bell Helicopter.</p>
+          <div class="tcard-prev">Commercial Aerospace MRO · CNC Manufacturing · Investor</div>
+        </div>
+      </div>
+
+      <!-- Bill Emery -->
+      <div class="tcard">
+        <div class="tcard-img">
+          <img src="images/headshot-bill-emery.jpg"
+               alt="Willard Emery">
+          <div class="tcard-initials">WE</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-name">Willard Emery</div>
+          <div class="tcard-role">International Growth</div>
+          <p class="tcard-bio">40+ years building and acquiring international aerospace businesses. Greenfield startups and integrations across North America, Europe, and Asia.</p>
+          <div class="tcard-prev">US · Canada · Mexico · Europe · Asia</div>
+        </div>
+      </div>
+
+      <!-- Kevin Toews -->
+      <div class="tcard">
+        <div class="tcard-img">
+          <img src="images/headshot-kevin-toews.jpg"
+               alt="Kevin Toews">
+          <div class="tcard-initials">KT</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-name">Kevin Toews</div>
+          <div class="tcard-role">Industrial & Process Ops</div>
+          <p class="tcard-bio">Owner-operator of industrial and manufacturing businesses. Process optimization and equipment integration for clients entering autonomous technology markets.</p>
+          <div class="tcard-prev">Industrial Manufacturing · Real Estate · Tech Investments</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PIPELINE ═══ -->
+<section id="pipeline">
+  <div class="pipeline-inner">
+    <div class="sec-eyebrow" style="color:rgba(0,184,148,1);">The Long Game</div>
+    <h2 class="sec-h2">Drips → Trickle<br>→ The Flood</h2>
+    <p class="sec-body">Patient, compounding investment in sales infrastructure. By Year 4–5 the model becomes self-sustaining, with manufacturers funding sales through realized revenues.</p>
+
+    <div class="dam-bars" id="dam">
+      <div class="dam-col">
+        <div class="dam-rev">$500K</div>
+        <div class="dam-fill" data-h="30"></div>
+        <div class="dam-yr">Y1</div>
+      </div>
+      <div class="dam-col">
+        <div class="dam-rev">$1M</div>
+        <div class="dam-fill" data-h="60"></div>
+        <div class="dam-yr">Y2</div>
+      </div>
+      <div class="dam-col">
+        <div class="dam-rev">$2M</div>
+        <div class="dam-fill" data-h="95"></div>
+        <div class="dam-yr">Y3</div>
+      </div>
+      <div class="dam-col">
+        <div class="dam-rev">$4M</div>
+        <div class="dam-fill" data-h="148" style="background:linear-gradient(to top,#00d4aa,rgba(0,212,170,.3))"></div>
+        <div class="dam-yr">Y4</div>
+      </div>
+      <div class="dam-col">
+        <div class="dam-rev" style="color:#3ddc84">$8M</div>
+        <div class="dam-fill" data-h="200" style="background:linear-gradient(to top,#3ddc84,rgba(61,220,132,.25))"></div>
+        <div class="dam-yr">Y5</div>
+      </div>
+    </div>
+
+    <p class="pipeline-note">Revenue-share model replaces TIL subsidy · Self-sustaining by Year 4–5</p>
+  </div>
+</section>
+
+<!-- ═══ TRADE SHOWS ═══ -->
+<section id="shows">
+  <div class="shows-inner">
+    <div class="shows-intro">
+      <div>
+        <div class="sec-eyebrow">2026 Market Presence</div>
+        <h2 class="sec-h2">On the Ground<br>Where It Matters</h2>
+      </div>
+      <p class="shows-intro-right">
+        "We don't just attend — we arrive with scheduled meetings, prepared introductions, and relentless follow-through. Relationships are built through preparation, frequency, and merit."
+      </p>
+    </div>
+
+    <div class="shows-list">
+      <div class="show-row">
+        <div class="show-date">May<br>11–14</div>
+        <div>
+          <div class="show-name">AUVSI XPONENTIAL</div>
+          <div class="show-loc">Detroit, MI</div>
+        </div>
+        <div class="show-focus">Largest global gathering for uncrewed systems</div>
+      </div>
+      <div class="show-row">
+        <div class="show-date">Jul<br>8–9</div>
+        <div>
+          <div class="show-name">Military Robotics & Autonomous Systems</div>
+          <div class="show-loc">Arlington, VA</div>
+        </div>
+        <div class="show-focus">Defense decision-makers, ground & air robotics</div>
+      </div>
+      <div class="show-row">
+        <div class="show-date">Sep<br>1–3</div>
+        <div>
+          <div class="show-name">Commercial UAV Expo</div>
+          <div class="show-loc">Las Vegas, NV</div>
+        </div>
+        <div class="show-focus">Energy, surveying, construction drone applications</div>
+      </div>
+      <div class="show-row">
+        <div class="show-date">Fall<br>2026</div>
+        <div>
+          <div class="show-name">UTAC 2026</div>
+          <div class="show-loc">Perry, GA</div>
+        </div>
+        <div class="show-focus">Tactical training — putting tech to work in field scenarios</div>
+      </div>
+      <div class="show-row">
+        <div class="show-date">Jan<br>5–8 '27</div>
+        <div>
+          <div class="show-name">CES 2027</div>
+          <div class="show-loc">Las Vegas, NV</div>
+        </div>
+        <div class="show-focus">Consumer & enterprise autonomy, sensor & AI trends</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REFERENCES ═══ -->
+<section id="references">
+  <div class="ref-inner">
+    <div class="sec-eyebrow">Client References</div>
+    <h2 class="sec-h2">What Partners Say</h2>
+    <p class="sec-body">The principles of OKA bring decades of trusted relationships across aerospace, defense, and manufacturing.</p>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <p class="ref-quote">Business drive and entrepreneurial working style resulted in the companies collaborating closely together and driving solutions to support the MRO industry. The working mode was always partnership focused — I can recommend them highly for any new kind of developments.</p>
+        <div class="ref-author">Michael Scheferhoff<span class="ref-co">CEO, Lufthansa Technik Engine Services</span></div>
+      </div>
+      <div class="ref-card">
+        <p class="ref-quote">The principals of OKA have collaborated with us for over 10 years in growing our revenue, establishing new markets, and introducing us to new potential customers.</p>
+        <div class="ref-author">Carol Robinson<span class="ref-co">CEO, The Canada Company & Can-Serv</span></div>
+      </div>
+      <div class="ref-card">
+        <p class="ref-quote">The principals of OKA aligned and elevated Citadel's sales and revenue, thus allowing us to sell the company at a significantly higher price multiple.</p>
+        <div class="ref-author">John Johnson<span class="ref-co">CEO, Bluestem Resources</span></div>
+      </div>
+      <div class="ref-card">
+        <p class="ref-quote">Partners in technology projects that developed advancements in our Supply Chain strategy over several years for both our legacy and emerging programs.</p>
+        <div class="ref-author">Troy Atchley<span class="ref-co">Supplier Manager, Bell Helicopter</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ EMAIL CAPTURE / REPORT ═══ -->
+<section id="report">
+  <div class="report-orb"></div>
+  <div class="report-inner">
+
+    <div class="report-left">
+      <div class="report-badge">
+        <div class="report-badge-dot"></div>
+        <span class="report-badge-text">Free Report · 2026</span>
+      </div>
+      <h2 class="report-h2">Get the<br><span class="teal">2026 UAS</span><br>Supply Chain<br>Opportunity<br>Report</h2>
+      <p class="report-body">Oklahoma is positioned to capture a significant share of the domestic drone manufacturing supply chain. We've mapped the landscape — the gaps, the buyers, the certifications, and the opportunity — so you don't have to.</p>
+      <div class="report-includes">
+        <div class="report-include-item">Where domestic drone OEMs are struggling to source components today</div>
+        <div class="report-include-item">The certifications that unlock defense and aerospace contracts (AS9100, ITAR, CMMC)</div>
+        <div class="report-include-item">Oklahoma's manufacturing strengths and where the gaps are</div>
+        <div class="report-include-item">2026 market outlook and the tradeshows where deals get made</div>
+        <div class="report-include-item">How to position your facility for autonomous systems buyers</div>
+      </div>
+    </div>
+
+    <div class="report-right">
+      <div class="report-form-card">
+        <form id="rfc-form-wrap" name="report-download" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="report-download">
+          <input type="hidden" name="bot-field" style="display:none">
+          <div class="rfc-title">Download the Report</div>
+          <div class="rfc-sub">Delivered instantly to your inbox · No spam, ever</div>
+          <div class="rfc-row">
+            <label class="rfc-label">First Name</label>
+            <input type="text" name="first-name" class="rfc-input" id="rfc-name" placeholder="Jane" required>
+          </div>
+          <div class="rfc-row">
+            <label class="rfc-label">Work Email</label>
+            <input type="email" name="email" class="rfc-input" id="rfc-email" placeholder="jane@company.com" required>
+          </div>
+          <div class="rfc-row">
+            <label class="rfc-label">Company</label>
+            <input type="text" name="company" class="rfc-input" id="rfc-company" placeholder="Your company">
+          </div>
+          <div class="rfc-row">
+            <label class="rfc-label">I Am A</label>
+            <select name="role" class="rfc-select" id="rfc-role">
+              <option value="">Select your role...</option>
+              <option>Drone OEM / Autonomous Systems Buyer</option>
+              <option>Oklahoma Manufacturer (SMM)</option>
+              <option>Defense / Aerospace Prime</option>
+              <option>Investor or Partner</option>
+              <option>Economic Development / Government</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="rfc-submit" id="rfc-submit-btn">
+            <span>Send Me the Report</span>
+            <span>→</span>
+          </button>
+          <p class="rfc-privacy">We respect your privacy. Your information is never shared or sold.<br>Unsubscribe anytime.</p>
+        </form>
+        <div class="rfc-success" id="rfc-success">
+          <div class="rfc-success-icon">🛸</div>
+          <div class="rfc-success-title">You're In!</div>
+          <p class="rfc-success-body">Your copy of the 2026 UAS Supply Chain Opportunity Report is ready.</p>
+          <a href="OKA-2026-UAS-Supply-Chain-Readiness-Report.pdf" download
+             style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+             font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;
+             text-transform:uppercase;background:var(--teal);color:var(--navy);
+             padding:14px 24px;border-radius:2px;text-decoration:none;
+             font-weight:700;transition:all .2s;box-shadow:0 4px 20px rgba(0,184,148,.35);">
+             Download Report (PDF) →</a>
+          <p style="font-size:13px;color:rgba(240,246,255,.4);font-weight:300;margin-top:12px;line-height:1.5;">A copy has also been sent to your email.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="sec-eyebrow">Get In Touch</div>
+    <div class="contact-grid">
+      <div>
+        <h2 class="contact-big">Ready to<br>Build Your<br><span class="teal">Supply</span><br>Chain?</h2>
+        <p class="contact-blurb">Whether you're a drone OEM seeking Oklahoma-made components, a manufacturer ready to break into autonomous systems markets, or a partner in Oklahoma's ecosystem — let's talk.</p>
+        <div class="contact-details">
+          <div class="cdet">
+            <span class="cdet-l">Email</span>
+            <a href="mailto:info@ok-as.com" class="cdet-r">info@ok-as.com</a>
+          </div>
+          <div class="cdet">
+            <span class="cdet-l">Primary Contact</span>
+            <a href="mailto:bcemery@ok-as.com" class="cdet-r">Brian Emery · bcemery@ok-as.com</a>
+          </div>
+          <div class="cdet">
+            <span class="cdet-l">Headquarters</span>
+            <span class="cdet-r">Tulsa, Oklahoma</span>
+          </div>
+          <div class="cdet">
+            <span class="cdet-l">Website</span>
+            <a href="https://www.ok-as.com" class="cdet-r">www.ok-as.com</a>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form">
+        <input type="hidden" name="form-name" value="contact">
+        <input type="hidden" name="bot-field" style="display:none">
+        <div class="cf-title">Send a Message</div>
+        <div class="cf-sub">We respond within 24 hours</div>
+        <div class="cf-row">
+          <label class="cf-label">Name</label>
+          <input type="text" name="name" class="cf-input" placeholder="Your name" required>
+        </div>
+        <div class="cf-row">
+          <label class="cf-label">Company</label>
+          <input type="text" name="company" class="cf-input" placeholder="Company name">
+        </div>
+        <div class="cf-row">
+          <label class="cf-label">I Am A</label>
+          <select name="role" class="cf-select">
+            <option value="">Select your role...</option>
+            <option>Drone OEM / Autonomous Systems Buyer</option>
+            <option>Oklahoma Manufacturer (SMM)</option>
+            <option>Defense / Aerospace Prime</option>
+            <option>Investor or Partner</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="cf-row">
+          <label class="cf-label">Message</label>
+          <textarea name="message" class="cf-input" placeholder="Tell us about your supply chain needs or how we can help…"></textarea>
+        </div>
+        <button type="submit" class="cf-submit" id="contact-submit">Send Message →</button>
+        <div id="contact-success" style="display:none; text-align:center; padding:24px 0;">
+          <div style="font-size:36px; margin-bottom:12px;">✅</div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--teal); letter-spacing:1px; margin-bottom:8px;">Message Sent!</div>
+          <p style="font-size:14px; color:var(--mid); font-weight:300;">We'll be in touch within 24 hours.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-logo">
+    <div class="ft-wordmark"><span>OK</span> AUTONOMOUS</div>
+    <div class="ft-tagline">Oklahoma's commercial engine for autonomous systems</div>
+  </div>
+  <div class="ft-links">
+    <a href="#mission">Mission</a>
+    <a href="#services">Services</a>
+    <a href="team.html">Team</a>
+    <a href="#shows">Events</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK 🛸</div>
+</footer>
+
+<script>
+/* ─── MOBILE MENU ─────────────────────── */
+const burger=document.getElementById('burger');
+const mobileMenu=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile(){
+  burger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ─── CURSOR ─────────────────────────── */
+const cur = document.getElementById('cur');
+const cur2 = document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+});
+(function raf(){
+  rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
+  cur2.style.left=rx+'px'; cur2.style.top=ry+'px';
+  requestAnimationFrame(raf);
+})();
+document.querySelectorAll('a,button,.tcard').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-big'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-big'));
+});
+
+/* ─── PARTICLES ──────────────────────── */
+function mkParticle(){
+  const p=document.createElement('div');
+  p.className='particle';
+  const sz=Math.random()*3+1;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-10px;
+    background:${Math.random()>.5?'rgba(0,184,148,':'rgba(21,32,53,'}${.4+Math.random()*.3});
+    animation-duration:${10+Math.random()*12}s;animation-delay:${Math.random()*3}s;`;
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),(22+Math.random()*5)*1000);
+}
+setInterval(mkParticle, 700);
+
+/* ─── SCROLL ANIMATIONS ──────────────── */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('vis'),
+        parseInt(e.target.dataset.d||0));
+    }
+  });
+},{threshold:.1});
+
+document.querySelectorAll('.stat-cell,.svc,.tcard,.show-row,.ref-card,.dam-col').forEach((el,i)=>{
+  el.dataset.d = (i%5)*90;
+  io.observe(el);
+});
+
+/* ─── DAM BARS ───────────────────────── */
+const damObs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.querySelectorAll('.dam-fill').forEach((bar,i)=>{
+        setTimeout(()=>{
+          bar.style.height=bar.dataset.h+'px';
+        },i*150+200);
+      });
+      damObs.unobserve(entry.target);
+    }
+  });
+},{threshold:.3});
+damObs.observe(document.getElementById('dam'));
+
+/* ─── KONAMI CODE ────────────────────── */
+const code=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let ki=0;
+document.addEventListener('keydown',e=>{
+  if(e.key===code[ki]){
+    ki++;
+    if(ki===code.length){
+      document.getElementById('konami').classList.add('on');
+      ki=0;
+    }
+  } else { ki=0; }
+});
+
+/* ─── DRONE EASTER EGG ───────────────── */
+/* Click the OKA logo 5x */
+let lc=0, lt;
+document.querySelector('.nav-logo').addEventListener('click',e=>{
+  e.preventDefault(); lc++;
+  clearTimeout(lt);
+  lt=setTimeout(()=>lc=0,700);
+  if(lc>=5){
+    lc=0; flyDrone();
+  }
+});
+function flyDrone(){
+  const d=document.getElementById('drone');
+  const startY=Math.random()*60+20;
+  const endY=Math.random()*40+10;
+  d.style.transition='none';
+  d.style.top=startY+'vh'; d.style.left='-60px';
+  d.style.transform='scaleX(1)';
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      d.style.transition='left 3.5s linear, top 3s ease-in-out';
+      d.style.left='110vw'; d.style.top=endY+'vh';
+    });
+  });
+}
+
+/* ─── REPORT FORM — Netlify AJAX submission ─── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Report download form
+  const rfcForm = document.getElementById('rfc-form-wrap');
+  if (rfcForm) {
+    rfcForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('rfc-submit-btn');
+      btn.innerHTML = '<span>Sending…</span>';
+      btn.style.opacity = '0.7';
+      try {
+        const formData = new FormData(rfcForm);
+        await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: new URLSearchParams(formData).toString() });
+        rfcForm.style.transition = 'opacity .4s';
+        rfcForm.style.opacity = '0';
+        setTimeout(() => {
+          rfcForm.style.display = 'none';
+          const s = document.getElementById('rfc-success');
+          s.style.display = 'block';
+          s.style.opacity = '0';
+          setTimeout(() => { s.style.transition = 'opacity .5s'; s.style.opacity = '1'; }, 50);
+        }, 400);
+      } catch(err) {
+        btn.innerHTML = '<span>Send Me the Report</span><span>→</span>';
+        btn.style.opacity = '1';
+        alert('Something went wrong — please email us at info@ok-as.com');
+      }
+    });
+  }
+
+  // Contact form
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit');
+      btn.textContent = 'Sending…';
+      btn.style.opacity = '0.7';
+      try {
+        const formData = new FormData(contactForm);
+        await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: new URLSearchParams(formData).toString() });
+        // Hide form fields, show success
+        Array.from(contactForm.querySelectorAll('.cf-row, .cf-title, .cf-sub')).forEach(el => el.style.display = 'none');
+        btn.style.display = 'none';
+        const s = document.getElementById('contact-success');
+        s.style.display = 'block';
+      } catch(err) {
+        btn.textContent = 'Send Message →';
+        btn.style.opacity = '1';
+        alert('Something went wrong — please email us directly at info@ok-as.com');
+      }
+    });
+  }
+
+});
+
+/* ─── SECRET TEAM CARD HOVER ─────────── */
+/* Hover a team card for 3s — shows "years of experience" */
+document.querySelectorAll('.tcard').forEach(card=>{
+  let hTimer;
+  const xpMap={'BC':'Brian has coached 100+ C-suite leaders.','BE':'15+ years owning aerospace businesses.','WE':'40+ years across 3 continents.','KT':'Built and optimized heavy industry ops.'};
+  const init=card.querySelector('.tcard-initials');
+  if(!init)return;
+  const key=init.textContent.trim();
+  card.addEventListener('mouseenter',()=>{
+    hTimer=setTimeout(()=>{
+      const bio=card.querySelector('.tcard-bio');
+      if(bio&&xpMap[key]){
+        bio.dataset.orig=bio.textContent;
+        bio.style.transition='opacity .3s';
+        bio.style.opacity='0';
+        setTimeout(()=>{
+          bio.textContent=xpMap[key];
+          bio.style.color='var(--teal)';
+          bio.style.opacity='1';
+        },300);
+      }
+    },2500);
+  });
+  card.addEventListener('mouseleave',()=>{
+    clearTimeout(hTimer);
+    const bio=card.querySelector('.tcard-bio');
+    if(bio&&bio.dataset.orig){
+      bio.style.opacity='0';
+      setTimeout(()=>{
+        bio.textContent=bio.dataset.orig;
+        bio.style.color='';
+        bio.style.opacity='1';
+        delete bio.dataset.orig;
+      },300);
+    }
+  });
+});
+</script>
+</body>
+</html>

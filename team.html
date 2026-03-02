@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — OK Autonomous</title>
+<meta name="description" content="Meet the founding partners of OK Autonomous — four operators with decades of aerospace, manufacturing, and sales leadership building Oklahoma's commercial engine for autonomous systems.">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Team — OK Autonomous">
+<meta property="og:description" content="Four operators with decades of aerospace, manufacturing, and sales leadership.">
+<meta property="og:image" content="images/logo-icon.jpg">
+<meta property="og:url" content="https://www.ok-as.com/team.html">
+<meta property="og:site_name" content="OK Autonomous">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:       #f0f6ff;
+    --white:     #ffffff;
+    --cloud:     #e8f0fb;
+    --ink:       #0e1624;
+    --navy:      #152035;
+    --mid:       #3a4f6e;
+    --muted:     #7a8fa8;
+    --rule:      #d0daea;
+    --teal:      #00b894;
+    --teal-dim:  rgba(0,184,148,0.12);
+    --teal-glow: rgba(0,184,148,0.25);
+  }
+
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background:var(--sky); color:var(--ink);
+    font-family:'Barlow',sans-serif; font-weight:400;
+    overflow-x:hidden;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor:none; }
+  }
+
+  /* ─── CURSOR ─── */
+  #cur  { position:fixed; width:10px; height:10px; background:var(--teal); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:multiply; transition:width .15s,height .15s; }
+  #cur2 { position:fixed; width:32px; height:32px; border:1.5px solid rgba(0,184,148,.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .1s ease; }
+  body.cursor-big #cur  { width:18px; height:18px; }
+  body.cursor-big #cur2 { width:56px; height:56px; }
+
+  /* ─── BG ─── */
+  .dot-grid { position:fixed; inset:0; pointer-events:none; z-index:0; background-image:radial-gradient(circle, rgba(0,100,200,.065) 1px, transparent 1px); background-size:36px 36px; }
+  .horizon-glow { position:fixed; top:-200px; left:-200px; width:800px; height:800px; background:radial-gradient(circle, rgba(0,184,148,.07) 0%, transparent 65%); pointer-events:none; z-index:0; }
+
+  /* ─── PARTICLES ─── */
+  .particle { position:fixed; border-radius:50%; pointer-events:none; z-index:1; opacity:0; animation:pfloat linear infinite; }
+  @keyframes pfloat { 0% { opacity:0; transform:translateY(0) scale(1); } 10% { opacity:.7; } 90% { opacity:.2; } 100% { opacity:0; transform:translateY(-100vh) scale(.4); } }
+
+  /* ─── NAV ─── */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    background:rgba(240,246,255,.88); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--rule);
+    padding:0 52px; height:66px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-logo img { height:34px; width:auto; filter:drop-shadow(0 2px 8px rgba(0,184,148,.2)); transition:filter .3s; }
+  .nav-logo:hover img { filter:drop-shadow(0 2px 16px rgba(0,184,148,.5)); }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; position:relative; padding-bottom:2px; }
+  .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px; background:var(--teal); transition:width .3s; }
+  .nav-links a:hover { color:var(--teal); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-links a.active { color:var(--teal); }
+  .nav-links a.active::after { width:100%; }
+  .nav-cta { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--white); background:var(--teal); padding:10px 22px; text-decoration:none; border-radius:2px; transition:all .2s; box-shadow:0 4px 16px var(--teal-glow); }
+  .nav-cta:hover { background:#00a07f; transform:translateY(-1px); }
+
+  /* ─── MOBILE MENU ─── */
+  .nav-burger {
+    display:none; background:none; border:none; padding:8px;
+    flex-direction:column; gap:5px; cursor:pointer;
+  }
+  .nav-burger span {
+    display:block; width:24px; height:2px; background:var(--navy);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity:0; }
+  .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display:none; position:fixed; top:66px; left:0; right:0; bottom:0;
+    background:rgba(240,246,255,.97); backdrop-filter:blur(20px);
+    z-index:99; flex-direction:column; align-items:center;
+    justify-content:center; gap:32px;
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a {
+    font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:2px;
+    color:var(--navy); text-decoration:none; transition:color .2s;
+  }
+  .mobile-menu a:hover { color:var(--teal); }
+  .mobile-menu .mobile-cta {
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; background:var(--teal); color:var(--white);
+    padding:14px 28px; border-radius:2px; text-decoration:none;
+    margin-top:16px;
+  }
+
+  @media (max-width:768px) {
+    .nav-burger { display:flex; }
+  }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    position:relative; z-index:2;
+    padding:140px 52px 72px;
+    background:var(--white);
+    border-bottom:1px solid var(--rule);
+    overflow:hidden;
+  }
+
+  /* Large background text */
+  .page-hero-bg-text {
+    position:absolute; right:-20px; top:50%; transform:translateY(-50%);
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(120px,18vw,240px);
+    letter-spacing:-4px; color:rgba(0,184,148,.05); pointer-events:none;
+    white-space:nowrap; line-height:1;
+    animation:fadeUp .8s .1s both;
+  }
+
+  .page-hero-inner { max-width:1240px; margin:0 auto; position:relative; z-index:2; }
+
+  .breadcrumb {
+    display:flex; align-items:center; gap:8px; margin-bottom:24px;
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase;
+    opacity:0; animation:fadeUp .7s .15s forwards;
+  }
+  .breadcrumb a { color:var(--teal); text-decoration:none; transition:opacity .2s; }
+  .breadcrumb a:hover { opacity:.7; }
+  .breadcrumb-sep { color:var(--rule); }
+  .breadcrumb-current { color:var(--muted); }
+
+  .page-hero-h1 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(64px,8vw,110px);
+    line-height:.92; letter-spacing:1px; color:var(--navy); margin-bottom:16px;
+    opacity:0; animation:fadeUp .8s .25s forwards;
+  }
+  .page-hero-h1 .teal { color:var(--teal); }
+
+  .page-hero-sub {
+    font-size:19px; line-height:1.7; color:var(--mid); font-weight:300;
+    max-width:620px; margin-bottom:0;
+    opacity:0; animation:fadeUp .8s .4s forwards;
+  }
+
+  /* Stat pills */
+  .page-hero-stats {
+    display:flex; gap:0; margin-top:48px; flex-wrap:wrap;
+    border:1px solid var(--rule); width:fit-content;
+    opacity:0; animation:fadeUp .8s .55s forwards;
+  }
+  .ph-stat {
+    padding:20px 36px; border-right:1px solid var(--rule);
+    transition:background .2s;
+  }
+  .ph-stat:last-child { border-right:none; }
+  .ph-stat:hover { background:var(--sky); }
+  .ph-stat-n { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--teal); line-height:1; }
+  .ph-stat-l { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:3px; }
+
+  /* ─── TEAM BIOS ─── */
+  #team-bios { position:relative; z-index:2; }
+
+  /* Each partner gets a full-width alternating section */
+  .partner-section {
+    padding:96px 52px;
+    border-bottom:1px solid var(--rule);
+    opacity:0; transform:translateY(24px);
+    transition:opacity .7s, transform .7s;
+  }
+  .partner-section.vis { opacity:1; transform:translateY(0); }
+  .partner-section:nth-child(odd)  { background:var(--white); }
+  .partner-section:nth-child(even) { background:var(--sky); }
+
+  .partner-inner {
+    max-width:1240px; margin:0 auto;
+    display:grid; grid-template-columns:340px 1fr; gap:72px; align-items:start;
+  }
+  .partner-section:nth-child(even) .partner-inner { direction:rtl; }
+  .partner-section:nth-child(even) .partner-inner > * { direction:ltr; }
+
+  /* Photo column */
+  .partner-photo-col { position:relative; }
+
+  .partner-photo-wrap {
+    position:relative; border-radius:4px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(21,32,53,.13);
+    aspect-ratio:4/5;
+  }
+  .partner-photo-wrap img {
+    width:100%; height:100%; object-fit:cover; object-position:center 20%;
+    transition:transform .6s ease;
+    display:block;
+  }
+  .partner-photo-wrap:hover img { transform:scale(1.04); }
+
+  /* Teal accent line on photo */
+  .partner-photo-wrap::before {
+    content:''; position:absolute; top:0; left:0;
+    width:4px; height:0; background:var(--teal); z-index:2;
+    transition:height .5s cubic-bezier(.16,1,.3,1);
+  }
+  .partner-section.vis .partner-photo-wrap::before { height:100%; transition-delay:.3s; }
+
+  /* Partner number badge */
+  .partner-num {
+    position:absolute; top:-16px; right:-16px;
+    font-family:'Bebas Neue',sans-serif; font-size:80px;
+    color:var(--teal); opacity:.1; line-height:1;
+    pointer-events:none;
+  }
+
+  /* Contact chip below photo */
+  .partner-contact-chip {
+    margin-top:20px; padding:16px 20px;
+    background:var(--white); border:1px solid var(--rule); border-radius:3px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .pcc-label {
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .pcc-role {
+    font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.5px; color:var(--navy);
+  }
+  .pcc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+  .pcc-tag {
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--teal);
+    background:var(--teal-dim); padding:4px 10px; border-radius:2px;
+    border:1px solid rgba(0,184,148,.18);
+  }
+
+  /* Bio column */
+  .partner-bio-col {}
+
+  .partner-eyebrow {
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:4px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:12px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .partner-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+
+  .partner-name {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,5vw,76px);
+    line-height:.92; letter-spacing:1px; color:var(--navy); margin-bottom:6px;
+  }
+
+  .partner-title {
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); margin-bottom:36px;
+    padding-bottom:28px; border-bottom:1px solid var(--rule);
+  }
+
+  .partner-body {
+    font-size:17px; line-height:1.8; color:var(--mid); font-weight:300; margin-bottom:16px;
+  }
+  .partner-body strong { color:var(--navy); font-weight:500; }
+
+  /* Career timeline */
+  .partner-timeline {
+    margin-top:40px; display:flex; flex-direction:column; gap:0;
+  }
+  .tl-header {
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--muted); margin-bottom:16px;
+  }
+  .tl-item {
+    display:grid; grid-template-columns:28px 1fr; gap:16px;
+    padding:16px 0; border-bottom:1px solid var(--rule);
+    align-items:start;
+  }
+  .tl-item:last-child { border-bottom:none; }
+  .tl-dot {
+    width:8px; height:8px; background:var(--teal); border-radius:50%;
+    margin-top:6px; flex-shrink:0;
+    box-shadow:0 0 0 3px var(--teal-dim);
+  }
+  .tl-content {}
+  .tl-co { font-size:15px; font-weight:500; color:var(--navy); margin-bottom:2px; }
+  .tl-desc { font-size:14px; color:var(--mid); font-weight:300; line-height:1.6; }
+
+  /* Key wins / highlights strip */
+  .partner-highlights {
+    margin-top:36px; padding:24px 28px;
+    background:var(--teal-dim); border-left:3px solid var(--teal);
+    border-radius:0 4px 4px 0;
+  }
+  .ph-label {
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:12px;
+  }
+  .ph-items { display:flex; flex-direction:column; gap:8px; }
+  .ph-item {
+    display:flex; gap:10px; font-size:14px; color:var(--navy); font-weight:400; line-height:1.5;
+  }
+  .ph-item::before { content:'✓'; color:var(--teal); font-weight:700; flex-shrink:0; }
+
+  /* ─── COLLECTIVE CTA ─── */
+  #collective {
+    position:relative; z-index:2;
+    background:var(--navy); padding:96px 52px;
+    overflow:hidden;
+  }
+  .collective-orb {
+    position:absolute; width:700px; height:700px; border-radius:50%;
+    background:radial-gradient(circle, rgba(0,184,148,.09) 0%, transparent 70%);
+    left:-200px; top:50%; transform:translateY(-50%); pointer-events:none;
+  }
+  .collective-inner {
+    max-width:1240px; margin:0 auto; position:relative; z-index:2;
+    display:grid; grid-template-columns:1fr 400px; gap:80px; align-items:center;
+  }
+  .collective-left {}
+  .collective-eyebrow {
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:4px;
+    text-transform:uppercase; color:var(--teal); margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .collective-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+  .collective-h2 {
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,5.5vw,84px);
+    line-height:.93; letter-spacing:1px; color:var(--white); margin-bottom:24px;
+  }
+  .collective-h2 .teal { color:var(--teal); }
+  .collective-body {
+    font-size:17px; line-height:1.75; color:rgba(240,246,255,.6);
+    font-weight:300; max-width:480px;
+  }
+
+  .collective-right {
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .coll-btn-primary {
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    background:var(--teal); color:var(--navy); padding:16px 28px; text-decoration:none;
+    border-radius:2px; text-align:center; transition:all .2s;
+    box-shadow:0 4px 20px rgba(0,184,148,.35);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .coll-btn-primary:hover { background:#00d4aa; transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,184,148,.5); }
+  .coll-btn-secondary {
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+    color:rgba(240,246,255,.5); border:1px solid rgba(240,246,255,.15);
+    padding:14px 28px; text-decoration:none; border-radius:2px; text-align:center;
+    transition:all .2s;
+  }
+  .coll-btn-secondary:hover { color:var(--white); border-color:rgba(240,246,255,.4); }
+
+  /* Contact line */
+  .coll-contact {
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(240,246,255,.25); text-align:center;
+  }
+  .coll-contact a { color:rgba(0,184,148,.7); text-decoration:none; transition:color .2s; }
+  .coll-contact a:hover { color:var(--teal); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background:var(--navy); padding:36px 52px;
+    border-top:1px solid rgba(255,255,255,.06);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
+    position:relative; z-index:2;
+  }
+  .ft-logo { display:flex; flex-direction:column; gap:4px; }
+  .ft-wordmark { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:3px; color:var(--white); }
+  .ft-wordmark span { color:var(--teal); }
+  .ft-tagline { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.3); }
+  .ft-links { display:flex; gap:28px; }
+  .ft-links a { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s; }
+  .ft-links a:hover { color:var(--teal); }
+  .ft-copy { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px; color:rgba(240,246,255,.2); }
+
+  /* ─── CURSOR HIDE ON TOUCH ─── */
+  @media (hover: none) {
+    #cur, #cur2 { display:none !important; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:1024px) {
+    .partner-inner { grid-template-columns:280px 1fr; gap:48px; }
+    .partner-section:nth-child(even) .partner-inner { direction:ltr; }
+    .collective-inner { grid-template-columns:1fr; gap:48px; }
+  }
+  @media (max-width:768px) {
+    nav { padding:0 20px; }
+    .nav-links { display:none; }
+    .nav-burger { display:flex; }
+    .page-hero, .partner-section, #collective { padding-left:20px; padding-right:20px; }
+    .partner-inner { grid-template-columns:1fr; }
+    .partner-photo-wrap { max-width:300px; }
+    .page-hero-stats { flex-direction:column; }
+    .ph-stat { border-right:none; border-bottom:1px solid var(--rule); }
+    .ph-stat:last-child { border-bottom:none; }
+    footer { flex-direction:column; gap:16px; text-align:center; }
+    .ft-links { justify-content:center; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+<div class="dot-grid"></div>
+<div class="horizon-glow"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo-horizontal.png"
+         alt="OK Autonomous">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">Mission</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="team.html" class="active">Team</a></li>
+    <li><a href="index.html#shows">Events</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Partner With Us</a>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#mission" onclick="closeMobile()">Mission</a>
+  <a href="index.html#services" onclick="closeMobile()">Services</a>
+  <a href="team.html" onclick="closeMobile()">Team</a>
+  <a href="index.html#shows" onclick="closeMobile()">Events</a>
+  <a href="index.html#contact" class="mobile-cta" onclick="closeMobile()">Partner With Us</a>
+</div>
+
+<!-- ═══ PAGE HERO ═══ -->
+<div class="page-hero">
+  <div class="page-hero-bg-text">TEAM</div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">OK Autonomous</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Team</span>
+    </div>
+    <h1 class="page-hero-h1">The <span class="teal">People</span><br>Behind the Mission</h1>
+    <p class="page-hero-sub">Four operators with decades of aerospace, manufacturing, and sales leadership — brought together to build Oklahoma's commercial engine for the autonomous systems era.</p>
+    <div class="page-hero-stats">
+      <div class="ph-stat">
+        <div class="ph-stat-n">$1.28B</div>
+        <div class="ph-stat-l">In Contracts Negotiated</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-stat-n">40+</div>
+        <div class="ph-stat-l">Years Aerospace Experience</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-stat-n">100+</div>
+        <div class="ph-stat-l">C-Suite Leaders Coached</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-stat-n">3</div>
+        <div class="ph-stat-l">Continents of Operations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PARTNER BIOS ═══ -->
+<div id="team-bios">
+
+  <!-- ── Brian Carpenter ── -->
+  <div class="partner-section">
+    <div class="partner-inner">
+      <div class="partner-photo-col">
+        <div class="partner-num">01</div>
+        <div class="partner-photo-wrap">
+          <img src="images/headshot-brian-carpenter.jpg"
+               alt="Brian Carpenter">
+        </div>
+        <div class="partner-contact-chip">
+          <span class="pcc-label">Role</span>
+          <span class="pcc-role">Partner — Sales Force Architecture</span>
+          <div class="pcc-tags">
+            <span class="pcc-tag">B2B Sales</span>
+            <span class="pcc-tag">Executive Coaching</span>
+            <span class="pcc-tag">Sales Strategy</span>
+          </div>
+        </div>
+      </div>
+      <div class="partner-bio-col">
+        <div class="partner-eyebrow">Founding Partner</div>
+        <h2 class="partner-name">Brian Carpenter</h2>
+        <div class="partner-title">Sales Force Development & Executive Leadership</div>
+        <p class="partner-body">Brian is the architect of OK Autonomous's commercial engine. He founded and scaled <strong>Didasko Sales and Marketing</strong> in Tulsa in 2009 — building it into a recognized B2B sales organization specializing in tech and manufacturing sectors.</p>
+        <p class="partner-body">Over his career, Brian has <strong>coached over 100 C-suite leaders</strong> on revenue growth, sales process optimization, and team development — spanning companies across the country. His methodology: build the right team, define the right process, then hold it accountable to results.</p>
+        <p class="partner-body">Brian currently serves on the <strong>Executive Vision Council of Oklahoma State University's Spears School of Business Smart Supply Chain Management Program</strong>, and is a member of the <strong>Tulsa Executive Association (TEA)</strong> — connecting his work directly to the innovation ecosystem powering Northeast Oklahoma's growth.</p>
+
+        <div class="partner-highlights">
+          <div class="ph-label">Key Career Highlights</div>
+          <div class="ph-items">
+            <div class="ph-item">Founded and scaled Didasko, a B2B sales organization serving tech and manufacturing clients</div>
+            <div class="ph-item">Coached 100+ C-suite executives on revenue growth through optimized sales processes</div>
+            <div class="ph-item">Executive Vision Council — OSU Spears School Smart Supply Chain Program</div>
+            <div class="ph-item">Member, Tulsa Executive Association (TEA)</div>
+            <div class="ph-item">Built sales forces closing $10M+ in annual deals through targeted outreach and coaching</div>
+          </div>
+        </div>
+
+        <div class="partner-timeline">
+          <div class="tl-header">Career Background</div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Didasko Sales & Marketing</div><div class="tl-desc">Founder & CEO — B2B sales org for tech and manufacturing, Tulsa, OK</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">4D Sales</div><div class="tl-desc">Sales leadership and executive coaching practice</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Dollar Thrifty Automotive Group</div><div class="tl-desc">Sales and business development leadership</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">The SABRE Group</div><div class="tl-desc">Enterprise technology sales</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Hitachi / IBM</div><div class="tl-desc">High-performance sales team leadership</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Brian Emery ── -->
+  <div class="partner-section">
+    <div class="partner-inner">
+      <div class="partner-photo-col">
+        <div class="partner-num">02</div>
+        <div class="partner-photo-wrap">
+          <img src="images/headshot-brian-emery.jpg"
+               alt="Brian Emery">
+        </div>
+        <div class="partner-contact-chip">
+          <span class="pcc-label">Role</span>
+          <span class="pcc-role">Partner — Aerospace & Operations</span>
+          <div class="pcc-tags">
+            <span class="pcc-tag">Aerospace MRO</span>
+            <span class="pcc-tag">CNC Machining</span>
+            <span class="pcc-tag">Supply Chain</span>
+          </div>
+        </div>
+      </div>
+      <div class="partner-bio-col">
+        <div class="partner-eyebrow">Founding Partner</div>
+        <h2 class="partner-name">Brian Emery</h2>
+        <div class="partner-title">Commercial Aerospace, Precision Machining & Manufacturing</div>
+        <p class="partner-body">Brian brings over <strong>15 years of direct ownership and operation</strong> in commercial aerospace, CNC machining, and advanced manufacturing. He has built and run businesses that supply precision components to some of the world's most demanding aerospace programs.</p>
+        <p class="partner-body">His board director roles at aerospace firms exceeding <strong>$100M in annual revenue</strong> gave him deep insight into supply chain strategy, operational efficiency, and what buyers actually need from their manufacturing partners. He knows both sides of the table — and uses that to OKA's advantage.</p>
+        <p class="partner-body">Brian is also an active <strong>investor in tech and manufacturing startups</strong> in Northeast Oklahoma, with a particular focus on companies that can accelerate the region's emergence in autonomous and advanced manufacturing sectors. He is the primary contact for OKA partnerships.</p>
+
+        <div class="partner-highlights">
+          <div class="ph-label">Key Career Highlights</div>
+          <div class="ph-items">
+            <div class="ph-item">Secured multimillion-dollar contracts with Lufthansa, KLM, United Airlines, Boeing, and Bell Helicopter</div>
+            <div class="ph-item">Board director roles at aerospace firms exceeding $100M annual revenue</div>
+            <div class="ph-item">20% YoY revenue growth contribution through supply chain and engineering developments</div>
+            <div class="ph-item">Active investor in tech and manufacturing startups in Northeast Oklahoma</div>
+            <div class="ph-item">Expertise spanning US-based and international supply chain and production operations</div>
+          </div>
+        </div>
+
+        <div class="partner-timeline">
+          <div class="tl-header">Career Background</div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">OK Autonomous</div><div class="tl-desc">Co-Founder & Partner — Primary contact, Tulsa, OK</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Aerospace Manufacturing Companies (Tulsa)</div><div class="tl-desc">Owner/Operator — CNC precision machining and aerospace components</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Board of Directors — Multiple Aerospace Firms</div><div class="tl-desc">Strategic oversight for $100M+ revenue operations</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Tech & Manufacturing Investor</div><div class="tl-desc">Active portfolio in NE Oklahoma innovation ecosystem</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Willard (Bill) Emery ── -->
+  <div class="partner-section">
+    <div class="partner-inner">
+      <div class="partner-photo-col">
+        <div class="partner-num">03</div>
+        <div class="partner-photo-wrap">
+          <img src="images/headshot-bill-emery.jpg"
+               alt="Willard Emery">
+        </div>
+        <div class="partner-contact-chip">
+          <span class="pcc-label">Role</span>
+          <span class="pcc-role">Partner — International Growth</span>
+          <div class="pcc-tags">
+            <span class="pcc-tag">Global Supply Chain</span>
+            <span class="pcc-tag">M&A</span>
+            <span class="pcc-tag">Greenfield Startups</span>
+          </div>
+        </div>
+      </div>
+      <div class="partner-bio-col">
+        <div class="partner-eyebrow">Founding Partner</div>
+        <h2 class="partner-name">Willard Emery</h2>
+        <div class="partner-title">International Commercial Aerospace & Manufacturing</div>
+        <p class="partner-body">With <strong>more than 40 years</strong> owning and operating international commercial aerospace and manufacturing businesses, Willard is OKA's most seasoned voice on what it takes to build, buy, and scale manufacturing organizations that last.</p>
+        <p class="partner-body">He has led <strong>acquisitions and integrations across North America</strong> — building companies in the US, Canada, and Mexico — and negotiated defense and commercial aerospace component deals across Europe and Asia. He's launched greenfield manufacturing startups from the ground up on multiple continents, which means he understands both the beginning of the journey and the institutional gravity of mature operations.</p>
+        <p class="partner-body">Willard's network spans decades of <strong>relationships with global aerospace primes, MRO operators, and defense contractors</strong> — relationships that OKA is uniquely positioned to activate on behalf of Oklahoma manufacturers.</p>
+
+        <div class="partner-highlights">
+          <div class="ph-label">Key Career Highlights</div>
+          <div class="ph-items">
+            <div class="ph-item">40+ years owning and operating international commercial aerospace businesses</div>
+            <div class="ph-item">Acquisitions and integrations across US, Canada, and Mexico</div>
+            <div class="ph-item">Negotiated defense and commercial aerospace component deals across North America, Europe, and Asia</div>
+            <div class="ph-item">Launched greenfield manufacturing startups on multiple continents</div>
+            <div class="ph-item">Deep expertise in global supply chains, contract negotiations, and scaling operations</div>
+          </div>
+        </div>
+
+        <div class="partner-timeline">
+          <div class="tl-header">Global Footprint</div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">North America</div><div class="tl-desc">Acquisitions, integrations, and operations across US, Canada, and Mexico</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Europe</div><div class="tl-desc">Defense and commercial aerospace component negotiations and supplier relationships</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Asia</div><div class="tl-desc">Supply chain development and component sourcing for aerospace programs</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Greenfield Startups</div><div class="tl-desc">Built manufacturing operations from the ground up across multiple regions</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Kevin Toews ── -->
+  <div class="partner-section">
+    <div class="partner-inner">
+      <div class="partner-photo-col">
+        <div class="partner-num">04</div>
+        <div class="partner-photo-wrap">
+          <img src="images/headshot-kevin-toews.jpg"
+               alt="Kevin Toews">
+        </div>
+        <div class="partner-contact-chip">
+          <span class="pcc-label">Role</span>
+          <span class="pcc-role">Partner — Industrial & Process Ops</span>
+          <div class="pcc-tags">
+            <span class="pcc-tag">Process Optimization</span>
+            <span class="pcc-tag">Heavy Industry</span>
+            <span class="pcc-tag">Market Expansion</span>
+          </div>
+        </div>
+      </div>
+      <div class="partner-bio-col">
+        <div class="partner-eyebrow">Founding Partner</div>
+        <h2 class="partner-name">Kevin Toews</h2>
+        <div class="partner-title">Industrial Operations, Process Optimization & Market Expansion</div>
+        <p class="partner-body">Kevin is an owner-operator with deep roots in <strong>industrial and manufacturing businesses</strong>. His work spans process optimization, equipment integration, and scaling operations for clients entering new and technically demanding markets — including autonomous technology.</p>
+        <p class="partner-body">He brings a <strong>pragmatic, operational lens</strong> to OKA's work — understanding not just what buyers want to purchase, but what it actually takes for a manufacturer to be ready to deliver it. That operational credibility matters enormously in conversations with sophisticated procurement teams.</p>
+        <p class="partner-body">Kevin is also an active investor in <strong>technology and real estate</strong> in the Tulsa region, with a track record of identifying high-growth opportunities and helping businesses position themselves to capture them. His approach is direct, data-informed, and grounded in years of running real operations.</p>
+
+        <div class="partner-highlights">
+          <div class="ph-label">Key Career Highlights</div>
+          <div class="ph-items">
+            <div class="ph-item">Owner-operator across multiple industrial and manufacturing businesses</div>
+            <div class="ph-item">Process optimization and equipment integration for heavy industry clients</div>
+            <div class="ph-item">Supported rapid scaling for clients entering autonomous technology markets</div>
+            <div class="ph-item">Active tech and real estate investor in the Tulsa innovation ecosystem</div>
+            <div class="ph-item">Focus on market expansion in high-growth industrial sectors</div>
+          </div>
+        </div>
+
+        <div class="partner-timeline">
+          <div class="tl-header">Areas of Expertise</div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Industrial Manufacturing</div><div class="tl-desc">Owner and operator of multiple industrial businesses focused on process efficiency</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Equipment Integration</div><div class="tl-desc">Technology-driven equipment upgrades to support scaling and new market entry</div></div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Technology Investments</div><div class="tl-desc">Active portfolio in Tulsa-area tech and real estate ventures</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end team-bios -->
+
+<!-- ═══ COLLECTIVE CTA ═══ -->
+<section id="collective">
+  <div class="collective-orb"></div>
+  <div class="collective-inner">
+    <div class="collective-left">
+      <div class="collective-eyebrow">Work With Us</div>
+      <h2 class="collective-h2">Ready to Put This<br>Team to Work for<br><span class="teal">Your Business?</span></h2>
+      <p class="collective-body">Whether you're a drone OEM looking for Oklahoma supply chain access, a manufacturer ready to break into autonomous systems markets, or a partner in Oklahoma's growing aerospace ecosystem — this team has the network, the experience, and the drive to make it happen.</p>
+    </div>
+    <div class="collective-right">
+      <a href="index.html#contact" class="coll-btn-primary">Partner With Us →</a>
+      <a href="index.html#report" class="coll-btn-secondary">Get the 2026 UAS Report</a>
+      <div class="coll-contact">Or email us directly at <a href="mailto:info@ok-as.com">info@ok-as.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-logo">
+    <div class="ft-wordmark"><span>OK</span> AUTONOMOUS</div>
+    <div class="ft-tagline">Oklahoma's commercial engine for autonomous systems</div>
+  </div>
+  <div class="ft-links">
+    <a href="index.html#mission">Mission</a>
+    <a href="index.html#services">Services</a>
+    <a href="team.html">Team</a>
+    <a href="index.html#shows">Events</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK 🛸</div>
+</footer>
+
+<script>
+/* ─── MOBILE MENU ─── */
+const burger=document.getElementById('burger');
+const mobileMenu=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile(){
+  burger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ─── CURSOR ─── */
+const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function raf(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(raf);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-big'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-big'));
+});
+
+/* ─── PARTICLES ─── */
+function mkP(){
+  const p=document.createElement('div'); p.className='particle';
+  const sz=Math.random()*3+1;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-10px;background:${Math.random()>.5?'rgba(0,184,148,':'rgba(21,32,53,'}${.3+Math.random()*.3});animation-duration:${10+Math.random()*12}s;animation-delay:${Math.random()*3}s;`;
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),(22+Math.random()*5)*1000);
+}
+setInterval(mkP,900);
+
+/* ─── SCROLL REVEAL ─── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
+},{threshold:.08});
+document.querySelectorAll('.partner-section').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
