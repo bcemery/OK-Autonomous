@@ -7,6 +7,14 @@
 <meta name="description" content="OK Autonomous is Tulsa's dedicated commercial representative for the autonomous systems era — sourcing contracts, facilitating buyer introductions, and translating Oklahoma manufacturing strengths into revenue.">
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P7CCQ2PM8Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P7CCQ2PM8Q');
+</script>
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="OK Autonomous — Oklahoma's Autonomous Systems Sales Force">
@@ -187,7 +195,7 @@
   }
 
   .hero-img-wrap {
-    position:relative; width:100%; height:62vh; min-height:300px; overflow:hidden;
+    position:relative; width:100%; height:52vh; min-height:260px; overflow:hidden;
   }
   .hero-img-wrap img {
     width:100%; height:100%; object-fit:cover; object-position:center 40%;
@@ -240,8 +248,8 @@
   }
 
   .hero-text-block {
-    position:relative; z-index:3; margin-top:-120px;
-    padding: 0 52px 64px;
+    position:relative; z-index:3; margin-top:-180px;
+    padding: 0 52px 40px;
     display:flex; flex-direction:column; gap:0;
   }
 
@@ -266,7 +274,7 @@
     font-family:'Bebas Neue', sans-serif;
     font-size:clamp(36px,4.5vw,64px);
     line-height:1; letter-spacing:1px; color:var(--mid);
-    margin-bottom:32px;
+    margin-bottom:24px;
     opacity:0; animation:fadeUp .9s .5s forwards;
   }
 
@@ -824,6 +832,13 @@
     color:rgba(240,246,255,.2);
   }
 
+  /* ─── CURSOR INVERSION ON DARK SECTIONS ───── */
+  #pipeline #cur, #report #cur, footer #cur, #pipeline ~ #cur, #report ~ #cur {
+    /* handled via JS */
+  }
+  body.cursor-light #cur  { background:var(--white); mix-blend-mode:difference; }
+  body.cursor-light #cur2 { border-color:rgba(255,255,255,.55); }
+
   /* ─── CURSOR HIDE ON TOUCH ─────────────────── */
   @media (hover: none) {
     #cur, #cur2 { display:none !important; }
@@ -890,8 +905,8 @@
     .nav-cta { display:none; }
     .nav-burger { display:flex; }
     #hero, section { padding-left:20px; padding-right:20px; }
-    .hero-img-wrap { height:45vh; min-height:220px; }
-    .hero-text-block { padding:0 20px 48px; margin-top:-80px; }
+    .hero-img-wrap { height:40vh; min-height:200px; }
+    .hero-text-block { padding:0 20px 40px; margin-top:-100px; }
     .hero-h1 { font-size:clamp(48px,12vw,72px); }
     .hero-sub { font-size:clamp(24px,6vw,36px); }
     .stats-strip { grid-template-columns:repeat(2,1fr); }
@@ -910,6 +925,7 @@
     .show-focus { display:none; }
     .report-inner { grid-template-columns:1fr; gap:40px; }
     .report-form-card { padding:28px 20px; }
+    #how-it-works div[style*='grid-template-columns:repeat(3'] { grid-template-columns:1fr !important; }
     .dam-bars { height:160px; }
     .dam-rev { font-size:16px; top:-24px; }
     .dam-yr { font-size:8px; }
@@ -957,7 +973,7 @@
     <li><a href="team.html">Team</a></li>
     <li><a href="#shows">Events</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Partner With Us</a>
+  <a href="#contact" class="nav-cta">Book a Call</a>
   <button class="nav-burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -967,7 +983,7 @@
   <a href="#services" onclick="closeMobile()">Services</a>
   <a href="team.html">Team</a>
   <a href="#shows" onclick="closeMobile()">Events</a>
-  <a href="#contact" class="mobile-cta" onclick="closeMobile()">Partner With Us</a>
+  <a href="#contact" class="mobile-cta" onclick="closeMobile()">Book a Call</a>
 </div>
 
 <!-- HERO -->
@@ -994,8 +1010,8 @@
         The <strong>dedicated sales force</strong> connecting drone OEMs and autonomous systems buyers with Oklahoma's proven manufacturing base — bridging local capability to national and international markets.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-teal">Partner With Us</a>
-        <a href="#mission" class="btn-ghost">Our Mission</a>
+        <a href="#contact" class="btn-teal">Book a 20-Minute Intro Call</a>
+        <a href="#report" class="btn-ghost">Download the Report</a>
       </div>
     </div>
   </div>
@@ -1039,7 +1055,7 @@
 <section id="mission">
   <div class="mission-grid">
     <div class="mission-img-wrap reveal">
-      <img src="images/mission-manufacturing.png" alt="Oklahoma manufacturing and autonomous systems">
+      <img src="images/mission-manufacturing.jpg" alt="Oklahoma manufacturing and autonomous systems">
       <div class="img-badge">
         <div class="img-badge-dot"></div>
         <span class="img-badge-text">Active · Tulsa, Oklahoma</span>
@@ -1115,7 +1131,7 @@
         <p style="font-size:16px;line-height:1.75;color:var(--mid);max-width:380px;font-weight:300;font-style:italic;">
           "As entrepreneurs we were trained that we eat what we kill. We de-risk through effort and attitude. Our careers and experiences are performance based — not theoretical, but practical."
         </p>
-        <a href="team.html" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--teal);color:var(--white);padding:12px 22px;text-decoration:none;border-radius:2px;transition:all .2s;box-shadow:0 4px 16px var(--teal-glow);width:fit-content;">Meet the Full Team →</a>
+        <a href="team.html" class="btn-teal" style="width:fit-content;">Meet the Full Team →</a>
       </div>
     </div>
     <div class="team-grid">
@@ -1176,6 +1192,35 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" style="background:var(--white);">
+  <div style="max-width:1240px;margin:0 auto;">
+    <div class="sec-eyebrow" style="text-align:center;justify-content:center;">How It Works</div>
+    <h2 class="sec-h2" style="text-align:center;">Assess → Pursue → Win</h2>
+    <p class="sec-body" style="text-align:center;max-width:620px;margin:0 auto 64px;">A simple, repeatable process that turns Oklahoma manufacturing capability into signed contracts.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--rule);border:1px solid var(--rule);">
+      <div style="background:var(--white);padding:48px 36px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">01</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Assess</div>
+        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We audit your capabilities, certifications, and market readiness — identifying exactly where you fit in the autonomous supply chain.</p>
+      </div>
+      <div style="background:var(--white);padding:48px 36px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">02</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Pursue</div>
+        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We source qualified opportunities, facilitate buyer introductions, and position your facility to win against national competition.</p>
+      </div>
+      <div style="background:var(--white);padding:48px 36px;text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">03</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Win</div>
+        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We support proposals, negotiate contracts, and close deals — delivering revenue, not reports.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="#contact" class="btn-teal">Book a 20-Minute Intro Call →</a>
     </div>
   </div>
 </section>
@@ -1502,6 +1547,19 @@ document.querySelectorAll('a,button,.tcard').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-big'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-big'));
 });
+
+/* ─── CURSOR INVERSION ON DARK SECTIONS ── */
+const darkSections = document.querySelectorAll('#pipeline, #report, footer');
+function checkCursorZone(){
+  let inDark = false;
+  darkSections.forEach(sec => {
+    const r = sec.getBoundingClientRect();
+    if(my >= r.top && my <= r.bottom) inDark = true;
+  });
+  document.body.classList.toggle('cursor-light', inDark);
+}
+document.addEventListener('mousemove', checkCursorZone);
+window.addEventListener('scroll', checkCursorZone, {passive:true});
 
 /* ─── PARTICLES ──────────────────────── */
 function mkParticle(){

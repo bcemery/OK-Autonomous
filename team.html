@@ -7,6 +7,14 @@
 <meta name="description" content="Meet the founding partners of OK Autonomous — four operators with decades of aerospace, manufacturing, and sales leadership building Oklahoma's commercial engine for autonomous systems.">
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P7CCQ2PM8Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P7CCQ2PM8Q');
+</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Team — OK Autonomous">
 <meta property="og:description" content="Four operators with decades of aerospace, manufacturing, and sales leadership.">
@@ -399,6 +407,10 @@
   .ft-links a:hover { color:var(--teal); }
   .ft-copy { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px; color:rgba(240,246,255,.2); }
 
+  /* ─── CURSOR INVERSION ON DARK SECTIONS ───── */
+  body.cursor-light #cur  { background:var(--white); mix-blend-mode:difference; }
+  body.cursor-light #cur2 { border-color:rgba(255,255,255,.55); }
+
   /* ─── CURSOR HIDE ON TOUCH ─── */
   @media (hover: none) {
     #cur, #cur2 { display:none !important; }
@@ -454,7 +466,7 @@
     <li><a href="team.html" class="active">Team</a></li>
     <li><a href="index.html#shows">Events</a></li>
   </ul>
-  <a href="index.html#contact" class="nav-cta">Partner With Us</a>
+  <a href="index.html#contact" class="nav-cta">Book a Call</a>
   <button class="nav-burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -464,7 +476,7 @@
   <a href="index.html#services" onclick="closeMobile()">Services</a>
   <a href="team.html" onclick="closeMobile()">Team</a>
   <a href="index.html#shows" onclick="closeMobile()">Events</a>
-  <a href="index.html#contact" class="mobile-cta" onclick="closeMobile()">Partner With Us</a>
+  <a href="index.html#contact" class="mobile-cta" onclick="closeMobile()">Book a Call</a>
 </div>
 
 <!-- ═══ PAGE HERO ═══ -->
@@ -755,6 +767,19 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-big'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-big'));
 });
+
+/* ─── CURSOR INVERSION ON DARK SECTIONS ── */
+const darkSections = document.querySelectorAll('#collective, footer');
+function checkCursorZone(){
+  let inDark = false;
+  darkSections.forEach(sec => {
+    const r = sec.getBoundingClientRect();
+    if(my >= r.top && my <= r.bottom) inDark = true;
+  });
+  document.body.classList.toggle('cursor-light', inDark);
+}
+document.addEventListener('mousemove', checkCursorZone);
+window.addEventListener('scroll', checkCursorZone, {passive:true});
 
 /* ─── PARTICLES ─── */
 function mkP(){
