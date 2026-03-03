@@ -370,17 +370,31 @@
   .coll-contact a:hover { color:var(--teal); }
 
   /* ─── FOOTER ─── */
+  /* ─── BACK TO TOP ─── */
+  .back-to-top {
+    position:fixed; bottom:32px; right:32px; z-index:98;
+    width:48px; height:48px; border-radius:50%;
+    background:var(--teal); border:none;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 20px rgba(0,184,148,.35);
+    cursor:pointer; opacity:0; pointer-events:none;
+    transition:opacity .3s, transform .3s;
+  }
+  .back-to-top.show { opacity:1; pointer-events:all; }
+  .back-to-top:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,184,148,.45); }
+  .back-to-top svg { width:20px; height:20px; fill:none; stroke:var(--white); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
   footer {
     background:var(--navy); padding:36px 52px;
     border-top:1px solid rgba(255,255,255,.06);
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
-    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; flex-wrap:wrap; gap:20px;
+    position:relative; z-index:2; text-align:center;
   }
-  .ft-logo { display:flex; flex-direction:column; gap:4px; }
+  .ft-logo { display:flex; flex-direction:column; gap:4px; align-items:center; }
   .ft-wordmark { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:3px; color:var(--white); }
   .ft-wordmark span { color:var(--teal); }
   .ft-tagline { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.3); }
-  .ft-links { display:flex; gap:28px; }
+  .ft-links { display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
   .ft-links a { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s; }
   .ft-links a:hover { color:var(--teal); }
   .ft-copy { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px; color:rgba(240,246,255,.2); }
@@ -410,8 +424,9 @@
     .page-hero-stats { flex-direction:column; }
     .ph-stat { border-right:none; border-bottom:1px solid var(--rule); }
     .ph-stat:last-child { border-bottom:none; }
-    footer { flex-direction:column; gap:16px; text-align:center; }
-    .ft-links { justify-content:center; }
+    footer { padding:32px 20px; gap:16px; }
+    .ft-links { gap:16px; }
+    .back-to-top { bottom:20px; right:20px; width:44px; height:44px; }
   }
 </style>
 </head>
@@ -421,6 +436,11 @@
 <div id="cur2"></div>
 <div class="dot-grid"></div>
 <div class="horizon-glow"></div>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
 
 <!-- ═══ NAV ═══ -->
 <nav>
@@ -710,7 +730,7 @@
     <a href="index.html#shows">Events</a>
     <a href="index.html#contact">Contact</a>
   </div>
-  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK 🛸</div>
+  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
 <script>
@@ -751,6 +771,12 @@ const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
 },{threshold:.08});
 document.querySelectorAll('.partner-section').forEach(el=>io.observe(el));
+
+/* ─── BACK TO TOP ─── */
+const btt=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{
+  btt.classList.toggle('show', window.scrollY > 600);
+},{ passive:true });
 </script>
 </body>
 </html>

@@ -55,19 +55,16 @@
   body.cursor-big #cur2 { width:56px; height:56px; }
 
   /* ─── ATMOSPHERIC BG ──────────────────────────── */
-  /* Subtle dot grid */
   .dot-grid {
     position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image: radial-gradient(circle, rgba(0,100,200,.065) 1px, transparent 1px);
     background-size: 36px 36px;
   }
-  /* Top left horizon glow */
   .horizon-glow {
     position:fixed; top:-200px; left:-200px; width:800px; height:800px;
     background: radial-gradient(circle, rgba(0,184,148,.07) 0%, transparent 65%);
     pointer-events:none; z-index:0;
   }
-  /* Bottom right glow */
   .horizon-glow-2 {
     position:fixed; bottom:-300px; right:-200px; width:900px; height:900px;
     background: radial-gradient(circle, rgba(21,32,53,.06) 0%, transparent 65%);
@@ -95,6 +92,11 @@
     padding: 0 52px;
     height: 66px;
     display:flex; align-items:center; justify-content:space-between;
+    transition: background .3s, box-shadow .3s;
+  }
+  nav.scrolled {
+    background: rgba(240,246,255,.96);
+    box-shadow: 0 2px 20px rgba(21,32,53,.08);
   }
 
   .nav-logo {
@@ -164,18 +166,31 @@
     .nav-burger { display:flex; }
   }
 
+  /* ─── BACK TO TOP ───────────────────────────── */
+  .back-to-top {
+    position:fixed; bottom:32px; right:32px; z-index:98;
+    width:48px; height:48px; border-radius:50%;
+    background:var(--teal); border:none;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 20px rgba(0,184,148,.35);
+    cursor:pointer; opacity:0; pointer-events:none;
+    transition:opacity .3s, transform .3s;
+  }
+  .back-to-top.show { opacity:1; pointer-events:all; }
+  .back-to-top:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,184,148,.45); }
+  .back-to-top svg { width:20px; height:20px; fill:none; stroke:var(--white); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
   /* ─── HERO ─────────────────────────────────────── */
   #hero {
     position:relative; min-height:100vh; padding-top:66px;
     display:flex; flex-direction:column; overflow:hidden; z-index:2;
   }
 
-  /* big hero image */
   .hero-img-wrap {
-    position:relative; width:100%; height:62vh; overflow:hidden;
+    position:relative; width:100%; height:62vh; min-height:300px; overflow:hidden;
   }
   .hero-img-wrap img {
-    width:100%; height:100%; object-fit:cover; object-position:center 60%;
+    width:100%; height:100%; object-fit:cover; object-position:center 40%;
     filter: brightness(.88) saturate(1.1);
     transform:scale(1.04);
     animation: hero-zoom 18s ease-in-out infinite alternate;
@@ -185,7 +200,6 @@
     to   { transform:scale(1.10) translateY(-10px); }
   }
 
-  /* overlay on hero image */
   .hero-img-overlay {
     position:absolute; inset:0;
     background: linear-gradient(
@@ -197,7 +211,6 @@
     );
   }
 
-  /* Radar rings on hero image */
   .radar-wrap {
     position:absolute; bottom:-60px; right:8%;
     width:320px; height:320px; pointer-events:none;
@@ -226,7 +239,6 @@
     30%,70% { opacity:1; transform:scale(1); }
   }
 
-  /* Hero text block — sits below image, over fade */
   .hero-text-block {
     position:relative; z-index:3; margin-top:-120px;
     padding: 0 52px 64px;
@@ -348,7 +360,6 @@
   }
   .mission-img-wrap:hover img { transform:scale(1.03); }
 
-  /* floating badge on image */
   .img-badge {
     position:absolute; bottom:24px; left:24px;
     background:rgba(255,255,255,.9);
@@ -369,7 +380,6 @@
   }
   .mission-text p strong { color:var(--navy); font-weight:500; }
 
-  /* dam analogy callout */
   .dam-callout {
     margin-top:32px; padding:20px 24px;
     border-left:3px solid var(--teal);
@@ -456,7 +466,6 @@
   }
   .tcard:hover .tcard-img img { transform:scale(1.05); }
 
-  /* Initials fallback — only visible when photo fails to load */
   .tcard-initials {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-family:'Bebas Neue', sans-serif; font-size:64px; color:var(--teal); opacity:.18;
@@ -481,7 +490,7 @@
     color:var(--muted); line-height:1.7;
   }
 
-  /* ─── PIPELINE / DAM ─────────────────────────── */
+  /* ─── PIPELINE / TAM ────────────────────────── */
   #pipeline { background:var(--navy); }
 
   .pipeline-inner { max-width:1240px; margin:0 auto; }
@@ -497,7 +506,7 @@
   .dam-col {
     display:flex; flex-direction:column; align-items:center;
     justify-content:flex-end; position:relative;
-    border-right:1px solid rgba(255,255,255,.06); padding:0 12px 28px;
+    border-right:1px solid rgba(255,255,255,.06); padding:0 8px 28px;
     opacity:0; transform:translateY(16px);
     transition:opacity .5s,transform .5s;
   }
@@ -505,22 +514,21 @@
   .dam-col.vis { opacity:1; transform:translateY(0); }
 
   .dam-fill {
-    width:100%; background:linear-gradient(to top, var(--teal), rgba(0,184,148,.25));
+    background:linear-gradient(to top, var(--teal), rgba(0,184,148,.25));
     border-radius:2px 2px 0 0;
-    width:60%; margin:0 auto; min-width:40px;
+    width:60%; margin:0 auto; min-width:36px;
     transition:height 1.2s cubic-bezier(.16,1,.3,1);
     height:0;
   }
-  .dam-fill.go { /* heights set by JS */ }
 
   .dam-yr {
     position:absolute; bottom:4px;
-    font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
+    font-family:'Space Mono', monospace; font-size:9px; letter-spacing:1px;
     color:rgba(240,246,255,.4); text-transform:uppercase;
   }
   .dam-rev {
     position:absolute; top:-28px;
-    font-family:'Bebas Neue', sans-serif; font-size:22px; color:var(--teal);
+    font-family:'Bebas Neue', sans-serif; font-size:20px; color:var(--teal);
     white-space:nowrap;
   }
 
@@ -793,10 +801,10 @@
   /* ─── FOOTER ─────────────────────────────────── */
   footer {
     background:var(--navy); padding:40px 52px;
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;
-    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:20px;
+    position:relative; z-index:2; text-align:center; flex-direction:column;
   }
-  .ft-logo { display:flex; flex-direction:column; gap:4px; }
+  .ft-logo { display:flex; flex-direction:column; gap:4px; align-items:center; }
   .ft-wordmark {
     font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:3px; color:var(--white);
   }
@@ -805,7 +813,7 @@
     font-family:'Space Mono', monospace; font-size:9px; letter-spacing:2px;
     text-transform:uppercase; color:rgba(240,246,255,.3);
   }
-  .ft-links { display:flex; gap:28px; }
+  .ft-links { display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
   .ft-links a {
     font-family:'Space Mono', monospace; font-size:10px; letter-spacing:2px;
     text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s;
@@ -822,7 +830,6 @@
   }
 
   /* ─── EASTER EGGS ────────────────────────────── */
-  /* Konami overlay */
   #konami {
     position:fixed; inset:0; background:rgba(14,22,36,.97); z-index:10000;
     display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;
@@ -850,11 +857,19 @@
   }
   .k-close:hover { background:var(--teal); color:var(--navy); }
 
-  /* Flying drone */
   #drone {
     position:fixed; font-size:36px; z-index:9990; pointer-events:none;
     top:50%; left:-60px;
     filter:drop-shadow(0 0 10px rgba(0,184,148,.7));
+  }
+
+  /* ─── SCROLL REVEAL ─────────────────────────── */
+  .reveal {
+    opacity:0; transform:translateY(24px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.vis {
+    opacity:1; transform:translateY(0);
   }
 
   /* ─── ANIMATIONS ──────────────────────────────── */
@@ -875,19 +890,35 @@
     .nav-cta { display:none; }
     .nav-burger { display:flex; }
     #hero, section { padding-left:20px; padding-right:20px; }
-    .hero-text-block { padding:0 20px 48px; }
+    .hero-img-wrap { height:45vh; min-height:220px; }
+    .hero-text-block { padding:0 20px 48px; margin-top:-80px; }
+    .hero-h1 { font-size:clamp(48px,12vw,72px); }
+    .hero-sub { font-size:clamp(24px,6vw,36px); }
     .stats-strip { grid-template-columns:repeat(2,1fr); }
     .services-grid { grid-template-columns:1fr; }
-    .team-grid { grid-template-columns:1fr; }
+    .svc { padding:28px 24px; }
+    .svc-text { font-size:14px; margin-bottom:16px; }
+    .team-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    .tcard-img { aspect-ratio:1/1; }
+    .tcard-body { padding:14px 14px 18px; }
+    .tcard-name { font-size:18px; }
+    .tcard-bio { font-size:12px; line-height:1.6; margin-bottom:8px;
+      display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .tcard-prev { font-size:8px; }
     .ref-grid { grid-template-columns:1fr; }
     .show-row { grid-template-columns:80px 1fr; }
     .show-focus { display:none; }
     .report-inner { grid-template-columns:1fr; gap:40px; }
     .report-form-card { padding:28px 20px; }
-    footer { flex-direction:column; gap:16px; text-align:center; }
-    .ft-links { justify-content:center; }
-    .partner-strip { padding:16px 20px; }
     .dam-bars { height:160px; }
+    .dam-rev { font-size:16px; top:-24px; }
+    .dam-yr { font-size:8px; }
+    footer { padding:32px 20px; gap:16px; }
+    .ft-links { gap:16px; }
+    .partner-strip { padding:16px 20px; flex-wrap:wrap; gap:12px; }
+    .ps-list { gap:16px; }
+    .back-to-top { bottom:20px; right:20px; width:44px; height:44px; }
+    .contact-grid { gap:40px; }
   }
 </style>
 </head>
@@ -905,16 +936,20 @@
 <!-- Easter eggs -->
 <div id="konami">
   <div class="k-title">DRONE CAPITAL<br>OF THE WORLD</div>
-  <div class="k-sub">Oklahoma. The flood is coming. 🌊</div>
+  <div class="k-sub">Oklahoma. The flood is coming.</div>
   <button class="k-close" onclick="document.getElementById('konami').classList.remove('on')">CLOSE TRANSMISSION</button>
 </div>
-<div id="drone">🚁</div>
+<div id="drone"></div>
 
-<!-- ═══ NAV ═══ -->
-<nav>
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- NAV -->
+<nav id="mainNav">
   <a href="#hero" class="nav-logo">
-    <img src="images/logo-horizontal.png"
-         alt="OK Autonomous">
+    <img src="images/logo-horizontal.png" alt="OK Autonomous">
   </a>
   <ul class="nav-links">
     <li><a href="#mission">Mission</a></li>
@@ -935,15 +970,11 @@
   <a href="#contact" class="mobile-cta" onclick="closeMobile()">Partner With Us</a>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <div id="hero">
   <div class="hero-img-wrap">
-    <!-- Hero image 1: drones over Tulsa skyline -->
-    <img
-      src="images/hero-tulsa-drones.png"
-      alt="Autonomous air vehicles over Tulsa skyline">
+    <img src="images/hero-tulsa-drones.png" alt="Autonomous air vehicles over Tulsa skyline">
     <div class="hero-img-overlay"></div>
-    <!-- Radar animation -->
     <div class="radar-wrap">
       <div class="r-ring"></div>
       <div class="r-ring"></div>
@@ -970,7 +1001,7 @@
   </div>
 </div>
 
-<!-- ═══ STATS ═══ -->
+<!-- STATS -->
 <div class="stats-strip" id="stats">
   <div class="stat-cell">
     <div class="stat-n">$1.28<span style="font-size:32px">B</span></div>
@@ -990,7 +1021,7 @@
   </div>
 </div>
 
-<!-- ═══ PARTNER STRIP ═══ -->
+<!-- PARTNER STRIP -->
 <div class="partner-strip">
   <span class="ps-label">Backed By</span>
   <div class="ps-rule"></div>
@@ -1004,22 +1035,18 @@
   </div>
 </div>
 
-<!-- ═══ MISSION ═══ -->
+<!-- MISSION -->
 <section id="mission">
   <div class="mission-grid">
-
-    <!-- Image: second hero photo from homepage -->
-    <div class="mission-img-wrap">
-      <img
-        src="images/mission-manufacturing.png"
-        alt="Oklahoma manufacturing and autonomous systems">
+    <div class="mission-img-wrap reveal">
+      <img src="images/mission-manufacturing.png" alt="Oklahoma manufacturing and autonomous systems">
       <div class="img-badge">
         <div class="img-badge-dot"></div>
         <span class="img-badge-text">Active · Tulsa, Oklahoma</span>
       </div>
     </div>
 
-    <div class="mission-text">
+    <div class="mission-text reveal">
       <div class="sec-eyebrow">Our Mission</div>
       <h2 class="sec-h2">Built to Win<br>Contracts for<br>Oklahoma</h2>
       <p>OK Autonomous is Tulsa's dedicated commercial representative for the autonomous systems era. We serve as the <strong>shared sales force</strong> for Oklahoma's small and midsized manufacturers — sourcing qualified opportunities, facilitating buyer introductions, and translating manufacturing strengths into revenue.</p>
@@ -1029,11 +1056,10 @@
         <p>"A patient investment in sales and marketing will first produce a few drips, then a light trickle — followed by a flood. If the groundwork isn't in place, the flood will occur and NE Oklahoma manufacturers will miss the rewards."</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ SERVICES ═══ -->
+<!-- SERVICES -->
 <section id="services">
   <div class="services-inner">
     <div class="sec-eyebrow">What We Do</div>
@@ -1042,7 +1068,6 @@
     <div class="services-grid">
       <div class="svc">
         <div class="svc-num">01</div>
-        <span class="svc-icon">🎯</span>
         <h3 class="svc-title">Market Access & Revenue</h3>
         <p class="svc-text">We open doors that Oklahoma manufacturers couldn't access alone. OEM introductions, defense prime relationships, and commercial drone buyer engagements — sourced, screened, and facilitated into signed contracts.</p>
         <div class="svc-tags">
@@ -1054,7 +1079,6 @@
       </div>
       <div class="svc">
         <div class="svc-num">02</div>
-        <span class="svc-icon">🔍</span>
         <h3 class="svc-title">Opportunity Capture</h3>
         <p class="svc-text">We screen every pursuit for fit, readiness, and win probability. We advise on certifications (AS9100, ITAR), competitive positioning, and proposal structure so manufacturers invest effort where it counts.</p>
         <div class="svc-tags">
@@ -1066,7 +1090,6 @@
       </div>
       <div class="svc">
         <div class="svc-num">03</div>
-        <span class="svc-icon">📡</span>
         <h3 class="svc-title">Capability Translation</h3>
         <p class="svc-text">Manufacturing capability means nothing if buyers can't understand it. We develop buyer-relevant value propositions and capability profiles that communicate Oklahoma manufacturing in language that closes deals.</p>
         <div class="svc-tags">
@@ -1080,7 +1103,7 @@
   </div>
 </section>
 
-<!-- ═══ TEAM ═══ -->
+<!-- TEAM -->
 <section id="team">
   <div class="team-inner">
     <div class="team-header">
@@ -1100,8 +1123,7 @@
       <!-- Brian Carpenter -->
       <div class="tcard">
         <div class="tcard-img">
-          <img src="images/headshot-brian-carpenter.jpg"
-               alt="Brian Carpenter">
+          <img src="images/headshot-brian-carpenter.jpg" alt="Brian Carpenter">
           <div class="tcard-initials">BC</div>
         </div>
         <div class="tcard-body">
@@ -1115,8 +1137,7 @@
       <!-- Brian Emery -->
       <div class="tcard">
         <div class="tcard-img">
-          <img src="images/headshot-brian-emery.jpg"
-               alt="Brian Emery">
+          <img src="images/headshot-brian-emery.jpg" alt="Brian Emery">
           <div class="tcard-initials">BE</div>
         </div>
         <div class="tcard-body">
@@ -1130,8 +1151,7 @@
       <!-- Bill Emery -->
       <div class="tcard">
         <div class="tcard-img">
-          <img src="images/headshot-bill-emery.jpg"
-               alt="Willard Emery">
+          <img src="images/headshot-bill-emery.jpg" alt="Willard Emery">
           <div class="tcard-initials">WE</div>
         </div>
         <div class="tcard-body">
@@ -1145,8 +1165,7 @@
       <!-- Kevin Toews -->
       <div class="tcard">
         <div class="tcard-img">
-          <img src="images/headshot-kevin-toews.jpg"
-               alt="Kevin Toews">
+          <img src="images/headshot-kevin-toews.jpg" alt="Kevin Toews">
           <div class="tcard-initials">KT</div>
         </div>
         <div class="tcard-body">
@@ -1161,46 +1180,46 @@
   </div>
 </section>
 
-<!-- ═══ PIPELINE ═══ -->
+<!-- PIPELINE — now showing TAM from report -->
 <section id="pipeline">
   <div class="pipeline-inner">
-    <div class="sec-eyebrow" style="color:rgba(0,184,148,1);">The Long Game</div>
-    <h2 class="sec-h2">Drips → Trickle<br>→ The Flood</h2>
-    <p class="sec-body">Patient, compounding investment in sales infrastructure. By Year 4–5 the model becomes self-sustaining, with manufacturers funding sales through realized revenues.</p>
+    <div class="sec-eyebrow" style="color:rgba(0,184,148,1);">Market Opportunity</div>
+    <h2 class="sec-h2">The UAS Market<br>is Exploding</h2>
+    <p class="sec-body">The domestic drone market — defense and commercial combined — is projected to grow from $9B in 2024 to over $36B by 2030. Oklahoma manufacturers are directly in the path of this demand wave.</p>
 
     <div class="dam-bars" id="dam">
       <div class="dam-col">
-        <div class="dam-rev">$500K</div>
-        <div class="dam-fill" data-h="30"></div>
-        <div class="dam-yr">Y1</div>
+        <div class="dam-rev">$9B</div>
+        <div class="dam-fill" data-h="45"></div>
+        <div class="dam-yr">2024</div>
       </div>
       <div class="dam-col">
-        <div class="dam-rev">$1M</div>
-        <div class="dam-fill" data-h="60"></div>
-        <div class="dam-yr">Y2</div>
+        <div class="dam-rev">$15B</div>
+        <div class="dam-fill" data-h="80"></div>
+        <div class="dam-yr">2026</div>
       </div>
       <div class="dam-col">
-        <div class="dam-rev">$2M</div>
-        <div class="dam-fill" data-h="95"></div>
-        <div class="dam-yr">Y3</div>
+        <div class="dam-rev">$22B</div>
+        <div class="dam-fill" data-h="115"></div>
+        <div class="dam-yr">2028</div>
       </div>
       <div class="dam-col">
-        <div class="dam-rev">$4M</div>
-        <div class="dam-fill" data-h="148" style="background:linear-gradient(to top,#00d4aa,rgba(0,212,170,.3))"></div>
-        <div class="dam-yr">Y4</div>
+        <div class="dam-rev">$30B</div>
+        <div class="dam-fill" data-h="155" style="background:linear-gradient(to top,#00d4aa,rgba(0,212,170,.3))"></div>
+        <div class="dam-yr">2029</div>
       </div>
       <div class="dam-col">
-        <div class="dam-rev" style="color:#3ddc84">$8M</div>
+        <div class="dam-rev" style="color:#3ddc84">$36B+</div>
         <div class="dam-fill" data-h="200" style="background:linear-gradient(to top,#3ddc84,rgba(61,220,132,.25))"></div>
-        <div class="dam-yr">Y5</div>
+        <div class="dam-yr">2030</div>
       </div>
     </div>
 
-    <p class="pipeline-note">Revenue-share model replaces TIL subsidy · Self-sustaining by Year 4–5</p>
+    <p class="pipeline-note">US DoD + Commercial UAS Total Addressable Market · Source: OKA 2026 UAS Supply Chain Report</p>
   </div>
 </section>
 
-<!-- ═══ TRADE SHOWS ═══ -->
+<!-- TRADE SHOWS -->
 <section id="shows">
   <div class="shows-inner">
     <div class="shows-intro">
@@ -1258,7 +1277,7 @@
   </div>
 </section>
 
-<!-- ═══ REFERENCES ═══ -->
+<!-- REFERENCES -->
 <section id="references">
   <div class="ref-inner">
     <div class="sec-eyebrow">Client References</div>
@@ -1286,12 +1305,12 @@
 </section>
 
 
-<!-- ═══ EMAIL CAPTURE / REPORT ═══ -->
+<!-- EMAIL CAPTURE / REPORT -->
 <section id="report">
   <div class="report-orb"></div>
   <div class="report-inner">
 
-    <div class="report-left">
+    <div class="report-left reveal">
       <div class="report-badge">
         <div class="report-badge-dot"></div>
         <span class="report-badge-text">Free Report · 2026</span>
@@ -1307,7 +1326,7 @@
       </div>
     </div>
 
-    <div class="report-right">
+    <div class="report-right reveal">
       <div class="report-form-card">
         <form id="rfc-form-wrap" name="report-download" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="report-download">
@@ -1345,7 +1364,7 @@
           <p class="rfc-privacy">We respect your privacy. Your information is never shared or sold.<br>Unsubscribe anytime.</p>
         </form>
         <div class="rfc-success" id="rfc-success">
-          <div class="rfc-success-icon">🛸</div>
+          <div class="rfc-success-icon">&#128760;</div>
           <div class="rfc-success-title">You're In!</div>
           <p class="rfc-success-body">Your copy of the 2026 UAS Supply Chain Opportunity Report is ready.</p>
           <a href="OKA-2026-UAS-Supply-Chain-Readiness-Report.pdf" download
@@ -1363,7 +1382,7 @@
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner">
     <div class="sec-eyebrow">Get In Touch</div>
@@ -1375,10 +1394,6 @@
           <div class="cdet">
             <span class="cdet-l">Email</span>
             <a href="mailto:info@ok-as.com" class="cdet-r">info@ok-as.com</a>
-          </div>
-          <div class="cdet">
-            <span class="cdet-l">Primary Contact</span>
-            <a href="mailto:bcemery@ok-as.com" class="cdet-r">Brian Emery · bcemery@ok-as.com</a>
           </div>
           <div class="cdet">
             <span class="cdet-l">Headquarters</span>
@@ -1416,11 +1431,11 @@
         </div>
         <div class="cf-row">
           <label class="cf-label">Message</label>
-          <textarea name="message" class="cf-input" placeholder="Tell us about your supply chain needs or how we can help…"></textarea>
+          <textarea name="message" class="cf-input" placeholder="Tell us about your supply chain needs or how we can help..."></textarea>
         </div>
         <button type="submit" class="cf-submit" id="contact-submit">Send Message →</button>
         <div id="contact-success" style="display:none; text-align:center; padding:24px 0;">
-          <div style="font-size:36px; margin-bottom:12px;">✅</div>
+          <div style="font-size:36px; margin-bottom:12px;">&#9989;</div>
           <div style="font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--teal); letter-spacing:1px; margin-bottom:8px;">Message Sent!</div>
           <p style="font-size:14px; color:var(--mid); font-weight:300;">We'll be in touch within 24 hours.</p>
         </div>
@@ -1429,7 +1444,7 @@
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer>
   <div class="ft-logo">
     <div class="ft-wordmark"><span>OK</span> AUTONOMOUS</div>
@@ -1442,7 +1457,7 @@
     <a href="#shows">Events</a>
     <a href="#contact">Contact</a>
   </div>
-  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK 🛸</div>
+  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
 <script>
@@ -1457,6 +1472,18 @@ function closeMobile(){
   burger.classList.remove('open');
   mobileMenu.classList.remove('open');
 }
+
+/* ─── NAV SCROLL EFFECT ──────────────── */
+const mainNav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  mainNav.classList.toggle('scrolled', window.scrollY > 80);
+},{ passive:true });
+
+/* ─── BACK TO TOP ────────────────────── */
+const btt=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{
+  btt.classList.toggle('show', window.scrollY > 600);
+},{ passive:true });
 
 /* ─── CURSOR ─────────────────────────── */
 const cur = document.getElementById('cur');
@@ -1499,7 +1526,7 @@ const io=new IntersectionObserver((entries)=>{
   });
 },{threshold:.1});
 
-document.querySelectorAll('.stat-cell,.svc,.tcard,.show-row,.ref-card,.dam-col').forEach((el,i)=>{
+document.querySelectorAll('.stat-cell,.svc,.tcard,.show-row,.ref-card,.dam-col,.reveal').forEach((el,i)=>{
   el.dataset.d = (i%5)*90;
   io.observe(el);
 });
@@ -1533,7 +1560,6 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ─── DRONE EASTER EGG ───────────────── */
-/* Click the OKA logo 5x */
 let lc=0, lt;
 document.querySelector('.nav-logo').addEventListener('click',e=>{
   e.preventDefault(); lc++;
@@ -1545,6 +1571,7 @@ document.querySelector('.nav-logo').addEventListener('click',e=>{
 });
 function flyDrone(){
   const d=document.getElementById('drone');
+  d.textContent='🚁';
   const startY=Math.random()*60+20;
   const endY=Math.random()*40+10;
   d.style.transition='none';
@@ -1602,7 +1629,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(contactForm);
         await fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
           body: new URLSearchParams(formData).toString() });
-        // Hide form fields, show success
         Array.from(contactForm.querySelectorAll('.cf-row, .cf-title, .cf-sub')).forEach(el => el.style.display = 'none');
         btn.style.display = 'none';
         const s = document.getElementById('contact-success');
@@ -1618,7 +1644,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ─── SECRET TEAM CARD HOVER ─────────── */
-/* Hover a team card for 3s — shows "years of experience" */
 document.querySelectorAll('.tcard').forEach(card=>{
   let hTimer;
   const xpMap={'BC':'Brian has coached 100+ C-suite leaders.','BE':'15+ years owning aerospace businesses.','WE':'40+ years across 3 continents.','KT':'Built and optimized heavy industry ops.'};
