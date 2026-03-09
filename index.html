@@ -112,10 +112,9 @@
   }
   .nav-logo img {
     height:34px; width:auto;
-    filter: drop-shadow(0 2px 8px rgba(0,184,148,.2));
-    transition: filter .3s;
+    transition: opacity .3s;
   }
-  .nav-logo:hover img { filter: drop-shadow(0 2px 16px rgba(0,184,148,.5)); }
+  .nav-logo:hover img { opacity:.85; }
 
   .nav-links { display:flex; gap:32px; list-style:none; }
   .nav-links a {
@@ -898,43 +897,141 @@
     .mission-grid { grid-template-columns:1fr; }
     .team-grid { grid-template-columns:repeat(2,1fr); }
     .contact-grid { grid-template-columns:1fr; }
+    .stats-strip { grid-template-columns:repeat(2,1fr); }
+    .stat-cell { padding:24px 28px; }
+    .stat-n { font-size:40px; }
+    .stat-n span { font-size:26px !important; }
+    .stat-l { font-size:9px; letter-spacing:1.5px; }
   }
+
   @media (max-width:768px) {
     nav { padding:0 20px; }
     .nav-links { display:none; }
     .nav-cta { display:none; }
     .nav-burger { display:flex; }
+
+    /* ─── Global section sizing ─── */
     #hero, section { padding-left:20px; padding-right:20px; }
+    section { padding-top:64px; padding-bottom:64px; }
+
+    /* ─── Hero ─── */
     .hero-img-wrap { height:40vh; min-height:200px; }
-    .hero-text-block { padding:0 20px 40px; margin-top:-100px; }
-    .hero-h1 { font-size:clamp(48px,12vw,72px); }
-    .hero-sub { font-size:clamp(24px,6vw,36px); }
+    .hero-text-block { padding:0 20px 32px; margin-top:-100px; }
+    .hero-h1 { font-size:clamp(44px,11vw,64px); }
+    .hero-sub { font-size:clamp(22px,5.5vw,32px); margin-bottom:18px; }
+    .hero-body { font-size:15px; line-height:1.65; }
+    .hero-row { gap:24px; }
+    .hero-actions { width:100%; }
+    .btn-teal { font-size:10px; padding:12px 20px; letter-spacing:1.5px; }
+    .btn-ghost { font-size:10px; letter-spacing:1.5px; }
+
+    /* ─── Stats strip — compact 2×2 ─── */
     .stats-strip { grid-template-columns:repeat(2,1fr); }
+    .stat-cell { padding:20px 16px; }
+    .stat-n { font-size:32px; }
+    .stat-n span { font-size:20px !important; }
+    .stat-l { font-size:8px; letter-spacing:1.5px; margin-top:2px; }
+
+    /* ─── Partner strip — compact ─── */
+    .partner-strip { padding:14px 20px; flex-direction:column; align-items:flex-start; gap:8px; }
+    .ps-rule { display:none; }
+    .ps-label { font-size:8px; letter-spacing:2px; }
+    .ps-list { gap:8px 16px; flex-wrap:wrap; }
+    .ps-item { font-size:8px; letter-spacing:1.5px; opacity:.6; }
+
+    /* ─── Mission ─── */
+    .sec-h2 { font-size:clamp(36px,8vw,52px); margin-bottom:16px; }
+    .sec-eyebrow { font-size:10px; letter-spacing:3px; margin-bottom:10px; }
+    .sec-body { font-size:15px; margin-bottom:36px; }
+    .mission-text p { font-size:15px; line-height:1.7; margin-bottom:16px; }
+    .dam-callout { padding:16px 18px; margin-top:24px; }
+    .dam-callout p { font-size:14px; }
+
+    /* ─── Services ─── */
     .services-grid { grid-template-columns:1fr; }
     .svc { padding:28px 24px; }
+    .svc-title { font-size:22px; }
     .svc-text { font-size:14px; margin-bottom:16px; }
+    .tag { font-size:8px; padding:3px 8px; }
+
+    /* ─── Team ─── */
     .team-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    .team-header { margin-bottom:32px; }
     .tcard-img { aspect-ratio:1/1; }
     .tcard-body { padding:14px 14px 18px; }
-    .tcard-name { font-size:18px; }
+    .tcard-name { font-size:17px; }
+    .tcard-role { font-size:8px; letter-spacing:1.5px; margin-bottom:10px; padding-bottom:10px; }
     .tcard-bio { font-size:12px; line-height:1.6; margin-bottom:8px;
       display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
     .tcard-prev { font-size:8px; }
-    .ref-grid { grid-template-columns:1fr; }
-    .show-row { grid-template-columns:80px 1fr; }
-    .show-focus { display:none; }
-    .report-inner { grid-template-columns:1fr; gap:40px; }
-    .report-form-card { padding:28px 20px; }
+
+    /* ─── How It Works ─── */
     #how-it-works div[style*='grid-template-columns:repeat(3'] { grid-template-columns:1fr !important; }
-    .dam-bars { height:160px; }
-    .dam-rev { font-size:16px; top:-24px; }
-    .dam-yr { font-size:8px; }
-    footer { padding:32px 20px; gap:16px; }
-    .ft-links { gap:16px; }
-    .partner-strip { padding:16px 20px; flex-wrap:wrap; gap:12px; }
-    .ps-list { gap:16px; }
-    .back-to-top { bottom:20px; right:20px; width:44px; height:44px; }
-    .contact-grid { gap:40px; }
+    #how-it-works div[style*='padding:48px 36px'] { padding:28px 24px !important; }
+
+    /* ─── Market Opportunity chart ─── */
+    .dam-bars { height:180px; margin-top:40px; margin-bottom:48px; }
+    .dam-col { padding:0 4px 36px; }
+    .dam-rev { font-size:14px; top:-22px; }
+    .dam-yr { font-size:7px; letter-spacing:.5px; bottom:12px; }
+    .dam-fill { width:55%; min-width:28px; }
+    .pipeline-note { font-size:8px; letter-spacing:1.5px; line-height:1.6; }
+
+    /* ─── Trade Shows ─── */
+    .show-row { grid-template-columns:70px 1fr; gap:16px; padding:16px 0; }
+    .show-date { font-size:10px; }
+    .show-name { font-size:18px; }
+    .show-loc { font-size:9px; }
+    .show-focus { display:none; }
+    .shows-intro-right { display:none; }
+
+    /* ─── References ─── */
+    .ref-grid { grid-template-columns:1fr; }
+    .ref-card { padding:28px 24px; }
+    .ref-quote { font-size:14px; line-height:1.7; }
+    .ref-author { font-size:9px; }
+
+    /* ─── Report section ─── */
+    .report-inner { grid-template-columns:1fr; gap:32px; }
+    .report-h2 { font-size:clamp(36px,8vw,52px); }
+    .report-body { font-size:14px; }
+    .report-form-card { padding:24px 18px; }
+    .rfc-title { font-size:20px; }
+    .rfc-input, .rfc-select { padding:10px 12px; font-size:14px; }
+    .rfc-submit { padding:13px; font-size:10px; letter-spacing:2px; }
+    .report-include-item { font-size:13px; }
+
+    /* ─── Contact ─── */
+    .contact-grid { gap:32px; }
+    .contact-big { font-size:clamp(40px,10vw,64px); margin-bottom:20px; }
+    .contact-blurb { font-size:15px; margin-bottom:28px; }
+    .contact-form { padding:28px 20px; }
+    .cf-title { font-size:22px; }
+    .cf-input, .cf-select { font-size:14px; }
+
+    /* ─── Footer ─── */
+    footer { padding:28px 20px; gap:14px; }
+    .ft-wordmark { font-size:18px; letter-spacing:2px; }
+    .ft-tagline { font-size:8px; }
+    .ft-links { gap:14px; }
+    .ft-links a { font-size:9px; letter-spacing:1.5px; }
+    .ft-copy { font-size:8px; }
+
+    /* ─── Back to top ─── */
+    .back-to-top { bottom:20px; right:20px; width:42px; height:42px; }
+    .back-to-top svg { width:18px; height:18px; }
+  }
+
+  /* ─── Small phones (375px and below) ─── */
+  @media (max-width:400px) {
+    .hero-h1 { font-size:40px; }
+    .hero-sub { font-size:20px; }
+    .stat-n { font-size:28px; }
+    .stat-n span { font-size:18px !important; }
+    .stat-cell { padding:16px 12px; }
+    .ps-item { font-size:7px; }
+    .tcard-name { font-size:15px; }
+    .tcard-bio { font-size:11px; -webkit-line-clamp:2; }
   }
 </style>
 </head>
