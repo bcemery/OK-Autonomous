@@ -1,3 +1,7 @@
+# Old Squarespace URLs → homepage sections
+/services    /#services   301
+/contact     /#contact    301
+
 # Force canonical HTTPS www domain — prevents redirect-based non-indexing issues
 http://ok-as.com/*     https://www.ok-as.com/:splat  301!
 http://www.ok-as.com/* https://www.ok-as.com/:splat  301!
