@@ -440,6 +440,14 @@
     .ft-links { gap:16px; }
     .back-to-top { bottom:20px; right:20px; width:44px; height:44px; }
   }
+
+  /* ─── Reduced motion accessibility ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .partner-section, .page-hero-eyebrow, .page-hero-h1, .page-hero-sub, .page-hero-cta {
+      opacity:1 !important; transform:none !important; animation:none !important;
+    }
+    * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
 </style>
 </head>
 <body>
@@ -792,10 +800,17 @@ function mkP(){
 setInterval(mkP,900);
 
 /* ─── SCROLL REVEAL ─── */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
-},{threshold:.08});
-document.querySelectorAll('.partner-section').forEach(el=>io.observe(el));
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealEls = document.querySelectorAll('.partner-section');
+if (prefersReduced) {
+  revealEls.forEach(el=>el.classList.add('vis'));
+} else {
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
+  },{threshold:.08});
+  revealEls.forEach(el=>io.observe(el));
+}
+setTimeout(()=>revealEls.forEach(el=>el.classList.add('vis')), 3000);
 
 /* ─── BACK TO TOP ─── */
 const btt=document.getElementById('backToTop');

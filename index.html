@@ -257,8 +257,9 @@
     text-transform:uppercase; color:var(--teal); margin-bottom:18px;
     display:flex; align-items:center; gap:10px;
     opacity:0; animation:fadeUp .8s .2s forwards;
+    text-shadow:0 1px 3px rgba(21,32,53,.35);
   }
-  .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--teal); }
+  .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--teal); box-shadow:0 0 6px rgba(0,184,148,.5); }
 
   .hero-h1 {
     font-family:'Bebas Neue', sans-serif;
@@ -937,7 +938,8 @@
     .hero-eyebrow::before { width:18px; }
 
     /* ─── Partner strip — compact row ─── */
-    .partner-strip { padding:14px 20px; gap:10px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .partner-strip { padding:14px 20px; gap:10px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; -ms-overflow-style:none; -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent); }
+    .partner-strip::-webkit-scrollbar { display:none; }
     .ps-label { font-size:8px; letter-spacing:2px; flex-shrink:0; }
     .ps-rule { width:1px; height:14px; flex-shrink:0; }
     .ps-list { gap:12px; flex-wrap:nowrap; }
@@ -1036,6 +1038,16 @@
     .ps-item { font-size:7px; letter-spacing:.5px; }
     .tcard-name { font-size:15px; }
     .tcard-bio { font-size:11px; -webkit-line-clamp:2; }
+  }
+
+  /* ─── Reduced motion — skip reveal animations, show everything immediately ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .stat-cell, .svc, .tcard, .show-row, .ref-card, .dam-col, .reveal,
+    .hero-eyebrow, .hero-h1, .hero-sub, .hero-copy, .hero-actions {
+      opacity:1 !important; transform:none !important; animation:none !important;
+    }
+    .dam-fill { transition:none !important; }
+    * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
   }
 </style>
 </head>
@@ -1145,7 +1157,6 @@
   <div class="ps-list">
     <span class="ps-item">Tulsa Innovation Labs</span>
     <span class="ps-item">TARMAC DC</span>
-    <span class="ps-item">Oklahoma Manufacturers Alliance</span>
     <span class="ps-item">OSU Smart Supply Chain</span>
     <span class="ps-item">OAIRE</span>
     <span class="ps-item">AUVSI</span>
@@ -1676,34 +1687,50 @@ function mkParticle(){
 setInterval(mkParticle, 700);
 
 /* ─── SCROLL ANIMATIONS ──────────────── */
-const io=new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){
-      setTimeout(()=>e.target.classList.add('vis'),
-        parseInt(e.target.dataset.d||0));
-    }
-  });
-},{threshold:.1});
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealEls = document.querySelectorAll('.stat-cell,.svc,.tcard,.show-row,.ref-card,.dam-col,.reveal');
 
-document.querySelectorAll('.stat-cell,.svc,.tcard,.show-row,.ref-card,.dam-col,.reveal').forEach((el,i)=>{
-  el.dataset.d = (i%5)*90;
-  io.observe(el);
-});
+if (prefersReduced) {
+  revealEls.forEach(el => el.classList.add('vis'));
+} else {
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('vis'),
+          parseInt(e.target.dataset.d||0));
+      }
+    });
+  },{threshold:.1});
+  revealEls.forEach((el,i)=>{
+    el.dataset.d = (i%5)*90;
+    io.observe(el);
+  });
+}
+
+// Safety net: force reveal after 3s regardless
+setTimeout(()=>revealEls.forEach(el=>el.classList.add('vis')), 3000);
 
 /* ─── DAM BARS ───────────────────────── */
-const damObs=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.querySelectorAll('.dam-fill').forEach((bar,i)=>{
-        setTimeout(()=>{
-          bar.style.height=bar.dataset.h+'px';
-        },i*150+200);
+const damEl = document.getElementById('dam');
+if (damEl) {
+  if (prefersReduced) {
+    damEl.querySelectorAll('.dam-fill').forEach(bar => { bar.style.height=bar.dataset.h+'px'; });
+  } else {
+    const damObs=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.querySelectorAll('.dam-fill').forEach((bar,i)=>{
+            setTimeout(()=>{
+              bar.style.height=bar.dataset.h+'px';
+            },i*150+200);
+          });
+          damObs.unobserve(entry.target);
+        }
       });
-      damObs.unobserve(entry.target);
-    }
-  });
-},{threshold:.3});
-damObs.observe(document.getElementById('dam'));
+    },{threshold:.3});
+    damObs.observe(damEl);
+  }
+}
 
 /* ─── KONAMI CODE ────────────────────── */
 const code=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
