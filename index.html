@@ -452,7 +452,24 @@
   .team-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:24px; }
 
   .team-grid {
-    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+    display:grid; grid-template-columns:repeat(5,1fr); gap:20px;
+  }
+  @media (max-width:1200px) {
+    .team-grid { grid-template-columns:repeat(3,1fr); }
+    /* Center the last two cards when they orphan on a row of 3 */
+    .team-grid > .tcard:nth-last-child(2):nth-child(3n+1) {
+      grid-column-start: 1;
+      grid-column-end: span 2;
+      justify-self: end;
+      max-width: calc(50% - 10px);
+      width: 100%;
+    }
+    .team-grid > .tcard:last-child:nth-child(3n+2) {
+      grid-column-end: span 2;
+      justify-self: start;
+      max-width: calc(50% - 10px);
+      width: 100%;
+    }
   }
 
   .tcard {
@@ -897,6 +914,17 @@
   @media (max-width:1024px) {
     .mission-grid { grid-template-columns:1fr; }
     .team-grid { grid-template-columns:repeat(2,1fr); }
+    /* Reset the 3-col orphan rules from the 1200px breakpoint */
+    .team-grid > .tcard:nth-last-child(2):nth-child(3n+1),
+    .team-grid > .tcard:last-child:nth-child(3n+2) {
+      grid-column: auto; grid-column-start: auto; grid-column-end: auto;
+      justify-self: stretch; max-width: none; width: auto;
+    }
+    .team-grid > .tcard:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: calc(50% - 12px);
+      justify-self: center;
+    }
     .contact-grid { grid-template-columns:1fr; }
     .stats-strip { grid-template-columns:repeat(2,1fr); }
     .stat-cell { padding:24px 28px; }
@@ -962,6 +990,12 @@
 
     /* ─── Team ─── */
     .team-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    /* Center orphan card on 2-col mobile when total is odd */
+    .team-grid > .tcard:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: calc(50% - 6px);
+      justify-self: center;
+    }
     .team-header { margin-bottom:32px; }
     .tcard-img { aspect-ratio:1/1; }
     .tcard-body { padding:14px 14px 18px; }
@@ -1301,6 +1335,20 @@
           <div class="tcard-role">Industrial & Process Ops</div>
           <p class="tcard-bio">Owner-operator of industrial and manufacturing businesses. Process optimization and equipment integration for clients entering autonomous technology markets.</p>
           <div class="tcard-prev">Industrial Manufacturing · Real Estate · Tech Investments</div>
+        </div>
+      </div>
+
+      <!-- Grant Morris -->
+      <div class="tcard">
+        <div class="tcard-img">
+          <img src="images/headshot-grant-morris.jpg" alt="Grant Morris">
+          <div class="tcard-initials">GM</div>
+        </div>
+        <div class="tcard-body">
+          <div class="tcard-name">Grant Morris</div>
+          <div class="tcard-role">Director, Business Partnerships</div>
+          <p class="tcard-bio">Leads day-to-day business development and supplier matchmaking for OK Autonomous — connecting drone OEMs and autonomous systems buyers with qualified Oklahoma manufacturers.</p>
+          <div class="tcard-prev">Business Development · Supplier Matchmaking · Business Attraction</div>
         </div>
       </div>
 
