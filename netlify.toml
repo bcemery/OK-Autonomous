@@ -1,0 +1,39 @@
+# ─── Security headers (applied to all responses) ───────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent site from being embedded in an iframe (clickjacking protection)
+    X-Frame-Options = "DENY"
+    # Prevent MIME-type sniffing
+    X-Content-Type-Options = "nosniff"
+    # Only send referrer info to same-origin destinations
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Limit powerful browser features (no camera/mic/geolocation by default)
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    # HSTS: force HTTPS for 2 years, include subdomains, submit to preload list
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+# ─── Long-term caching for static assets ────────────────────
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ─── Custom 404 page ────────────────────────────────────────
+# Netlify serves /404.html automatically when a page is not found
+# (no config needed — just having 404.html in root is enough)
