@@ -6,3 +6,7 @@
 http://ok-as.com/*     https://www.ok-as.com/:splat  301!
 http://www.ok-as.com/* https://www.ok-as.com/:splat  301!
 https://ok-as.com/*    https://www.ok-as.com/:splat  301!
+
+# Canonicalize .html to pretty URLs (prevents duplicate content)
+/team.html   /team        301!
+/index.html  /            301!
