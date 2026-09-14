@@ -400,7 +400,9 @@
   }
 
   /* ─── SERVICES ───────────────────────────────── */
-  #services { background:var(--sky); }
+  #services { background:var(--sky); padding-top:80px; padding-bottom:80px; }
+  #services .sec-h2 { margin-bottom:0; }
+  #services .services-grid.v21 { margin-top:40px !important; }
 
   .services-inner { max-width:1240px; margin:0 auto; }
 
@@ -1267,7 +1269,98 @@
   }
   .door.v22:hover .door-cta-v22 { gap:18px; }
 
-  /* ════ DOORS v2.3: asymmetric dark/light split, custom icons, corner accents ════ */
+  /* ════ DOORS v2.5: A/P/W-style editorial, hairline center rule, no boxes ════ */
+  #doors { background:var(--white); padding:100px 0 110px; }
+  #doors .doors-inner { max-width:1240px; margin:0 auto; padding:0 40px; }
+  #doors .doors-head { text-align:center; margin-bottom:0; }
+  #doors .doors-head .sec-eyebrow { justify-content:center; }
+
+  .doors-grid.v25 {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    margin-top:80px;
+    position:relative;
+  }
+  @media (max-width:900px){ .doors-grid.v25 { grid-template-columns:1fr; } }
+
+  .door-v25 {
+    padding:0 60px;
+    text-align:center;
+    border-right:1px solid var(--rule);
+    text-decoration:none;
+    display:block;
+    position:relative;
+    transition:transform .35s ease;
+  }
+  .door-v25:last-child { border-right:none; }
+  @media (max-width:900px){
+    .door-v25 { border-right:none; border-bottom:1px solid var(--rule); padding:0 20px 60px; }
+    .door-v25:last-child { border-bottom:none; padding-bottom:0; }
+    .door-v25 + .door-v25 { padding-top:60px; }
+  }
+  .door-v25:hover { transform:translateY(-4px); }
+
+  .door-v25-num {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:88px; font-weight:700;
+    color:transparent;
+    -webkit-text-stroke:1px var(--teal);
+    letter-spacing:2px;
+    line-height:1;
+    margin-bottom:32px;
+    transition:-webkit-text-stroke-width .35s ease;
+  }
+  .door-v25:hover .door-v25-num { -webkit-text-stroke-width:1.5px; }
+
+  .door-v25-icon {
+    width:120px; height:120px;
+    margin:0 auto 32px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .door-v25-icon svg { width:100%; height:100%; }
+
+  .door-v25-audience {
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+
+  .door-v25-name {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:44px; font-weight:700;
+    letter-spacing:0.5px;
+    line-height:1.05;
+    color:var(--navy);
+    margin-bottom:18px;
+    transition:color .35s ease;
+  }
+  .door-v25:hover .door-v25-name { color:var(--teal); }
+
+  .door-v25-desc {
+    font-family:'Barlow', sans-serif;
+    font-size:15px; font-weight:300;
+    line-height:1.65;
+    color:var(--mid);
+    max-width:340px;
+    margin:0 auto 28px;
+  }
+
+  .door-v25-cta {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--teal);
+    transition:gap .3s ease;
+  }
+  .door-v25:hover .door-v25-cta { gap:18px; }
+
+  /* ════ DOORS v2.3 (legacy, unused) ════ */
   .doors-grid.v23 {
     display:grid; grid-template-columns:1fr 1fr;
     gap:24px;
@@ -1413,10 +1506,10 @@
   .svc.v21 {
     background:transparent !important;
     display:grid !important;
-    grid-template-columns: 200px 1fr auto !important;
-    gap:48px !important;
+    grid-template-columns: 160px 1fr auto !important;
+    gap:40px !important;
     align-items:center;
-    padding:56px 8px !important;
+    padding:40px 8px !important;
     position:relative;
     overflow:hidden;
     transition:background .35s ease;
@@ -1425,15 +1518,15 @@
     border-bottom:1px solid var(--rule) !important;
     box-shadow:none !important;
   }
-  @media (max-width:900px) { .svc.v21 { grid-template-columns:1fr; gap:16px; padding:40px 8px; } }
+  @media (max-width:900px) { .svc.v21 { grid-template-columns:1fr; gap:14px; padding:30px 8px; } }
   .svc.v21:hover { background:transparent; }
   .svc.v21 .svc-num-v21 {
     font-family:'Bebas Neue', sans-serif;
-    font-size:140px; font-weight:700;
+    font-size:108px; font-weight:700;
     line-height:0.85;
     color:transparent;
-    -webkit-text-stroke: 1.5px var(--navy);
-    text-stroke: 1.5px var(--navy);
+    -webkit-text-stroke: 1.25px var(--navy);
+    text-stroke: 1.25px var(--navy);
     letter-spacing:2px;
     opacity:0.85;
     transition:opacity .35s ease, color .35s ease;
@@ -1461,16 +1554,31 @@
     margin:0;
     max-width:640px;
   }
-  .svc.v21 .svc-tags-v21 { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  /* Refined: inline dot-separated spec line, no pill boxes */
+  .svc.v21 .svc-tags-v21 {
+    margin-top:10px;
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+    line-height:1.6;
+  }
   .svc.v21 .svc-tags-v21 .tag {
     background:transparent;
-    border:1px solid rgba(0,184,148,0.5);
-    color:var(--teal);
+    border:none;
+    color:var(--muted);
     font-family:'Space Mono', monospace;
-    font-size:10px; letter-spacing:1.5px;
-    padding:5px 10px;
+    font-size:10px; letter-spacing:2px;
+    padding:0;
     text-transform:uppercase;
+    display:inline;
   }
+  .svc.v21 .svc-tags-v21 .tag + .tag::before {
+    content:'·';
+    margin:0 10px;
+    color:var(--rule);
+  }
+  .svc.v21:hover .svc-tags-v21 .tag { color:var(--mid); transition:color .35s ease; }
   .svc.v21 .svc-arrow {
     font-family:'Bebas Neue', sans-serif;
     font-size:32px;
@@ -1763,59 +1871,54 @@
       <div class="sec-eyebrow" style="justify-content:center;">Who We Serve</div>
       <h2 class="sec-h2">Two Sides. One Network.</h2>
     </div>
-    <div class="doors-grid v23">
+    <div class="doors-grid v25">
 
-      <!-- LEFT: dark panel, for OEMs (they arrive with a need) -->
-      <a href="#contact" class="door v23 door-dark" data-ghost="01">
-        <!-- ghost numeral, bottom-right -->
-        <div class="door-ghost-v23">01</div>
-        <!-- custom icon: inbound BOM (arrow into a document) -->
-        <div class="door-icon-v23">
-          <svg viewBox="0 0 80 80" fill="none">
-            <!-- document -->
-            <path d="M28 18 L58 20 L58 68 L26 66 Z" stroke="#00b894" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
-            <line x1="34" y1="32" x2="52" y2="33" stroke="#00b894" stroke-width="1.2" stroke-linecap="round"/>
-            <line x1="34" y1="40" x2="48" y2="41" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
-            <line x1="34" y1="48" x2="50" y2="49" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
-            <line x1="34" y1="56" x2="46" y2="57" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
-            <!-- inbound arrow -->
-            <path d="M8 42 L26 42 M20 36 L26 42 L20 48" stroke="#00b894" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- SIDE 01: For OEMs -->
+      <a href="#contact" class="door-v25">
+        <div class="door-v25-num">01</div>
+        <div class="door-v25-icon">
+          <svg viewBox="0 0 120 120" fill="none">
+            <!-- document (BOM) -->
+            <path d="M50 24 L88 26 L88 96 L48 94 Z" stroke="#152035" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+            <line x1="57" y1="42" x2="80" y2="43" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="57" y1="52" x2="75" y2="53" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="57" y1="62" x2="78" y2="63" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="57" y1="72" x2="72" y2="73" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- inbound arrow into document -->
+            <path d="M20 60 L46 60 M38 52 L46 60 L38 68" stroke="#00b894" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           </svg>
         </div>
-        <div class="door-audience">For Drone &amp; Autonomous OEMs</div>
-        <div class="door-h-v23">Need U.S. Suppliers?</div>
-        <p class="door-body-v23">We match your BOM to qualified Oklahoma manufacturers &mdash; vetted, certified, ready.</p>
-        <span class="door-cta-v23">Send Us Your BOM &nbsp;→</span>
+        <div class="door-v25-audience">For Drone &amp; Autonomous OEMs</div>
+        <div class="door-v25-name">Need U.S. Suppliers?</div>
+        <p class="door-v25-desc">We match your BOM to qualified Oklahoma manufacturers &mdash; vetted, certified, ready.</p>
+        <span class="door-v25-cta">Send Us Your BOM &nbsp;→</span>
       </a>
 
-      <!-- RIGHT: light panel, for OK Manufacturers (they're the operator) -->
-      <a href="#contact" class="door v23 door-light" data-ghost="02">
-        <!-- ghost numeral, bottom-left -->
-        <div class="door-ghost-v23 flip">02</div>
-        <!-- custom icon: spindle / tool badge (operator side) -->
-        <div class="door-icon-v23">
-          <svg viewBox="0 0 80 80" fill="none">
-            <!-- outer ring / gear body -->
-            <circle cx="40" cy="40" r="20" stroke="#152035" stroke-width="1.6" fill="none"/>
-            <!-- inner spindle circle -->
-            <circle cx="40" cy="40" r="6" stroke="#152035" stroke-width="1.4" fill="none"/>
-            <!-- gear teeth marks -->
-            <line x1="40" y1="14" x2="40" y2="20" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="40" y1="60" x2="40" y2="66" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="14" y1="40" x2="20" y2="40" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="60" y1="40" x2="66" y2="40" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="22" y1="22" x2="26" y2="26" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
-            <line x1="54" y1="54" x2="58" y2="58" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
-            <line x1="58" y1="22" x2="54" y2="26" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
-            <line x1="26" y1="54" x2="22" y2="58" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
-            <!-- teal metal chip -->
-            <path d="M46 34 C 52 30, 58 34, 62 30" stroke="#00b894" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- SIDE 02: For OK Manufacturers -->
+      <a href="#contact" class="door-v25">
+        <div class="door-v25-num">02</div>
+        <div class="door-v25-icon">
+          <svg viewBox="0 0 120 120" fill="none">
+            <!-- spindle / gear body -->
+            <circle cx="60" cy="60" r="28" stroke="#152035" stroke-width="1.8" fill="none"/>
+            <circle cx="60" cy="60" r="8" stroke="#152035" stroke-width="1.6" fill="none"/>
+            <!-- teeth marks -->
+            <line x1="60" y1="24" x2="60" y2="32" stroke="#152035" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="60" y1="88" x2="60" y2="96" stroke="#152035" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="24" y1="60" x2="32" y2="60" stroke="#152035" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="88" y1="60" x2="96" y2="60" stroke="#152035" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="34" y1="34" x2="40" y2="40" stroke="#152035" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="80" y1="80" x2="86" y2="86" stroke="#152035" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="86" y1="34" x2="80" y2="40" stroke="#152035" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="40" y1="80" x2="34" y2="86" stroke="#152035" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- teal metal chip flying -->
+            <path d="M68 48 C 76 42, 84 46, 92 40" stroke="#00b894" stroke-width="2.2" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
-        <div class="door-audience">For Oklahoma Manufacturers</div>
-        <div class="door-h-v23">Want Autonomous-Systems Work?</div>
-        <p class="door-body-v23">We bring pre-qualified drone OEMs, primes, and buyers to your shop.</p>
-        <span class="door-cta-v23">Get On Our Roster &nbsp;→</span>
+        <div class="door-v25-audience">For Oklahoma Manufacturers</div>
+        <div class="door-v25-name">Want Autonomous-Systems Work?</div>
+        <p class="door-v25-desc">We bring pre-qualified drone OEMs, primes, and buyers to your shop.</p>
+        <span class="door-v25-cta">Get On Our Roster &nbsp;→</span>
       </a>
 
     </div>
