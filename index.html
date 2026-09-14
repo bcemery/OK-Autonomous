@@ -1083,9 +1083,566 @@
     .dam-fill { transition:none !important; }
     * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
   }
+  /* ═══════════════════════════════════════════════════════════════
+     PREVIEW-ONLY STYLES
+     Everything below is new for the proposed update.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Section anchor offset so change tags aren't hidden under the nav */
+  section[id], #hero, #doors, #tiers, #scenarios { scroll-margin-top: 120px; }
+
+  /* ═══════════════════════════════════════════════════════════════
+     V2.1 — FONT-WEIGHT FIXES + PUNCHED-UP SECTIONS
+     Overrides that force Bebas 700 to match live site's visual weight.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Match live site's font weights everywhere */
+  .sec-h2 { font-weight: 700 !important; letter-spacing: 1px !important; }
+  .svc-title { font-weight: 700 !important; letter-spacing: 0.5px !important; font-size: 28px !important; color: var(--navy) !important; }
+  .door-h { font-weight: 700 !important; letter-spacing: 0.5px !important; }
+  .tier-h { font-weight: 700 !important; letter-spacing: 0.5px !important; }
+
+  /* ─── DOORS v2.1: photographic split-panel cards ─── */
+  .doors-grid.v21 { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:56px; }
+  @media (max-width: 900px) { .doors-grid.v21 { grid-template-columns:1fr; } }
+
+  .door.v21 {
+    position:relative;
+    display:block;
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    background:var(--ink);
+    text-decoration:none;
+    border:none;
+    padding:0;
+    transition:transform .5s ease;
+  }
+  .door.v21:hover { transform: translateY(-4px); }
+  .door.v21 .door-img {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    filter: grayscale(20%) brightness(0.55) contrast(1.1);
+    transition:transform 1.2s ease, filter .5s ease;
+  }
+  .door.v21:hover .door-img { transform: scale(1.05); filter: grayscale(0%) brightness(0.6) contrast(1.1); }
+  .door.v21 .door-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(14,22,36,0.2) 0%, rgba(14,22,36,0.35) 55%, rgba(14,22,36,0.9) 100%);
+  }
+  .door.v21 .door-content {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:48px;
+    color:var(--white);
+  }
+  .door.v21 .door-num {
+    position:absolute; top:28px; left:48px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+  }
+  .door.v21 .door-eyebrow-v21 {
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .door.v21 .door-h-v21 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:44px; font-weight:700;
+    letter-spacing:0.5px;
+    line-height:1.05;
+    color:var(--white);
+    margin-bottom:14px;
+  }
+  .door.v21 .door-body-v21 {
+    font-family:'Barlow', sans-serif;
+    font-size:15px; font-weight:300;
+    line-height:1.55;
+    color:rgba(255,255,255,0.85);
+    margin-bottom:22px;
+    max-width:380px;
+  }
+  .door.v21 .door-cta-v21 {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--teal);
+    align-self:flex-start;
+    transition:gap .3s ease;
+  }
+  .door.v21:hover .door-cta-v21 { gap:18px; }
+  .swap-marker {
+    position:absolute; top:28px; right:28px;
+    background:rgba(243,156,18,0.95);
+    color:#0e1624;
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:1.5px;
+    padding:6px 10px;
+    text-transform:uppercase;
+    z-index:5;
+  }
+
+  /* ─── DOORS v2.2: type-only cards, hairline rule top, ghost numeral background ─── */
+  .doors-grid.v22 {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:0;
+    margin-top:56px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  @media (max-width: 900px) { .doors-grid.v22 { grid-template-columns:1fr; } .doors-grid.v22 .door.v22:first-child { border-right:none; border-bottom:1px solid var(--rule); } }
+  .door.v22 {
+    position:relative;
+    display:block;
+    text-decoration:none;
+    padding:80px 56px 72px;
+    background:transparent;
+    overflow:hidden;
+    transition:background .35s ease;
+    min-height:340px;
+  }
+  .door.v22:first-child { border-right:1px solid var(--rule); }
+  .door.v22:hover { background:#f7fafc; }
+  .door.v22::before {
+    content:attr(data-ghost);
+    position:absolute;
+    right:-20px; bottom:-40px;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:280px; font-weight:700;
+    line-height:0.85;
+    color:transparent;
+    -webkit-text-stroke: 1.5px var(--navy);
+    opacity:0.06;
+    pointer-events:none;
+    letter-spacing:2px;
+    transition:opacity .35s ease, color .35s ease;
+  }
+  .door.v22:hover::before { opacity:0.14; color:var(--teal); -webkit-text-stroke: 1.5px var(--teal); }
+  .door.v22 .door-num-v22 {
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    margin-bottom:44px;
+  }
+  .door.v22 .door-eyebrow-v22 {
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:2px;
+    color:var(--mid);
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .door.v22 .door-h-v22 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:52px; font-weight:700;
+    letter-spacing:0.5px;
+    line-height:1.02;
+    color:var(--navy);
+    margin-bottom:20px;
+    max-width:420px;
+  }
+  .door.v22 .door-body-v22 {
+    font-family:'Barlow', sans-serif;
+    font-size:16px; font-weight:300;
+    line-height:1.6;
+    color:var(--mid);
+    margin-bottom:32px;
+    max-width:380px;
+  }
+  .door.v22 .door-cta-v22 {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--teal);
+    transition:gap .3s ease;
+  }
+  .door.v22:hover .door-cta-v22 { gap:18px; }
+
+  /* ════ DOORS v2.3: asymmetric dark/light split, custom icons, corner accents ════ */
+  .doors-grid.v23 {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:56px;
+  }
+  @media (max-width: 900px) { .doors-grid.v23 { grid-template-columns:1fr; } }
+
+  .door.v23 {
+    position:relative;
+    display:block;
+    text-decoration:none;
+    padding:64px 56px 72px;
+    overflow:hidden;
+    transition:transform .5s ease, box-shadow .5s ease;
+    min-height:440px;
+  }
+  .door.v23:hover { transform: translateY(-6px); }
+
+  .door.v23.door-dark {
+    background: linear-gradient(135deg, #0e1624 0%, #152035 60%, #1a2a45 100%);
+    color: #f0f6ff;
+  }
+  .door.v23.door-dark:hover { box-shadow: 0 20px 60px rgba(0,184,148,0.15); }
+
+  .door.v23.door-light {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    color: var(--navy);
+  }
+  .door.v23.door-light:hover { box-shadow: 0 20px 60px rgba(21,32,53,0.08); border-color: var(--teal); }
+
+  /* corner accent glyphs */
+  .door.v23 .door-corner {
+    position:absolute; width:44px; height:44px;
+    opacity:0.85;
+    transition:opacity .35s ease;
+  }
+  .door.v23 .door-corner.tl { top:24px; left:24px; }
+  .door.v23 .door-corner.tr { top:24px; right:24px; }
+  .door.v23:hover .door-corner { opacity:1; }
+
+  /* giant ghost numerals as watermark */
+  .door.v23 .door-ghost-v23 {
+    position:absolute;
+    right:-20px; bottom:-50px;
+    font-family:'Bebas Neue', sans-serif;
+    font-size:280px; font-weight:700;
+    line-height:0.8;
+    letter-spacing:0;
+    pointer-events:none;
+    color:transparent;
+    transition:opacity .35s ease;
+  }
+  .door.v23 .door-ghost-v23.flip { right:auto; left:-20px; }
+  .door.v23.door-dark .door-ghost-v23 {
+    -webkit-text-stroke: 1px rgba(0,184,148,0.18);
+    opacity:1;
+  }
+  .door.v23.door-light .door-ghost-v23 {
+    -webkit-text-stroke: 1px rgba(21,32,53,0.08);
+    opacity:1;
+  }
+  .door.v23:hover .door-ghost-v23 { -webkit-text-stroke-width: 1.5px; }
+
+  /* custom SVG icon */
+  .door.v23 .door-icon-v23 {
+    width:80px; height:80px;
+    margin-bottom:32px;
+    position:relative; z-index:2;
+  }
+  .door.v23 .door-icon-v23 svg { width:100%; height:100%; }
+
+  /* audience label (small eyebrow) */
+  .door.v23 .door-audience {
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+    position:relative; z-index:2;
+  }
+  .door.v23.door-dark .door-audience { color:var(--teal); }
+  .door.v23.door-light .door-audience { color:var(--teal); }
+
+  /* small number in header row */
+  .door.v23 .door-num-v23 {
+    position:absolute; top:32px; right:32px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    z-index:2;
+  }
+  .door.v23.door-light .door-num-v23 { left:32px; right:auto; }
+  .door.v23.door-dark .door-num-v23 { color:rgba(240,246,255,0.4); }
+  .door.v23.door-light .door-num-v23 { color:var(--muted); }
+
+  /* headline */
+  .door.v23 .door-h-v23 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:54px; font-weight:700;
+    letter-spacing:0.5px;
+    line-height:1.02;
+    margin-bottom:20px;
+    max-width:420px;
+    position:relative; z-index:2;
+  }
+  .door.v23.door-dark .door-h-v23 { color:#f0f6ff; }
+  .door.v23.door-light .door-h-v23 { color:var(--navy); }
+
+  .door.v23 .door-body-v23 {
+    font-family:'Barlow', sans-serif;
+    font-size:16px; font-weight:300;
+    line-height:1.6;
+    margin-bottom:36px;
+    max-width:380px;
+    position:relative; z-index:2;
+  }
+  .door.v23.door-dark .door-body-v23 { color:rgba(240,246,255,0.75); }
+  .door.v23.door-light .door-body-v23 { color:var(--mid); }
+
+  .door.v23 .door-cta-v23 {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px;
+    color:var(--teal);
+    text-transform:uppercase;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--teal);
+    transition:gap .3s ease;
+    position:relative; z-index:2;
+  }
+  .door.v23:hover .door-cta-v23 { gap:20px; }
+
+  /* ─── SERVICES v2.1: editorial split-row cards with ghost numerals ─── */
+  .services-grid.v21 {
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:0 !important;
+    background:transparent !important;
+    border:none !important;
+    border-top:1px solid var(--rule) !important;
+    margin-top:56px;
+    padding:0 !important;
+  }
+  .svc.v21 {
+    background:transparent !important;
+    display:grid !important;
+    grid-template-columns: 200px 1fr auto !important;
+    gap:48px !important;
+    align-items:center;
+    padding:56px 8px !important;
+    position:relative;
+    overflow:hidden;
+    transition:background .35s ease;
+    cursor:default;
+    border:none !important;
+    border-bottom:1px solid var(--rule) !important;
+    box-shadow:none !important;
+  }
+  @media (max-width:900px) { .svc.v21 { grid-template-columns:1fr; gap:16px; padding:40px 8px; } }
+  .svc.v21:hover { background:transparent; }
+  .svc.v21 .svc-num-v21 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:140px; font-weight:700;
+    line-height:0.85;
+    color:transparent;
+    -webkit-text-stroke: 1.5px var(--navy);
+    text-stroke: 1.5px var(--navy);
+    letter-spacing:2px;
+    opacity:0.85;
+    transition:opacity .35s ease, color .35s ease;
+  }
+  .svc.v21:hover .svc-num-v21 {
+    color:var(--teal);
+    -webkit-text-stroke: 1.5px var(--teal);
+    opacity:1;
+  }
+  .svc.v21:hover .svc-title-v21 { color:var(--teal); transition:color .35s ease; }
+  .svc.v21 .svc-body-v21 { display:flex; flex-direction:column; gap:12px; }
+  .svc.v21 .svc-title-v21 {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:32px; font-weight:700;
+    letter-spacing:0.5px;
+    line-height:1.1;
+    color:var(--navy);
+    margin:0;
+  }
+  .svc.v21 .svc-text-v21 {
+    font-family:'Barlow', sans-serif;
+    font-size:16px; font-weight:300;
+    line-height:1.6;
+    color:var(--mid);
+    margin:0;
+    max-width:640px;
+  }
+  .svc.v21 .svc-tags-v21 { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .svc.v21 .svc-tags-v21 .tag {
+    background:transparent;
+    border:1px solid rgba(0,184,148,0.5);
+    color:var(--teal);
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:1.5px;
+    padding:5px 10px;
+    text-transform:uppercase;
+  }
+  .svc.v21 .svc-arrow {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:32px;
+    color:var(--muted);
+    transition:color .35s ease, transform .35s ease;
+  }
+  .svc.v21:hover .svc-arrow { color:var(--teal); transform:translateX(6px); }
+  @media (max-width:900px) { .svc.v21 .svc-arrow { display:none; } }
+
+  /* ─── HOW IT WORKS v2.1: kill boxes, add hand-drawn SVG icons ─── */
+  .hiw-v21 {
+    background:var(--white);
+    padding:120px 0 140px;
+  }
+  .hiw-v21-inner { max-width:1240px; margin:0 auto; padding:0 40px; }
+  .hiw-v21-grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    margin-top:80px;
+    position:relative;
+  }
+  @media (max-width:900px) { .hiw-v21-grid { grid-template-columns:1fr; gap:60px; } }
+  .hiw-v21-step {
+    padding:0 40px;
+    text-align:center;
+    border-right:1px solid var(--rule);
+    position:relative;
+  }
+  .hiw-v21-step:last-child { border-right:none; }
+  @media (max-width:900px) { .hiw-v21-step { border-right:none; border-bottom:1px solid var(--rule); padding-bottom:60px; } .hiw-v21-step:last-child { border-bottom:none; padding-bottom:0; } }
+  .hiw-v21-num {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:88px; font-weight:700;
+    color:transparent;
+    -webkit-text-stroke: 1px var(--teal);
+    letter-spacing:2px;
+    line-height:1;
+    margin-bottom:32px;
+  }
+  .hiw-v21-icon {
+    width:120px; height:120px;
+    margin:0 auto 32px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hiw-v21-icon svg { width:100%; height:100%; }
+  .hiw-v21-name {
+    font-family:'Bebas Neue', sans-serif;
+    font-size:32px; font-weight:700;
+    letter-spacing:0.5px;
+    color:var(--navy);
+    margin-bottom:16px;
+  }
+  .hiw-v21-desc {
+    font-family:'Barlow', sans-serif;
+    font-size:15px; font-weight:300;
+    line-height:1.65;
+    color:var(--mid);
+    max-width:280px; margin:0 auto;
+  }
+
+  /* CHANGE marker — tags sections that changed vs the live site */
+  .change-tag {
+    display:inline-block;
+    background:var(--teal); color:#0e1624;
+    font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+    letter-spacing:1.2px; padding:3px 8px; margin-bottom:14px;
+    text-transform:uppercase;
+  }
+  .change-tag.new { background:#f39c12; }
+
+  /* ═══ AUDIENCE DOORS ═══ */
+  #doors { padding:96px 52px; background:var(--white); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+  .doors-inner { max-width:1240px; margin:0 auto; }
+  .doors-head { text-align:center; margin-bottom:56px; }
+  .doors-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .door {
+    background:var(--sky); border:1px solid var(--rule); border-left:3px solid var(--teal);
+    padding:40px 36px; position:relative; overflow:hidden;
+    transition:transform .3s, box-shadow .3s, border-color .3s;
+    text-decoration:none; color:inherit; display:block;
+  }
+  .door:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(21,32,53,.08); border-left-color:var(--navy); }
+  .door-eyebrow { font-family:'Space Mono',monospace; font-size:11px; color:var(--teal); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px; }
+  .door-h { font-family:'Bebas Neue',sans-serif; font-size:34px; color:var(--navy); line-height:1.05; letter-spacing:.5px; margin-bottom:16px; }
+  .door-body { font-size:15px; line-height:1.65; color:var(--mid); font-weight:400; margin-bottom:22px; }
+  .door-cta { font-family:'Space Mono',monospace; font-size:12px; color:var(--navy); letter-spacing:1px; text-transform:uppercase; font-weight:700; display:inline-flex; align-items:center; gap:8px; }
+  .door-cta::after { content:"→"; transition:transform .2s; }
+  .door:hover .door-cta::after { transform:translateX(4px); }
+  @media (max-width:900px){ .doors-grid{ grid-template-columns:1fr; } #doors{ padding:64px 20px; } .door{ padding:32px 24px; } .door-h{ font-size:28px; } }
+
+  /* ═══ WHAT THIS LOOKS LIKE ═══ */
+  #scenarios { padding:120px 52px; background:var(--sky); }
+  .scen-inner { max-width:1240px; margin:0 auto; }
+  .scen-head { margin-bottom:64px; max-width:720px; }
+  .scen-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--rule); border:1px solid var(--rule); }
+  .scen {
+    background:var(--white); padding:40px 32px 44px; position:relative;
+    display:flex; flex-direction:column;
+  }
+  .scen-num { font-family:'Space Mono',monospace; font-size:11px; color:var(--teal); letter-spacing:2px; margin-bottom:10px; }
+  .scen-open { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--navy); line-height:1.15; letter-spacing:.5px; margin-bottom:18px; text-transform:uppercase; }
+  .scen-body { font-size:15px; line-height:1.7; color:var(--mid); font-weight:400; margin-bottom:22px; flex:1; }
+  .scen-result { font-family:'Space Mono',monospace; font-size:11px; color:var(--navy); letter-spacing:1px; text-transform:uppercase; padding-top:18px; border-top:1px solid var(--rule); }
+  .scen-result strong { color:var(--teal); font-weight:700; }
+  @media (max-width:900px){ .scen-grid{ grid-template-columns:1fr; } #scenarios{ padding:80px 20px; } }
+
+  /* ═══ HOW WE WORK TOGETHER (Tiers) ═══ */
+  #tiers { padding:120px 52px; background:var(--white); }
+  .tiers-inner { max-width:1240px; margin:0 auto; }
+  .tiers-head { text-align:center; margin-bottom:64px; }
+  .tiers-head p { max-width:640px; margin:0 auto; }
+  .tiers-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:stretch; }
+  .tier {
+    background:var(--sky); border:1px solid var(--rule); padding:44px 40px;
+    display:flex; flex-direction:column; position:relative;
+  }
+  .tier-1 { border-top:3px solid var(--teal); }
+  .tier-2 { border-top:3px solid var(--navy); background:var(--navy); color:var(--sky); }
+  .tier-tag { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+  .tier-1 .tier-tag { color:var(--teal); }
+  .tier-2 .tier-tag { color:var(--teal); }
+  .tier-h { font-family:'Bebas Neue',sans-serif; font-size:36px; line-height:1.05; letter-spacing:.5px; margin-bottom:18px; }
+  .tier-1 .tier-h { color:var(--navy); }
+  .tier-2 .tier-h { color:var(--sky); }
+  .tier-price { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.8px; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid var(--rule); }
+  .tier-1 .tier-price { color:var(--mid); border-bottom-color:var(--rule); }
+  .tier-2 .tier-price { color:var(--muted); border-bottom-color:rgba(240,246,255,.15); }
+  .tier-body { font-size:15px; line-height:1.7; margin-bottom:22px; font-weight:400; }
+  .tier-1 .tier-body { color:var(--mid); }
+  .tier-2 .tier-body { color:var(--cloud); }
+  .tier-list { list-style:none; padding:0; margin:0 0 28px; flex:1; }
+  .tier-list li { font-size:14px; line-height:1.55; padding:9px 0 9px 22px; position:relative; }
+  .tier-1 .tier-list li { color:var(--mid); border-bottom:1px solid var(--rule); }
+  .tier-2 .tier-list li { color:var(--cloud); border-bottom:1px solid rgba(240,246,255,.1); }
+  .tier-list li:last-child { border-bottom:none; }
+  .tier-list li::before {
+    content:"✓"; position:absolute; left:0; top:9px; color:var(--teal); font-weight:700;
+  }
+  .tier-fine { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.6px; line-height:1.6; margin-top:8px; }
+  .tier-1 .tier-fine { color:var(--muted); }
+  .tier-2 .tier-fine { color:var(--muted); }
+  .tier-cta {
+    display:inline-block; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:1.2px; text-transform:uppercase; font-weight:700;
+    padding:14px 24px; text-decoration:none; align-self:flex-start;
+  }
+  .tier-1 .tier-cta { background:var(--teal); color:#0e1624; }
+  .tier-2 .tier-cta { background:var(--teal); color:#0e1624; }
+  .tier-cta:hover { filter:brightness(1.08); }
+  @media (max-width:900px){ .tiers-grid{ grid-template-columns:1fr; } #tiers{ padding:80px 20px; } .tier{ padding:32px 24px; } .tier-h{ font-size:30px; } }
+
+  /* Hero sub headline — matched to live site: Bebas 64px / 400 / lh 64px / muted */
+  #hero .hero-sub-new {
+    font-family:'Bebas Neue',sans-serif !important;
+    font-size:64px !important;
+    font-weight:400 !important;
+    color:rgb(58,79,110) !important;
+    letter-spacing:1px !important;
+    line-height:64px !important;
+    margin-top:12px !important;
+    margin-bottom:28px !important;
+    max-width:760px !important;
+  }
+  #hero .hero-sub-new .teal { color:var(--teal) !important; }
+  @media (max-width:900px){
+    #hero .hero-sub-new { font-size:clamp(30px, 6.5vw, 46px) !important; line-height:1 !important; }
+  }
+
 </style>
 </head>
 <body>
+
 
 <!-- Cursor -->
 <div id="cur"></div>
@@ -1115,22 +1672,24 @@
     <img src="images/logo-horizontal.png" alt="OK Autonomous">
   </a>
   <ul class="nav-links">
-    <li><a href="#mission">Mission</a></li>
+    <li><a href="#doors">Who We Serve</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#tiers">Engagement</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="#shows">Events</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Book a Call</a>
+  <a href="#contact" class="nav-cta">Find My Supplier</a>
   <button class="nav-burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#mission" onclick="closeMobile()">Mission</a>
+  <a href="#doors" onclick="closeMobile()">Who We Serve</a>
   <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#tiers" onclick="closeMobile()">Engagement</a>
   <a href="team.html">Team</a>
   <a href="#shows" onclick="closeMobile()">Events</a>
-  <a href="#contact" class="mobile-cta" onclick="closeMobile()">Book a Call</a>
+  <a href="#contact" class="mobile-cta" onclick="closeMobile()">Find My Supplier</a>
 </div>
 
 <!-- HERO -->
@@ -1151,14 +1710,14 @@
   <div class="hero-text-block">
     <div class="hero-eyebrow">Tulsa, Oklahoma · Est. 2025</div>
     <h1 class="hero-h1"><span class="teal">OK</span>LAHOMA<br>AUTONOMOUS</h1>
-    <div class="hero-sub">Empowering Oklahoma's<br>Autonomous Revolution</div>
+    <div class="hero-sub-new">Your U.S. Supply Chain<br>Starts in <span class="teal">Oklahoma.</span></div>
     <div class="hero-row">
       <p class="hero-body">
-        The <strong>dedicated sales force</strong> connecting drone OEMs and autonomous systems buyers with Oklahoma's proven manufacturing base — bridging local capability to national and international markets.
+        Drone and autonomous-systems companies: find Oklahoma-made components, qualified suppliers, and defense-ready manufacturing partners — without the sourcing slog.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-teal">Book a 20-Minute Intro Call</a>
-        <a href="#report" class="btn-ghost">Download the Report</a>
+        <a href="#contact" class="btn-teal">Find My Oklahoma Supplier →</a>
+        <a href="#doors" class="btn-ghost">I'm an OK Manufacturer</a>
       </div>
     </div>
   </div>
@@ -1186,7 +1745,7 @@
 
 <!-- PARTNER STRIP -->
 <div class="partner-strip">
-  <span class="ps-label">Backed By</span>
+  <span class="ps-label">Peer Organizations</span>
   <div class="ps-rule"></div>
   <div class="ps-list">
     <span class="ps-item">Tulsa Innovation Labs</span>
@@ -1196,6 +1755,72 @@
     <span class="ps-item">AUVSI</span>
   </div>
 </div>
+
+<!-- AUDIENCE DOORS —— NEW (tight) -->
+<section id="doors">
+  <div class="doors-inner">
+    <div class="doors-head">
+      <div class="sec-eyebrow" style="justify-content:center;">Who We Serve</div>
+      <h2 class="sec-h2">Two Sides. One Network.</h2>
+    </div>
+    <div class="doors-grid v23">
+
+      <!-- LEFT: dark panel, for OEMs (they arrive with a need) -->
+      <a href="#contact" class="door v23 door-dark" data-ghost="01">
+        <!-- ghost numeral, bottom-right -->
+        <div class="door-ghost-v23">01</div>
+        <!-- custom icon: inbound BOM (arrow into a document) -->
+        <div class="door-icon-v23">
+          <svg viewBox="0 0 80 80" fill="none">
+            <!-- document -->
+            <path d="M28 18 L58 20 L58 68 L26 66 Z" stroke="#00b894" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+            <line x1="34" y1="32" x2="52" y2="33" stroke="#00b894" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="34" y1="40" x2="48" y2="41" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
+            <line x1="34" y1="48" x2="50" y2="49" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
+            <line x1="34" y1="56" x2="46" y2="57" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round"/>
+            <!-- inbound arrow -->
+            <path d="M8 42 L26 42 M20 36 L26 42 L20 48" stroke="#00b894" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="door-audience">For Drone &amp; Autonomous OEMs</div>
+        <div class="door-h-v23">Need U.S. Suppliers?</div>
+        <p class="door-body-v23">We match your BOM to qualified Oklahoma manufacturers &mdash; vetted, certified, ready.</p>
+        <span class="door-cta-v23">Send Us Your BOM &nbsp;→</span>
+      </a>
+
+      <!-- RIGHT: light panel, for OK Manufacturers (they're the operator) -->
+      <a href="#contact" class="door v23 door-light" data-ghost="02">
+        <!-- ghost numeral, bottom-left -->
+        <div class="door-ghost-v23 flip">02</div>
+        <!-- custom icon: spindle / tool badge (operator side) -->
+        <div class="door-icon-v23">
+          <svg viewBox="0 0 80 80" fill="none">
+            <!-- outer ring / gear body -->
+            <circle cx="40" cy="40" r="20" stroke="#152035" stroke-width="1.6" fill="none"/>
+            <!-- inner spindle circle -->
+            <circle cx="40" cy="40" r="6" stroke="#152035" stroke-width="1.4" fill="none"/>
+            <!-- gear teeth marks -->
+            <line x1="40" y1="14" x2="40" y2="20" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="40" y1="60" x2="40" y2="66" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="14" y1="40" x2="20" y2="40" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="60" y1="40" x2="66" y2="40" stroke="#152035" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="22" y1="22" x2="26" y2="26" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="54" y1="54" x2="58" y2="58" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="58" y1="22" x2="54" y2="26" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="26" y1="54" x2="22" y2="58" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <!-- teal metal chip -->
+            <path d="M46 34 C 52 30, 58 34, 62 30" stroke="#00b894" stroke-width="2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="door-audience">For Oklahoma Manufacturers</div>
+        <div class="door-h-v23">Want Autonomous-Systems Work?</div>
+        <p class="door-body-v23">We bring pre-qualified drone OEMs, primes, and buyers to your shop.</p>
+        <span class="door-cta-v23">Get On Our Roster &nbsp;→</span>
+      </a>
+
+    </div>
+  </div>
+</section>
 
 <!-- MISSION -->
 <section id="mission">
@@ -1210,10 +1835,8 @@
 
     <div class="mission-text reveal">
       <div class="sec-eyebrow">Our Mission</div>
-      <h2 class="sec-h2">Built to Win<br>Contracts for<br>Oklahoma</h2>
-      <p>OK Autonomous is Tulsa's dedicated commercial representative for the autonomous systems era. We serve as the <strong>shared sales force</strong> for Oklahoma's small and midsized manufacturers — sourcing qualified opportunities, facilitating buyer introductions, and translating manufacturing strengths into revenue.</p>
-      <p>We're not consultants. We're <strong>operators</strong> — rooted in the Tulsa innovation ecosystem, with 40+ years of aerospace sales, CNC and manufacturing leadership, and proven startup scaling behind us.</p>
-      <p>Our vision: <strong>Oklahoma as the drone capital of the world.</strong> The groundwork is being laid right now. When the flood comes, our manufacturers will be ready.</p>
+      <h2 class="sec-h2">Oklahoma:<br>The Drone Capital<br>of the World.</h2>
+      <p>We're not consultants. We're <strong>operators</strong> — 40+ years of aerospace sales, CNC manufacturing, and startup scaling — building the commercial bridge between autonomous-systems demand and Oklahoma's supplier base.</p>
       <div class="dam-callout">
         <p>"A patient investment in sales and marketing will first produce a few drips, then a light trickle — followed by a flood. If the groundwork isn't in place, the flood will occur and NE Oklahoma manufacturers will miss the rewards."</p>
       </div>
@@ -1221,49 +1844,70 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- SERVICES —— v2.1: editorial split-row layout with ghost numerals + tags restored -->
 <section id="services">
   <div class="services-inner">
     <div class="sec-eyebrow">What We Do</div>
-    <h2 class="sec-h2">Three Core Services</h2>
-    <p class="sec-body">We act as your dedicated commercial engine — not a consulting report, but an active sales force with skin in the game.</p>
-    <div class="services-grid">
-      <div class="svc">
-        <div class="svc-num">01</div>
-        <h3 class="svc-title">Market Access & Revenue</h3>
-        <p class="svc-text">We open doors that Oklahoma manufacturers couldn't access alone. OEM introductions, defense prime relationships, and commercial drone buyer engagements — sourced, screened, and facilitated into signed contracts.</p>
-        <div class="svc-tags">
-          <span class="tag">Defense Primes</span>
-          <span class="tag">Drone OEMs</span>
-          <span class="tag">Commercial UAS</span>
-          <span class="tag">Buyer Introductions</span>
+    <h2 class="sec-h2">Four Ways We Move the Needle.</h2>
+    <div class="services-grid v21">
+      <div class="svc v21">
+        <div class="svc-num-v21">01</div>
+        <div class="svc-body-v21">
+          <h3 class="svc-title-v21">Supplier Matching</h3>
+          <p class="svc-text-v21">Your BOM in. Qualified Oklahoma manufacturers out. Vetted for capability, capacity, and AS9100/ITAR readiness.</p>
+          <div class="svc-tags-v21">
+            <span class="tag">BOM Analysis</span>
+            <span class="tag">AS9100</span>
+            <span class="tag">ITAR</span>
+            <span class="tag">Capacity Check</span>
+          </div>
         </div>
+        <div class="svc-arrow">→</div>
       </div>
-      <div class="svc">
-        <div class="svc-num">02</div>
-        <h3 class="svc-title">Opportunity Capture</h3>
-        <p class="svc-text">We screen every pursuit for fit, readiness, and win probability. We advise on certifications (AS9100, ITAR), competitive positioning, and proposal structure so manufacturers invest effort where it counts.</p>
-        <div class="svc-tags">
-          <span class="tag">AS9100</span>
-          <span class="tag">ITAR</span>
-          <span class="tag">Pipeline Strategy</span>
-          <span class="tag">Proposal Support</span>
+      <div class="svc v21">
+        <div class="svc-num-v21">02</div>
+        <div class="svc-body-v21">
+          <h3 class="svc-title-v21">Market Access</h3>
+          <p class="svc-text-v21">Warm intros to drone OEMs, autonomous-systems buyers, and defense primes &mdash; the right people, briefed on the right topics.</p>
+          <div class="svc-tags-v21">
+            <span class="tag">Warm Intros</span>
+            <span class="tag">Show Meetings</span>
+            <span class="tag">Prime Access</span>
+          </div>
         </div>
+        <div class="svc-arrow">→</div>
       </div>
-      <div class="svc">
-        <div class="svc-num">03</div>
-        <h3 class="svc-title">Capability Translation</h3>
-        <p class="svc-text">Manufacturing capability means nothing if buyers can't understand it. We develop buyer-relevant value propositions and capability profiles that communicate Oklahoma manufacturing in language that closes deals.</p>
-        <div class="svc-tags">
-          <span class="tag">Value Proposition</span>
-          <span class="tag">Proposal Writing</span>
-          <span class="tag">SMM Advocacy</span>
-          <span class="tag">Marketing Materials</span>
+      <div class="svc v21">
+        <div class="svc-num-v21">03</div>
+        <div class="svc-body-v21">
+          <h3 class="svc-title-v21">Oklahoma Market Entry</h3>
+          <p class="svc-text-v21">Exploring OK? We map the supplier base, connect you to programs and partners, and shorten your ramp.</p>
+          <div class="svc-tags-v21">
+            <span class="tag">Supplier Map</span>
+            <span class="tag">Program Intros</span>
+            <span class="tag">Site Selection</span>
+          </div>
         </div>
+        <div class="svc-arrow">→</div>
+      </div>
+      <div class="svc v21">
+        <div class="svc-num-v21">04</div>
+        <div class="svc-body-v21">
+          <h3 class="svc-title-v21">Pursuit &amp; Proposal Support</h3>
+          <p class="svc-text-v21">Win-probability screens, sharper positioning, proposal firepower &mdash; so effort turns into revenue.</p>
+          <div class="svc-tags-v21">
+            <span class="tag">Win Screening</span>
+            <span class="tag">Positioning</span>
+            <span class="tag">Proposal Firepower</span>
+          </div>
+        </div>
+        <div class="svc-arrow">→</div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- (SCENARIOS SECTION REMOVED IN V2 — absorbed into How It Works below) -->
 
 <!-- TEAM -->
 <section id="team">
@@ -1356,31 +2000,134 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how-it-works" style="background:var(--white);">
-  <div style="max-width:1240px;margin:0 auto;">
+<!-- HOW IT WORKS —— v2.1: kill boxes, custom hand-drawn SVG icons per step -->
+<section id="how-it-works" class="hiw-v21">
+  <div class="hiw-v21-inner">
     <div class="sec-eyebrow" style="text-align:center;justify-content:center;">How It Works</div>
     <h2 class="sec-h2" style="text-align:center;">Assess → Pursue → Win</h2>
-    <p class="sec-body" style="text-align:center;max-width:620px;margin:0 auto 64px;">A simple, repeatable process that turns Oklahoma manufacturing capability into signed contracts.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--rule);border:1px solid var(--rule);">
-      <div style="background:var(--white);padding:48px 36px;text-align:center;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">01</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Assess</div>
-        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We audit your capabilities, certifications, and market readiness — identifying exactly where you fit in the autonomous supply chain.</p>
+    <p class="sec-body" style="text-align:center;max-width:560px;margin:24px auto 0;">Requirements to revenue, no consulting reports in between.</p>
+    <div class="hiw-v21-grid">
+
+      <div class="hiw-v21-step">
+        <div class="hiw-v21-num">01</div>
+        <div class="hiw-v21-icon">
+          <!-- ASSESS icon: hand-drawn BOM / spec-sheet with checkmark -->
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- paper sheet with slight rotation to feel hand-drawn -->
+            <path d="M28 18 L82 20 L82 100 L26 98 Z" stroke="#152035" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+            <path d="M82 20 L90 28 L90 108 L82 100 M82 100 L26 98 L34 106 L90 108" stroke="#152035" stroke-width="1.2" stroke-linejoin="round" fill="none" opacity="0.5"/>
+            <!-- header rule -->
+            <line x1="36" y1="32" x2="74" y2="33" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <!-- BOM rows -->
+            <line x1="36" y1="44" x2="70" y2="45" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="36" y1="54" x2="66" y2="55" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="36" y1="64" x2="72" y2="65" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="36" y1="74" x2="64" y2="75" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- teal checkmark, hand-drawn feel -->
+            <path d="M62 82 L70 92 L88 68" stroke="#00b894" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="hiw-v21-name">Assess</div>
+        <p class="hiw-v21-desc">Share your BOM, capability, or market question. We map it to the network.</p>
       </div>
-      <div style="background:var(--white);padding:48px 36px;text-align:center;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">02</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Pursue</div>
-        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We source qualified opportunities, facilitate buyer introductions, and position your facility to win against national competition.</p>
+
+      <div class="hiw-v21-step">
+        <div class="hiw-v21-num">02</div>
+        <div class="hiw-v21-icon">
+          <!-- PURSUE icon: hand-drawn network node graph -->
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- connecting lines first -->
+            <line x1="60" y1="32" x2="30" y2="62" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="60" y1="32" x2="92" y2="56" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="60" y1="32" x2="60" y2="92" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="30" y1="62" x2="60" y2="92" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="92" y1="56" x2="60" y2="92" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="30" y1="62" x2="92" y2="56" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round" opacity="0.5" stroke-dasharray="3 3"/>
+            <!-- nodes -->
+            <circle cx="60" cy="32" r="7" fill="#00b894" stroke="#152035" stroke-width="1.6"/>
+            <circle cx="30" cy="62" r="6" fill="#fff" stroke="#152035" stroke-width="1.6"/>
+            <circle cx="92" cy="56" r="6" fill="#fff" stroke="#152035" stroke-width="1.6"/>
+            <circle cx="60" cy="92" r="6" fill="#fff" stroke="#152035" stroke-width="1.6"/>
+            <!-- signal pulse rings around top node -->
+            <circle cx="60" cy="32" r="12" stroke="#00b894" stroke-width="1" fill="none" opacity="0.5"/>
+            <circle cx="60" cy="32" r="17" stroke="#00b894" stroke-width="0.8" fill="none" opacity="0.25"/>
+          </svg>
+        </div>
+        <div class="hiw-v21-name">Pursue</div>
+        <p class="hiw-v21-desc">Warm intros, meetings at shows, direct connections to buyers, suppliers, and primes.</p>
       </div>
-      <div style="background:var(--white);padding:48px 36px;text-align:center;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--teal);opacity:.2;line-height:1;margin-bottom:12px;">03</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--navy);letter-spacing:.5px;margin-bottom:14px;">Win</div>
-        <p style="font-size:15px;line-height:1.75;color:var(--mid);font-weight:300;">We support proposals, negotiate contracts, and close deals — delivering revenue, not reports.</p>
+
+      <div class="hiw-v21-step">
+        <div class="hiw-v21-num">03</div>
+        <div class="hiw-v21-icon">
+          <!-- WIN icon: hand-drawn signed contract with pen stroke -->
+          <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- contract paper -->
+            <path d="M24 22 L82 24 L82 96 L22 94 Z" stroke="#152035" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+            <!-- top rule -->
+            <line x1="32" y1="34" x2="74" y2="35" stroke="#152035" stroke-width="1.4" stroke-linecap="round"/>
+            <!-- text rows -->
+            <line x1="32" y1="46" x2="70" y2="47" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="32" y1="54" x2="66" y2="55" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <line x1="32" y1="62" x2="72" y2="63" stroke="#7a8fa8" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- signature line -->
+            <line x1="32" y1="82" x2="58" y2="83" stroke="#7a8fa8" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2"/>
+            <!-- teal signature scribble -->
+            <path d="M34 80 C 38 74, 42 84, 46 78 S 52 74, 56 80" stroke="#00b894" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <!-- pen -->
+            <path d="M78 66 L102 42 L108 48 L84 72 Z" stroke="#152035" stroke-width="1.6" stroke-linejoin="round" fill="#fff"/>
+            <path d="M78 66 L84 72 L74 78 Z" stroke="#152035" stroke-width="1.6" stroke-linejoin="round" fill="#152035"/>
+          </svg>
+        </div>
+        <div class="hiw-v21-name">Win</div>
+        <p class="hiw-v21-desc">Positioning, proposal support, follow-through &mdash; until it's signed.</p>
       </div>
+
     </div>
-    <div style="text-align:center;margin-top:48px;">
-      <a href="#contact" class="btn-teal">Book a 20-Minute Intro Call →</a>
+    <div style="text-align:center;margin-top:72px;">
+      <a href="#contact" class="btn-teal">Send Us Your BOM →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK TOGETHER — TIERS —— NEW (tight) -->
+<section id="tiers">
+  <div class="tiers-inner">
+    <div class="tiers-head">
+      <div class="sec-eyebrow" style="justify-content:center;">How We Engage</div>
+      <h2 class="sec-h2">Two Ways In.</h2>
+    </div>
+    <div class="tiers-grid">
+
+      <div class="tier tier-1">
+        <div class="tier-tag">Ecosystem Services</div>
+        <h3 class="tier-h">Connect. Match. Introduce.</h3>
+        <div class="tier-price">Grant-supported · No cost to qualified companies</div>
+        <ul class="tier-list">
+          <li>Supplier matching &amp; supply-chain mapping</li>
+          <li>Warm intros to buyers, primes, partners</li>
+          <li>Oklahoma market entry &amp; ecosystem navigation</li>
+          <li>Opportunity ID &amp; pursuit screening</li>
+        </ul>
+        <p class="tier-fine">Funded through EDA Build to Scale. Free to qualified companies in the OK autonomous-systems ecosystem.</p>
+        <a href="#contact" class="tier-cta" style="margin-top:22px;">Check If You Qualify →</a>
+      </div>
+
+      <div class="tier tier-2">
+        <div class="tier-tag">Growth Partnerships</div>
+        <h3 class="tier-h">Your Dedicated Sales Arm.</h3>
+        <div class="tier-price">Retained engagement · Scoped by outcome</div>
+        <ul class="tier-list">
+          <li>Dedicated business-development capacity</li>
+          <li>Named-account pursuit &amp; pipeline</li>
+          <li>Active sales rep at buyer meetings &amp; events</li>
+          <li>Capability positioning &amp; proposal firepower</li>
+          <li>Pipeline reporting against revenue targets</li>
+        </ul>
+        <p class="tier-fine">Backed by 40+ years of aerospace, CNC, and startup operating experience.</p>
+        <a href="#contact" class="tier-cta" style="margin-top:22px;">Request a Pipeline Review →</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1424,12 +2171,13 @@
   </div>
 </section>
 
-<!-- TRADE SHOWS -->
+<!-- TRADE SHOWS —— REVISED LIST -->
 <section id="shows">
   <div class="shows-inner">
     <div class="shows-intro">
       <div>
-        <div class="sec-eyebrow">2026 Market Presence</div>
+        <span class="change-tag">Updated List</span>
+        <div class="sec-eyebrow">Market Presence</div>
         <h2 class="sec-h2">On the Ground<br>Where It Matters</h2>
       </div>
       <p class="shows-intro-right">
@@ -1437,23 +2185,44 @@
       </p>
     </div>
 
+    <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:12px 0 20px;">Upcoming</h3>
     <div class="shows-list">
       <div class="show-row">
-        <div class="show-date">May<br>11–14</div>
+        <div class="show-date">Sep<br>15</div>
         <div>
-          <div class="show-name">AUVSI XPONENTIAL</div>
-          <div class="show-loc">Detroit, MI</div>
+          <div class="show-name">Autonomy Oklahoma Symposium</div>
+          <div class="show-loc">Oklahoma City, OK</div>
         </div>
-        <div class="show-focus">Largest global gathering for uncrewed systems</div>
+        <div class="show-focus">State-level convening for the OK autonomous-systems ecosystem</div>
       </div>
       <div class="show-row">
-        <div class="show-date">Jul<br>8–9</div>
+        <div class="show-date">Oct<br>12–14</div>
         <div>
-          <div class="show-name">Military Robotics & Autonomous Systems</div>
-          <div class="show-loc">Arlington, VA</div>
+          <div class="show-name">AUSA Annual Meeting &amp; Exposition</div>
+          <div class="show-loc">Washington, DC</div>
         </div>
-        <div class="show-focus">Defense decision-makers, ground & air robotics</div>
+        <div class="show-focus">Largest land-power exposition — Army &amp; defense prime engagement</div>
       </div>
+      <div class="show-row">
+        <div class="show-date">Nov<br>9–10</div>
+        <div>
+          <div class="show-name">AUVSI Defense</div>
+          <div class="show-loc">Washington, DC</div>
+        </div>
+        <div class="show-focus">Defense-focused uncrewed &amp; autonomous systems programs</div>
+      </div>
+      <div class="show-row">
+        <div class="show-date">May<br>17–20 '27</div>
+        <div>
+          <div class="show-name">XPONENTIAL 2027</div>
+          <div class="show-loc">Miami Beach, FL</div>
+        </div>
+        <div class="show-focus">Largest global gathering for uncrewed &amp; autonomous systems</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:48px 0 20px;">Recently Attended</h3>
+    <div class="shows-list">
       <div class="show-row">
         <div class="show-date">Sep<br>1–3</div>
         <div>
@@ -1463,20 +2232,20 @@
         <div class="show-focus">Energy, surveying, construction drone applications</div>
       </div>
       <div class="show-row">
-        <div class="show-date">Fall<br>2026</div>
+        <div class="show-date">Aug<br>4–6</div>
         <div>
-          <div class="show-name">UTAC 2026</div>
-          <div class="show-loc">Perry, GA</div>
+          <div class="show-name">Tinker and the Primes</div>
+          <div class="show-loc">Midwest City, OK</div>
         </div>
-        <div class="show-focus">Tactical training — putting tech to work in field scenarios</div>
+        <div class="show-focus">OK small business + defense prime matchmaking</div>
       </div>
       <div class="show-row">
-        <div class="show-date">Jan<br>5–8 '27</div>
+        <div class="show-date">May<br>11–14</div>
         <div>
-          <div class="show-name">CES 2027</div>
-          <div class="show-loc">Las Vegas, NV</div>
+          <div class="show-name">AUVSI XPONENTIAL</div>
+          <div class="show-loc">Detroit, MI</div>
         </div>
-        <div class="show-focus">Consumer & enterprise autonomy, sensor & AI trends</div>
+        <div class="show-focus">Largest global gathering for uncrewed systems</div>
       </div>
     </div>
   </div>
@@ -1587,14 +2356,14 @@
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT —— REVISED -->
 <section id="contact">
   <div class="contact-inner">
-    <div class="sec-eyebrow">Get In Touch</div>
+    <div class="sec-eyebrow">Get in Touch</div>
     <div class="contact-grid">
       <div>
-        <h2 class="contact-big">Ready to<br>Build Your<br><span class="teal">Supply</span><br>Chain?</h2>
-        <p class="contact-blurb">Whether you're a drone OEM seeking Oklahoma-made components, a manufacturer ready to break into autonomous systems markets, or a partner in Oklahoma's ecosystem — let's talk.</p>
+        <h2 class="contact-big">Tell Us<br>What You<br><span class="teal">Need.</span></h2>
+        <p class="contact-blurb">24-hour response. No sales pitch — just next steps.</p>
         <div class="contact-details">
           <div class="cdet">
             <span class="cdet-l">Email</span>
@@ -1602,7 +2371,7 @@
           </div>
           <div class="cdet">
             <span class="cdet-l">Headquarters</span>
-            <span class="cdet-r">Tulsa, Oklahoma</span>
+            <span class="cdet-r">The Gradient<br>12 N Cheyenne Ave<br>Tulsa, Oklahoma</span>
           </div>
           <div class="cdet">
             <span class="cdet-l">Website</span>
@@ -1624,19 +2393,19 @@
           <input type="text" name="company" class="cf-input" placeholder="Company name">
         </div>
         <div class="cf-row">
-          <label class="cf-label">I Am A</label>
+          <label class="cf-label">What Brings You Here?</label>
           <select name="role" class="cf-select">
-            <option value="">Select your role...</option>
-            <option>Drone OEM / Autonomous Systems Buyer</option>
-            <option>Oklahoma Manufacturer (SMM)</option>
-            <option>Defense / Aerospace Prime</option>
-            <option>Investor or Partner</option>
-            <option>Other</option>
+            <option value="">Select the closest fit...</option>
+            <option>I need Oklahoma suppliers or a supply-chain solution</option>
+            <option>I'm an OK manufacturer looking for commercial work</option>
+            <option>I want to explore expanding into Oklahoma</option>
+            <option>I'm interested in a retained partnership</option>
+            <option>Something else / general inquiry</option>
           </select>
         </div>
         <div class="cf-row">
           <label class="cf-label">Message</label>
-          <textarea name="message" class="cf-input" placeholder="Tell us about your supply chain needs or how we can help..."></textarea>
+          <textarea name="message" class="cf-input" placeholder="Tell us what you're trying to accomplish and we'll take it from there..."></textarea>
         </div>
         <button type="submit" class="cf-submit" id="contact-submit">Send Message →</button>
         <div id="contact-success" style="display:none; text-align:center; padding:24px 0;">
