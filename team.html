@@ -487,6 +487,9 @@
   .ft-links a { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s; }
   .ft-links a:hover { color:var(--teal); }
   .ft-copy { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px; color:rgba(240,246,255,.2); }
+  .ft-hq { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.35); line-height:1.7; text-align:center; }
+  .ft-hq a { color:inherit; text-decoration:none; }
+  .ft-hq a:hover { color:var(--teal); }
 
   /* ─── CURSOR INVERSION ON DARK SECTIONS ───── */
   body.cursor-light #cur  { background:var(--white); mix-blend-mode:difference; }
@@ -545,27 +548,29 @@
 
 <!-- ═══ NAV ═══ -->
 <nav>
-  <a href="index.html" class="nav-logo">
+  <a href="/" class="nav-logo">
     <img src="images/logo-horizontal.png"
          alt="OK Autonomous">
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#mission">Mission</a></li>
-    <li><a href="index.html#services">Services</a></li>
-    <li><a href="team.html" class="active">Team</a></li>
-    <li><a href="index.html#shows">Events</a></li>
+    <li><a href="/#doors">Who We Serve</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#tiers">Engagement</a></li>
+    <li><a href="/team" class="active">Team</a></li>
+    <li><a href="/#shows">Events</a></li>
   </ul>
-  <a href="index.html#contact" class="nav-cta">Book a Call</a>
+  <a href="/#contact" class="nav-cta">Find My Supplier</a>
   <button class="nav-burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html#mission" onclick="closeMobile()">Mission</a>
-  <a href="index.html#services" onclick="closeMobile()">Services</a>
-  <a href="team.html" onclick="closeMobile()">Team</a>
-  <a href="index.html#shows" onclick="closeMobile()">Events</a>
-  <a href="index.html#contact" class="mobile-cta" onclick="closeMobile()">Book a Call</a>
+  <a href="/#doors" onclick="closeMobile()">Who We Serve</a>
+  <a href="/#services" onclick="closeMobile()">Services</a>
+  <a href="/#tiers" onclick="closeMobile()">Engagement</a>
+  <a href="/team" onclick="closeMobile()">Team</a>
+  <a href="/#shows" onclick="closeMobile()">Events</a>
+  <a href="/#contact" class="mobile-cta" onclick="closeMobile()">Find My Supplier</a>
 </div>
 
 <!-- ═══ PAGE HERO ═══ -->
@@ -874,12 +879,14 @@
     <div class="ft-tagline">Oklahoma's commercial engine for autonomous systems</div>
   </div>
   <div class="ft-links">
-    <a href="index.html#mission">Mission</a>
-    <a href="index.html#services">Services</a>
-    <a href="team.html">Team</a>
-    <a href="index.html#shows">Events</a>
-    <a href="index.html#contact">Contact</a>
+    <a href="/#doors">Who We Serve</a>
+    <a href="/#services">Services</a>
+    <a href="/#tiers">Engagement</a>
+    <a href="/team">Team</a>
+    <a href="/#shows">Events</a>
+    <a href="/#contact">Contact</a>
   </div>
+  <div class="ft-hq">The Gradient · 12 N Cheyenne Ave · Tulsa, Oklahoma · <a href="mailto:info@ok-as.com">info@ok-as.com</a></div>
   <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
