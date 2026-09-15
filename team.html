@@ -108,897 +108,433 @@
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sky:       #f0f6ff;
-    --white:     #ffffff;
-    --cloud:     #e8f0fb;
-    --ink:       #0e1624;
-    --navy:      #152035;
-    --mid:       #3a4f6e;
-    --muted:     #7a8fa8;
-    --rule:      #d0daea;
-    --teal:      #00b894;
-    --teal-dim:  rgba(0,184,148,0.12);
-    --teal-glow: rgba(0,184,148,0.25);
-  }
 
-  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
+html{scroll-behavior:smooth}
+body{margin:0;background:#f0f6ff;color:#0e1624;font-family:'Barlow',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#152035;text-decoration:none}a:hover{color:#00b894}
+h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}
+[data-rv]{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+[data-rv].on{opacity:1;transform:none}
+[data-desktop-nav] a{white-space:nowrap}
+@media (max-width:1000px){[data-desktop-nav]{display:none !important}[data-burger]{display:flex !important}}
+@media (max-width:900px){[data-sticky]{position:static !important}}
+@media (max-width:640px){[data-photo]{max-width:200px}[data-footer]{padding:32px clamp(20px,5vw,64px) 20px !important;gap:20px !important}[data-footer-grid]{grid-template-columns:1fr !important;gap:20px !important}}
+@media (prefers-reduced-motion:reduce){[data-rv]{opacity:1;transform:none;transition:none}}
 
-  body {
-    background:var(--sky); color:var(--ink);
-    font-family:'Barlow',sans-serif; font-weight:400;
-    overflow-x:hidden;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    body { cursor:none; }
-  }
-
-  /* ─── CURSOR ─── */
-  #cur  { position:fixed; width:10px; height:10px; background:var(--teal); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:multiply; transition:width .15s,height .15s; }
-  #cur2 { position:fixed; width:32px; height:32px; border:1.5px solid rgba(0,184,148,.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all .1s ease; }
-  body.cursor-big #cur  { width:18px; height:18px; }
-  body.cursor-big #cur2 { width:56px; height:56px; }
-
-  /* ─── BG ─── */
-  .dot-grid { position:fixed; inset:0; pointer-events:none; z-index:0; background-image:radial-gradient(circle, rgba(0,100,200,.065) 1px, transparent 1px); background-size:36px 36px; }
-  .horizon-glow { position:fixed; top:-200px; left:-200px; width:800px; height:800px; background:radial-gradient(circle, rgba(0,184,148,.07) 0%, transparent 65%); pointer-events:none; z-index:0; }
-
-  /* ─── PARTICLES ─── */
-  .particle { position:fixed; border-radius:50%; pointer-events:none; z-index:1; opacity:0; animation:pfloat linear infinite; }
-  @keyframes pfloat { 0% { opacity:0; transform:translateY(0) scale(1); } 10% { opacity:.7; } 90% { opacity:.2; } 100% { opacity:0; transform:translateY(-100vh) scale(.4); } }
-
-  /* ─── NAV ─── */
-  nav {
-    position:fixed; top:0; width:100%; z-index:100;
-    background:rgba(240,246,255,.88); backdrop-filter:blur(18px);
-    border-bottom:1px solid var(--rule);
-    padding:0 52px; height:66px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-  .nav-logo img { height:34px; width:auto; transition:opacity .3s; }
-  .nav-logo:hover img { opacity:.85; }
-  .nav-links { display:flex; gap:32px; list-style:none; }
-  .nav-links a { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; position:relative; padding-bottom:2px; }
-  .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px; background:var(--teal); transition:width .3s; }
-  .nav-links a:hover { color:var(--teal); }
-  .nav-links a:hover::after { width:100%; }
-  .nav-links a.active { color:var(--teal); }
-  .nav-links a.active::after { width:100%; }
-  .nav-cta { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--white); background:var(--teal); padding:10px 22px; text-decoration:none; border-radius:2px; transition:all .2s; box-shadow:0 4px 16px var(--teal-glow); }
-  .nav-cta:hover { background:#00a07f; transform:translateY(-1px); }
-
-  /* ─── MOBILE MENU ─── */
-  .nav-burger {
-    display:none; background:none; border:none; padding:8px;
-    flex-direction:column; gap:5px; cursor:pointer;
-  }
-  .nav-burger span {
-    display:block; width:24px; height:2px; background:var(--navy);
-    transition:all .3s cubic-bezier(.16,1,.3,1);
-  }
-  .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-  .nav-burger.open span:nth-child(2) { opacity:0; }
-  .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-
-  .mobile-menu {
-    display:none; position:fixed; top:66px; left:0; right:0; bottom:0;
-    background:rgba(240,246,255,.97); backdrop-filter:blur(20px);
-    z-index:99; flex-direction:column; align-items:center;
-    justify-content:center; gap:32px;
-  }
-  .mobile-menu.open { display:flex; }
-  .mobile-menu a {
-    font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:2px;
-    color:var(--navy); text-decoration:none; transition:color .2s;
-  }
-  .mobile-menu a:hover { color:var(--teal); }
-  .mobile-menu .mobile-cta {
-    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px;
-    text-transform:uppercase; background:var(--teal); color:var(--white);
-    padding:14px 28px; border-radius:2px; text-decoration:none;
-    margin-top:16px;
-  }
-
-  @media (max-width:768px) {
-    .nav-burger { display:flex; }
-  }
-
-  /* ─── PAGE HERO ─── */
-  .page-hero {
-    position:relative; z-index:2;
-    padding:140px 52px 72px;
-    background:var(--white);
-    border-bottom:1px solid var(--rule);
-    overflow:hidden;
-  }
-
-  /* Large background text */
-  .page-hero-bg-text {
-    position:absolute; right:-20px; top:50%; transform:translateY(-50%);
-    font-family:'Bebas Neue',sans-serif; font-size:clamp(120px,18vw,240px);
-    letter-spacing:-4px; color:rgba(0,184,148,.05); pointer-events:none;
-    white-space:nowrap; line-height:1;
-    animation:fadeUp .8s .1s both;
-  }
-
-  .page-hero-inner { max-width:1240px; margin:0 auto; position:relative; z-index:2; }
-
-  .breadcrumb {
-    display:flex; align-items:center; gap:8px; margin-bottom:24px;
-    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase;
-    opacity:0; animation:fadeUp .7s .15s forwards;
-  }
-  .breadcrumb a { color:var(--teal); text-decoration:none; transition:opacity .2s; }
-  .breadcrumb a:hover { opacity:.7; }
-  .breadcrumb-sep { color:var(--rule); }
-  .breadcrumb-current { color:var(--muted); }
-
-  .page-hero-h1 {
-    font-family:'Bebas Neue',sans-serif; font-size:clamp(64px,8vw,110px);
-    line-height:.92; letter-spacing:1px; color:var(--navy); margin-bottom:16px;
-    opacity:0; animation:fadeUp .8s .25s forwards;
-  }
-  .page-hero-h1 .teal { color:var(--teal); }
-
-  .page-hero-sub {
-    font-size:19px; line-height:1.7; color:var(--mid); font-weight:300;
-    max-width:620px; margin-bottom:0;
-    opacity:0; animation:fadeUp .8s .4s forwards;
-  }
-
-  /* Stat pills */
-  .page-hero-stats {
-    display:flex; gap:0; margin-top:48px; flex-wrap:wrap;
-    border:1px solid var(--rule); width:fit-content;
-    opacity:0; animation:fadeUp .8s .55s forwards;
-  }
-  .ph-stat {
-    padding:20px 36px; border-right:1px solid var(--rule);
-    transition:background .2s;
-  }
-  .ph-stat:last-child { border-right:none; }
-  .ph-stat:hover { background:var(--sky); }
-  .ph-stat-n { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--teal); line-height:1; }
-  .ph-stat-l { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:3px; }
-
-  /* ─── TEAM BIOS ─── */
-  #team-bios { position:relative; z-index:2; }
-
-  /* Each partner gets a full-width alternating section */
-  .partner-section {
-    padding:96px 52px;
-    border-bottom:1px solid var(--rule);
-    opacity:0; transform:translateY(24px);
-    transition:opacity .7s, transform .7s;
-  }
-  .partner-section.vis { opacity:1; transform:translateY(0); }
-  .partner-section:nth-child(odd)  { background:var(--white); }
-  .partner-section:nth-child(even) { background:var(--sky); }
-
-  .partner-inner {
-    max-width:1240px; margin:0 auto;
-    display:grid; grid-template-columns:340px 1fr; gap:72px; align-items:start;
-  }
-  .partner-section:nth-child(even) .partner-inner { direction:rtl; }
-  .partner-section:nth-child(even) .partner-inner > * { direction:ltr; }
-
-  /* Photo column */
-  .partner-photo-col { position:relative; }
-
-  .partner-photo-wrap {
-    position:relative; border-radius:4px; overflow:hidden;
-    box-shadow:0 20px 60px rgba(21,32,53,.13);
-    aspect-ratio:4/5;
-  }
-  .partner-photo-wrap img {
-    width:100%; height:100%; object-fit:cover; object-position:center 20%;
-    transition:transform .6s ease;
-    display:block;
-  }
-  .partner-photo-wrap:hover img { transform:scale(1.04); }
-
-  /* Teal accent line on photo */
-  .partner-photo-wrap::before {
-    content:''; position:absolute; top:0; left:0;
-    width:4px; height:0; background:var(--teal); z-index:2;
-    transition:height .5s cubic-bezier(.16,1,.3,1);
-  }
-  .partner-section.vis .partner-photo-wrap::before { height:100%; transition-delay:.3s; }
-
-  /* Partner number badge */
-  .partner-num {
-    position:absolute; top:-16px; right:-16px;
-    font-family:'Bebas Neue',sans-serif; font-size:80px;
-    color:var(--teal); opacity:.1; line-height:1;
-    pointer-events:none;
-  }
-
-  /* Contact chip below photo */
-  .partner-contact-chip {
-    margin-top:20px; padding:16px 20px;
-    background:var(--white); border:1px solid var(--rule); border-radius:3px;
-    display:flex; flex-direction:column; gap:8px;
-  }
-  .pcc-label {
-    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px;
-    text-transform:uppercase; color:var(--muted);
-  }
-  .pcc-role {
-    font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.5px; color:var(--navy);
-  }
-  .pcc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
-  .pcc-tag {
-    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1.5px;
-    text-transform:uppercase; color:var(--teal);
-    background:var(--teal-dim); padding:4px 10px; border-radius:2px;
-    border:1px solid rgba(0,184,148,.18);
-  }
-
-  /* Bio column */
-  .partner-bio-col {}
-
-  .partner-eyebrow {
-    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:4px;
-    text-transform:uppercase; color:var(--teal); margin-bottom:12px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .partner-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
-
-  .partner-name {
-    font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,5vw,76px);
-    line-height:.92; letter-spacing:1px; color:var(--navy); margin-bottom:6px;
-  }
-
-  .partner-title {
-    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px;
-    text-transform:uppercase; color:var(--muted); margin-bottom:36px;
-    padding-bottom:28px; border-bottom:1px solid var(--rule);
-  }
-
-  .partner-body {
-    font-size:17px; line-height:1.8; color:var(--mid); font-weight:300; margin-bottom:16px;
-  }
-  .partner-body strong { color:var(--navy); font-weight:500; }
-
-  /* Career timeline */
-  .partner-timeline {
-    margin-top:40px; display:flex; flex-direction:column; gap:0;
-  }
-  .tl-header {
-    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px;
-    text-transform:uppercase; color:var(--muted); margin-bottom:16px;
-  }
-  .tl-item {
-    display:grid; grid-template-columns:28px 1fr; gap:16px;
-    padding:16px 0; border-bottom:1px solid var(--rule);
-    align-items:start;
-  }
-  .tl-item:last-child { border-bottom:none; }
-  .tl-dot {
-    width:8px; height:8px; background:var(--teal); border-radius:50%;
-    margin-top:6px; flex-shrink:0;
-    box-shadow:0 0 0 3px var(--teal-dim);
-  }
-  .tl-content {}
-  .tl-co { font-size:15px; font-weight:500; color:var(--navy); margin-bottom:2px; }
-  .tl-desc { font-size:14px; color:var(--mid); font-weight:300; line-height:1.6; }
-
-  /* Key wins / highlights strip */
-  .partner-highlights {
-    margin-top:36px; padding:24px 28px;
-    background:var(--teal-dim); border-left:3px solid var(--teal);
-    border-radius:0 4px 4px 0;
-  }
-  .ph-label {
-    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px;
-    text-transform:uppercase; color:var(--teal); margin-bottom:12px;
-  }
-  .ph-items { display:flex; flex-direction:column; gap:8px; }
-  .ph-item {
-    display:flex; gap:10px; font-size:14px; color:var(--navy); font-weight:400; line-height:1.5;
-  }
-  .ph-item::before { content:'✓'; color:var(--teal); font-weight:700; flex-shrink:0; }
-
-  /* ─── COLLECTIVE CTA ─── */
-  #collective {
-    position:relative; z-index:2;
-    background:var(--navy); padding:96px 52px;
-    overflow:hidden;
-  }
-  .collective-orb {
-    position:absolute; width:700px; height:700px; border-radius:50%;
-    background:radial-gradient(circle, rgba(0,184,148,.09) 0%, transparent 70%);
-    left:-200px; top:50%; transform:translateY(-50%); pointer-events:none;
-  }
-  .collective-inner {
-    max-width:1240px; margin:0 auto; position:relative; z-index:2;
-    display:grid; grid-template-columns:1fr 400px; gap:80px; align-items:center;
-  }
-  .collective-left {}
-  .collective-eyebrow {
-    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:4px;
-    text-transform:uppercase; color:var(--teal); margin-bottom:16px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .collective-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
-  .collective-h2 {
-    font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,5.5vw,84px);
-    line-height:.93; letter-spacing:1px; color:var(--white); margin-bottom:24px;
-  }
-  .collective-h2 .teal { color:var(--teal); }
-  .collective-body {
-    font-size:17px; line-height:1.75; color:rgba(240,246,255,.6);
-    font-weight:300; max-width:480px;
-  }
-
-  .collective-right {
-    display:flex; flex-direction:column; gap:16px;
-  }
-  .coll-btn-primary {
-    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px; text-transform:uppercase;
-    background:var(--teal); color:var(--navy); padding:16px 28px; text-decoration:none;
-    border-radius:2px; text-align:center; transition:all .2s;
-    box-shadow:0 4px 20px rgba(0,184,148,.35);
-    display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  .coll-btn-primary:hover { background:#00d4aa; transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,184,148,.5); }
-  .coll-btn-secondary {
-    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase;
-    color:rgba(240,246,255,.5); border:1px solid rgba(240,246,255,.15);
-    padding:14px 28px; text-decoration:none; border-radius:2px; text-align:center;
-    transition:all .2s;
-  }
-  .coll-btn-secondary:hover { color:var(--white); border-color:rgba(240,246,255,.4); }
-
-  /* Contact line */
-  .coll-contact {
-    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px;
-    text-transform:uppercase; color:rgba(240,246,255,.25); text-align:center;
-  }
-  .coll-contact a { color:rgba(0,184,148,.7); text-decoration:none; transition:color .2s; }
-  .coll-contact a:hover { color:var(--teal); }
-
-  /* ─── FOOTER ─── */
-  /* ─── BACK TO TOP ─── */
-  .back-to-top {
-    position:fixed; bottom:32px; right:32px; z-index:98;
-    width:48px; height:48px; border-radius:50%;
-    background:var(--teal); border:none;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 4px 20px rgba(0,184,148,.35);
-    cursor:pointer; opacity:0; pointer-events:none;
-    transition:opacity .3s, transform .3s;
-  }
-  .back-to-top.show { opacity:1; pointer-events:all; }
-  .back-to-top:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,184,148,.45); }
-  .back-to-top svg { width:20px; height:20px; fill:none; stroke:var(--white); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
-
-  footer {
-    background:var(--navy); padding:36px 52px;
-    border-top:1px solid rgba(255,255,255,.06);
-    display:flex; align-items:center; justify-content:center; flex-direction:column; flex-wrap:wrap; gap:20px;
-    position:relative; z-index:2; text-align:center;
-  }
-  .ft-logo { display:flex; flex-direction:column; gap:4px; align-items:center; }
-  .ft-wordmark { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:3px; color:var(--white); }
-  .ft-wordmark span { color:var(--teal); }
-  .ft-tagline { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.3); }
-  .ft-links { display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
-  .ft-links a { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.4); text-decoration:none; transition:color .2s; }
-  .ft-links a:hover { color:var(--teal); }
-  .ft-copy { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:1px; color:rgba(240,246,255,.2); }
-  .ft-hq { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(240,246,255,.35); line-height:1.7; text-align:center; }
-  .ft-hq a { color:inherit; text-decoration:none; }
-  .ft-hq a:hover { color:var(--teal); }
-
-  /* ─── CURSOR INVERSION ON DARK SECTIONS ───── */
-  body.cursor-light #cur  { background:var(--white); mix-blend-mode:difference; }
-  body.cursor-light #cur2 { border-color:rgba(255,255,255,.55); }
-
-  /* ─── CURSOR HIDE ON TOUCH ─── */
-  @media (hover: none) {
-    #cur, #cur2 { display:none !important; }
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width:1024px) {
-    .partner-inner { grid-template-columns:280px 1fr; gap:48px; }
-    .partner-section:nth-child(even) .partner-inner { direction:ltr; }
-    .collective-inner { grid-template-columns:1fr; gap:48px; }
-  }
-  @media (max-width:768px) {
-    nav { padding:0 20px; }
-    .nav-links { display:none; }
-    .nav-cta { display:none; }
-    .nav-burger { display:flex; }
-    .page-hero, .partner-section, #collective { padding-left:20px; padding-right:20px; }
-    .partner-inner { grid-template-columns:1fr; }
-    .partner-photo-wrap { max-width:300px; }
-    .page-hero-stats { flex-direction:column; }
-    .ph-stat { border-right:none; border-bottom:1px solid var(--rule); }
-    .ph-stat:last-child { border-bottom:none; }
-    footer { padding:32px 20px; gap:16px; }
-    .ft-links { gap:16px; }
-    .back-to-top { bottom:20px; right:20px; width:44px; height:44px; }
-  }
-
-  /* ─── Reduced motion accessibility ─── */
-  @media (prefers-reduced-motion: reduce) {
-    .partner-section, .page-hero-eyebrow, .page-hero-h1, .page-hero-sub, .page-hero-cta {
-      opacity:1 !important; transform:none !important; animation:none !important;
-    }
-    * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
-  }
-
-  /* ═══ MOBILE OPTIMIZATION (<=640px) ═══ */
-  @media (max-width:640px) {
-    footer {
-      padding:44px 24px 40px !important;
-      gap:24px !important;
-    }
-    .ft-logo { gap:6px !important; }
-    .ft-wordmark { font-size:20px !important; letter-spacing:2.5px !important; }
-    .ft-tagline { font-size:8px !important; letter-spacing:1.4px !important; line-height:1.5 !important; max-width:none !important; padding:0 8px !important; white-space:nowrap !important; }
-    .ft-links {
-      gap:0 !important;
-      display:grid !important;
-      grid-template-columns:1fr 1fr !important;
-      row-gap:14px !important;
-      column-gap:12px !important;
-      width:100% !important;
-      max-width:280px !important;
-      padding:20px 0 !important;
-      border-top:1px solid rgba(255,255,255,.08) !important;
-      border-bottom:1px solid rgba(255,255,255,.08) !important;
-    }
-    .ft-links a {
-      font-size:10px !important;
-      letter-spacing:2px !important;
-      text-align:center !important;
-      padding:2px 0 !important;
-    }
-    .ft-hq {
-      font-size:9px !important;
-      letter-spacing:1.8px !important;
-      line-height:1.9 !important;
-    }
-    .ft-hq-line { display:block !important; }
-    .ft-dot { color:rgba(0,184,148,.5) !important; margin:0 4px !important; }
-    .ft-copy {
-      font-size:8.5px !important;
-      letter-spacing:1.5px !important;
-      opacity:.6 !important;
-    }
-  }
+[hidden]{display:none !important}
+.hv1:hover{color:#152035 !important}
+.hv2:hover{color:#152035 !important}
+.hv3:hover{color:#152035 !important}
+.hv4:hover{color:#152035 !important}
+.hv5:hover{color:#152035 !important}
+.hv6:hover{filter:grayscale(0) !important}
+.hv7:hover{filter:grayscale(0) !important}
+.hv8:hover{filter:grayscale(0) !important}
+.hv9:hover{filter:grayscale(0) !important}
+.hv10:hover{filter:grayscale(0) !important}
+.hv11:hover{color:#152035 !important;border-color:#152035 !important}
+.hv12:hover{color:#152035 !important;border-color:#152035 !important}
+.hv13:hover{color:#152035 !important;border-color:#152035 !important}
+.hv14:hover{color:#152035 !important;border-color:#152035 !important}
+.hv15:hover{background:#00b894 !important;color:#0e1624 !important}
+.hv16:hover{background:#fff !important;color:#0e1624 !important}
+.hv17:hover{border-color:#fff !important;background:rgba(255,255,255,.1) !important;color:#fff !important}
+.hv18:hover{color:#00b894 !important}
+.hv19:hover{color:#00b894 !important}
+.hv20:hover{color:#00b894 !important}
+.hv21:hover{color:#00b894 !important}
+.hv22:hover{color:#00b894 !important}
+.hv23:hover{color:#00b894 !important}
+.hv24:hover{color:#00b894 !important}
+.hv25:hover{color:#00b894 !important}
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur2"></div>
-<div class="dot-grid"></div>
-<div class="horizon-glow"></div>
 
-<!-- Back to Top -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
-</button>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-  <a href="/" class="nav-logo">
-    <img src="images/logo-horizontal.png"
-         alt="OK Autonomous">
-  </a>
-  <ul class="nav-links">
-    <li><a href="/#doors">Who We Serve</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#tiers">Engagement</a></li>
-    <li><a href="/team" class="active">Team</a></li>
-    <li><a href="/#shows">Events</a></li>
-  </ul>
-  <a href="/#contact" class="nav-cta">Find My Supplier</a>
-  <button class="nav-burger" id="burger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+<div data-screen-label="Team" style="display:flex;flex-direction:column;min-height:100vh;overflow-x:clip">
+
+<nav style="position:sticky;top:0;z-index:50;height:64px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid #d0daea;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,64px);gap:24px">
+  <a href="/" style="display:flex;align-items:center"><img src="images/logo-horizontal.png" alt="OK Autonomous" style="height:28px;display:block"></a>
+  <div data-desktop-nav="" style="display:flex;gap:28px;align-items:center;font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase">
+    <a href="/#doors" style="color:#3a4f6e;border-bottom:1px solid transparent;padding-bottom:2px;transition:color .3s,border-color .3s" class="hv11">Who We Serve</a>
+    <a href="/#services" style="color:#3a4f6e;border-bottom:1px solid transparent;padding-bottom:2px;transition:color .3s,border-color .3s" class="hv12">Services</a>
+    <a href="/#tiers" style="color:#3a4f6e;border-bottom:1px solid transparent;padding-bottom:2px;transition:color .3s,border-color .3s" class="hv13">Engagement</a>
+    <a href="/team" style="color:#152035;border-bottom:1px solid #152035;padding-bottom:2px">Team</a>
+    <a href="/#shows" style="color:#3a4f6e;border-bottom:1px solid transparent;padding-bottom:2px;transition:color .3s,border-color .3s" class="hv14">Events</a>
+    <a href="/#contact" style="background:#152035;color:#fff;padding:12px 18px;transition:background .3s" class="hv15">Find My Supplier</a>
+  </div>
+  <button data-burger="" aria-label="Menu" style="display:none;flex-direction:column;gap:6px;background:none;border:0;padding:8px;cursor:pointer"><span style="display:block;width:22px;height:2px;background:#152035"></span><span style="display:block;width:22px;height:2px;background:#152035"></span></button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="/#doors" onclick="closeMobile()">Who We Serve</a>
-  <a href="/#services" onclick="closeMobile()">Services</a>
-  <a href="/#tiers" onclick="closeMobile()">Engagement</a>
-  <a href="/team" onclick="closeMobile()">Team</a>
-  <a href="/#shows" onclick="closeMobile()">Events</a>
-  <a href="/#contact" class="mobile-cta" onclick="closeMobile()">Find My Supplier</a>
-</div>
-
-<!-- ═══ PAGE HERO ═══ -->
-<div class="page-hero">
-  <div class="page-hero-bg-text">TEAM</div>
-  <div class="page-hero-inner">
-    <div class="breadcrumb">
-      <a href="index.html">OK Autonomous</a>
-      <span class="breadcrumb-sep">/</span>
-      <span class="breadcrumb-current">Team</span>
-    </div>
-    <h1 class="page-hero-h1">The <span class="teal">People</span><br>Behind the Mission</h1>
-    <p class="page-hero-sub">Four founding partners with decades of aerospace, manufacturing, and sales leadership — and a director of business partnerships driving day-to-day commercial execution. Together, they're building Oklahoma's commercial engine for the autonomous systems era.</p>
-    <div class="page-hero-stats">
-      <div class="ph-stat">
-        <div class="ph-stat-n">$1.28B</div>
-        <div class="ph-stat-l">In Contracts Negotiated</div>
-      </div>
-      <div class="ph-stat">
-        <div class="ph-stat-n">40+</div>
-        <div class="ph-stat-l">Years Aerospace Experience</div>
-      </div>
-      <div class="ph-stat">
-        <div class="ph-stat-n">100+</div>
-        <div class="ph-stat-l">C-Suite Leaders Coached</div>
-      </div>
-      <div class="ph-stat">
-        <div class="ph-stat-n">3</div>
-        <div class="ph-stat-l">Continents of Operations</div>
-      </div>
-    </div>
+<div data-if="menuOpen" hidden="">
+  <div style="position:fixed;inset:64px 0 0 0;z-index:49;background:#f0f6ff;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:40px clamp(20px,5vw,64px)">
+    <a href="/#doors" style="font:400 44px/1 'Bebas Neue',sans-serif;color:#152035">Who We Serve</a>
+    <a href="/#services" style="font:400 44px/1 'Bebas Neue',sans-serif;color:#152035">Services</a>
+    <a href="/#tiers" style="font:400 44px/1 'Bebas Neue',sans-serif;color:#152035">Engagement</a>
+    <a href="/team" style="font:400 44px/1 'Bebas Neue',sans-serif;color:#00b894">Team</a>
+    <a href="/#shows" style="font:400 44px/1 'Bebas Neue',sans-serif;color:#152035">Events</a>
+    <a href="/#contact" style="font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;background:#152035;color:#fff;padding:18px 24px;width:fit-content;margin-top:12px">Find My Supplier</a>
   </div>
 </div>
 
-<!-- ═══ PARTNER BIOS ═══ -->
-<div id="team-bios">
-
-  <!-- ── Brian Carpenter ── -->
-  <div class="partner-section">
-    <div class="partner-inner">
-      <div class="partner-photo-col">
-        <div class="partner-num">01</div>
-        <div class="partner-photo-wrap">
-          <img src="images/headshot-brian-carpenter.jpg"
-               alt="Brian Carpenter">
-        </div>
-        <div class="partner-contact-chip">
-          <span class="pcc-label">Role</span>
-          <span class="pcc-role">Partner — Sales Force Architecture</span>
-          <div class="pcc-tags">
-            <span class="pcc-tag">B2B Sales</span>
-            <span class="pcc-tag">Executive Coaching</span>
-            <span class="pcc-tag">Sales Strategy</span>
-          </div>
-        </div>
+<!-- HERO -->
+<header data-screen-label="Team Hero" style="background:#152035">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,10vw,140px) clamp(20px,5vw,64px) clamp(48px,6vw,80px);display:flex;flex-direction:column;gap:clamp(32px,4vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-end;justify-content:space-between">
+      <div data-rv="" style="flex:1 1 320px;display:flex;flex-direction:column;gap:24px">
+        <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#00b894">Founding Partners · Tulsa, Oklahoma</div>
+        <h1 style="margin:0;font:400 clamp(56px,9vw,128px)/.9 'Bebas Neue',sans-serif;color:#fff">The <span style="color:#00b894">People</span> Behind the Mission</h1>
       </div>
-      <div class="partner-bio-col">
-        <div class="partner-eyebrow">Founding Partner</div>
-        <h2 class="partner-name">Brian Carpenter</h2>
-        <div class="partner-title">Sales Force Development & Executive Leadership</div>
-        <p class="partner-body">Brian is the architect of OK Autonomous's commercial engine. He founded and scaled <strong>Didasko Sales and Marketing</strong> in Tulsa in 2009 — building it into a recognized B2B sales organization specializing in tech and manufacturing sectors.</p>
-        <p class="partner-body">Over his career, Brian has <strong>coached over 100 C-suite leaders</strong> on revenue growth, sales process optimization, and team development — spanning companies across the country. His methodology: build the right team, define the right process, then hold it accountable to results.</p>
-        <p class="partner-body">Brian currently serves on the <strong>Executive Vision Council of Oklahoma State University's Spears School of Business Smart Supply Chain Management Program</strong>, and is a member of the <strong>Tulsa Executive Association (TEA)</strong> — connecting his work directly to the innovation ecosystem powering Northeast Oklahoma's growth.</p>
-
-        <div class="partner-highlights">
-          <div class="ph-label">Key Career Highlights</div>
-          <div class="ph-items">
-            <div class="ph-item">Founded and scaled Didasko, a B2B sales organization serving tech and manufacturing clients</div>
-            <div class="ph-item">Coached 100+ C-suite executives on revenue growth through optimized sales processes</div>
-            <div class="ph-item">Executive Vision Council — OSU Spears School Smart Supply Chain Program</div>
-            <div class="ph-item">Member, Tulsa Executive Association (TEA)</div>
-            <div class="ph-item">Built sales forces closing $10M+ in annual deals through targeted outreach and coaching</div>
-          </div>
-        </div>
-
-        <div class="partner-timeline">
-          <div class="tl-header">Career Background</div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Didasko Sales & Marketing</div><div class="tl-desc">Founder & CEO — B2B sales org for tech and manufacturing, Tulsa, OK</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">4D Sales</div><div class="tl-desc">Sales leadership and executive coaching practice</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Dollar Thrifty Automotive Group</div><div class="tl-desc">Sales and business development leadership</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">The SABRE Group</div><div class="tl-desc">Enterprise technology sales</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Hitachi / IBM</div><div class="tl-desc">High-performance sales team leadership</div></div></div>
-        </div>
-      </div>
+      <p data-rv="" style="flex:1 1 300px;max-width:48ch;margin:0;font:300 clamp(16px,1.4vw,19px)/1.6 'Barlow',sans-serif;color:rgba(255,255,255,.78);transition-delay:120ms">Four founding partners with decades of aerospace, manufacturing, and sales leadership — and a director of business partnerships driving day-to-day commercial execution. Together, they're building Oklahoma's commercial engine for the autonomous systems era.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:24px;border-top:1px solid rgba(255,255,255,.15);padding-top:32px">
+      <div data-rv="" style="border-left:1px solid rgba(255,255,255,.18);padding-left:20px"><div style="font:400 clamp(40px,4.5vw,56px)/1 'Bebas Neue',sans-serif;color:#fff" data-c1>$1.28B</div><div style="font:400 12px/1.4 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px">In Contracts Negotiated</div></div>
+      <div data-rv="" style="border-left:1px solid rgba(255,255,255,.18);padding-left:20px;transition-delay:80ms"><div style="font:400 clamp(40px,4.5vw,56px)/1 'Bebas Neue',sans-serif;color:#fff">40+</div><div style="font:400 12px/1.4 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px">Years Aerospace Experience</div></div>
+      <div data-rv="" style="border-left:1px solid rgba(255,255,255,.18);padding-left:20px;transition-delay:160ms"><div style="font:400 clamp(40px,4.5vw,56px)/1 'Bebas Neue',sans-serif;color:#fff">100+</div><div style="font:400 12px/1.4 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px">C-Suite Leaders Coached</div></div>
+      <div data-rv="" style="border-left:1px solid rgba(255,255,255,.18);padding-left:20px;transition-delay:240ms"><div style="font:400 clamp(40px,4.5vw,56px)/1 'Bebas Neue',sans-serif;color:#fff">3</div><div style="font:400 12px/1.4 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:10px">Continents of Operations</div></div>
     </div>
   </div>
+</header>
 
-  <!-- ── Willard (Bill) Emery ── -->
-  <div class="partner-section">
-    <div class="partner-inner">
-      <div class="partner-photo-col">
-        <div class="partner-num">02</div>
-        <div class="partner-photo-wrap">
-          <img src="images/headshot-bill-emery.jpg"
-               alt="Willard Emery">
-        </div>
-        <div class="partner-contact-chip">
-          <span class="pcc-label">Role</span>
-          <span class="pcc-role">Partner — International Growth</span>
-          <div class="pcc-tags">
-            <span class="pcc-tag">Global Supply Chain</span>
-            <span class="pcc-tag">M&A</span>
-            <span class="pcc-tag">Greenfield Startups</span>
-          </div>
-        </div>
-      </div>
-      <div class="partner-bio-col">
-        <div class="partner-eyebrow">Founding Partner</div>
-        <h2 class="partner-name">Willard Emery</h2>
-        <div class="partner-title">International Commercial Aerospace & Manufacturing</div>
-        <p class="partner-body">With <strong>more than 40 years</strong> owning and operating international commercial aerospace and manufacturing businesses, Willard is OKA's most seasoned voice on what it takes to build, buy, and scale manufacturing organizations that last.</p>
-        <p class="partner-body">He has led <strong>acquisitions and integrations across North America</strong> — building companies in the US, Canada, and Mexico — and negotiated defense and commercial aerospace component deals across Europe and Asia. He's launched greenfield manufacturing startups from the ground up on multiple continents, which means he understands both the beginning of the journey and the institutional gravity of mature operations.</p>
-        <p class="partner-body">Willard's network spans decades of <strong>relationships with global aerospace primes, MRO operators, and defense contractors</strong> — relationships that OKA is uniquely positioned to activate on behalf of Oklahoma manufacturers.</p>
-
-        <div class="partner-highlights">
-          <div class="ph-label">Key Career Highlights</div>
-          <div class="ph-items">
-            <div class="ph-item">40+ years owning and operating international commercial aerospace businesses</div>
-            <div class="ph-item">Acquisitions and integrations across US, Canada, and Mexico</div>
-            <div class="ph-item">Negotiated defense and commercial aerospace component deals across North America, Europe, and Asia</div>
-            <div class="ph-item">Launched greenfield manufacturing startups on multiple continents</div>
-            <div class="ph-item">Deep expertise in global supply chains, contract negotiations, and scaling operations</div>
-          </div>
-        </div>
-
-        <div class="partner-timeline">
-          <div class="tl-header">Global Footprint</div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">North America</div><div class="tl-desc">Acquisitions, integrations, and operations across US, Canada, and Mexico</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Europe</div><div class="tl-desc">Defense and commercial aerospace component negotiations and supplier relationships</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Asia</div><div class="tl-desc">Supply chain development and component sourcing for aerospace programs</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Greenfield Startups</div><div class="tl-desc">Built manufacturing operations from the ground up across multiple regions</div></div></div>
-        </div>
-      </div>
-    </div>
+<!-- INDEX STRIP -->
+<div style="background:#fff;border-bottom:1px solid #d0daea">
+  <div style="max-width:1280px;margin:0 auto;padding:16px clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:8px 32px;font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase">
+    
+      <a href="#brian-carpenter" style="color:#7a8fa8;transition:color .3s" class="hv1"><span style="color:#00b894">01</span> Brian Carpenter</a>
+    
+      <a href="#willard-emery" style="color:#7a8fa8;transition:color .3s" class="hv2"><span style="color:#00b894">02</span> Willard Emery</a>
+    
+      <a href="#brian-emery" style="color:#7a8fa8;transition:color .3s" class="hv3"><span style="color:#00b894">03</span> Brian Emery</a>
+    
+      <a href="#grant-morris" style="color:#7a8fa8;transition:color .3s" class="hv4"><span style="color:#00b894">04</span> Grant Morris</a>
+    
+      <a href="#kevin-toews" style="color:#7a8fa8;transition:color .3s" class="hv5"><span style="color:#00b894">05</span> Kevin Toews</a>
+    
   </div>
+</div>
 
-  <!-- ── Brian Emery ── -->
-  <div class="partner-section">
-    <div class="partner-inner">
-      <div class="partner-photo-col">
-        <div class="partner-num">03</div>
-        <div class="partner-photo-wrap">
-          <img src="images/headshot-brian-emery.jpg"
-               alt="Brian Emery">
+<!-- PARTNERS -->
+<section id="partners" data-screen-label="Partners" style="background:#f0f6ff">
+  
+    <article id="brian-carpenter" style="border-bottom:1px solid #d0daea;scroll-margin-top:64px">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px) 64px;align-items:flex-start">
+        <div data-rv="" data-sticky="" style="flex:1 1 260px;max-width:360px;display:flex;flex-direction:column;gap:20px;align-self:flex-start;position:sticky;top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8"><span style="color:#00b894">01</span><span>Founding Partner</span></div>
+          <div data-photo="" style="aspect-ratio:4/5;overflow:hidden;background:#e8f0fb"><img src="images/headshot-brian-carpenter.jpg" alt="Brian Carpenter" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:grayscale(1) contrast(1.05);transition:filter .6s" class="hv6"></div>
+          <div style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8">B2B Sales · Executive Coaching · Sales Strategy</div>
         </div>
-        <div class="partner-contact-chip">
-          <span class="pcc-label">Role</span>
-          <span class="pcc-role">Partner — Aerospace & Operations</span>
-          <div class="pcc-tags">
-            <span class="pcc-tag">Aerospace MRO</span>
-            <span class="pcc-tag">CNC Machining</span>
-            <span class="pcc-tag">Supply Chain</span>
+        <div style="flex:2 1 440px;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:400 clamp(48px,6vw,88px)/.92 'Bebas Neue',sans-serif;color:#152035">Brian Carpenter</h2>
+            <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#00b894">Sales Force Development &amp; Executive Leadership</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:64ch">
+            <p style="margin:0;font:300 clamp(17px,1.4vw,19px)/1.65 'Barlow',sans-serif;color:#152035">Brian is the architect of OK Autonomous's commercial engine. He founded and scaled Didasko Sales and Marketing in Tulsa in 2009 — building it into a recognized B2B sales organization specializing in tech and manufacturing sectors.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Over his career, Brian has coached over 100 C-suite leaders on revenue growth, sales process optimization, and team development — spanning companies across the country. His methodology: build the right team, define the right process, then hold it accountable to results.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Brian currently serves on the Executive Vision Council of Oklahoma State University's Spears School of Business Smart Supply Chain Management Program, and is a member of the Tulsa Executive Association (TEA) — connecting his work directly to the innovation ecosystem powering Northeast Oklahoma's growth.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 48px;border-top:1px solid #152035;padding-top:28px">
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Highlights</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Founded and scaled Didasko, a B2B sales organization serving tech and manufacturing clients</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Coached 100+ C-suite executives on revenue growth through optimized sales processes</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Executive Vision Council — OSU Spears School Smart Supply Chain Program</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Member, Tulsa Executive Association (TEA)</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Built sales forces closing $10M+ in annual deals through targeted outreach and coaching</li>
+                
+              </ul>
+            </div>
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Background</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Didasko Sales &amp; Marketing</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Founder &amp; CEO — B2B sales org for tech and manufacturing, Tulsa, OK</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">4D Sales</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Sales leadership and executive coaching practice</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Dollar Thrifty Automotive Group</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Sales and business development leadership</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">The SABRE Group</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Enterprise technology sales</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Hitachi / IBM</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">High-performance sales team leadership</div></li>
+                
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <div class="partner-bio-col">
-        <div class="partner-eyebrow">Founding Partner</div>
-        <h2 class="partner-name">Brian Emery</h2>
-        <div class="partner-title">Commercial Aerospace, Precision Machining & Manufacturing</div>
-        <p class="partner-body">Brian brings over <strong>15 years of direct ownership and operation</strong> in commercial aerospace, CNC machining, and advanced manufacturing. He has built and run businesses that supply precision components to some of the world's most demanding aerospace programs.</p>
-        <p class="partner-body">His board director roles at aerospace firms exceeding <strong>$100M in annual revenue</strong> gave him deep insight into supply chain strategy, operational efficiency, and what buyers actually need from their manufacturing partners. He knows both sides of the table — and uses that to OKA's advantage.</p>
-        <p class="partner-body">Brian is also an active <strong>investor in tech and manufacturing startups</strong> in Northeast Oklahoma, with a particular focus on companies that can accelerate the region's emergence in autonomous and advanced manufacturing sectors. He is the primary contact for OKA partnerships.</p>
-
-        <div class="partner-highlights">
-          <div class="ph-label">Key Career Highlights</div>
-          <div class="ph-items">
-            <div class="ph-item">Secured multimillion-dollar contracts with Lufthansa, KLM, United Airlines, Boeing, and Bell Helicopter</div>
-            <div class="ph-item">Board director roles at aerospace firms exceeding $100M annual revenue</div>
-            <div class="ph-item">20% YoY revenue growth contribution through supply chain and engineering developments</div>
-            <div class="ph-item">Active investor in tech and manufacturing startups in Northeast Oklahoma</div>
-            <div class="ph-item">Expertise spanning US-based and international supply chain and production operations</div>
+    </article>
+  
+    <article id="willard-emery" style="border-bottom:1px solid #d0daea;scroll-margin-top:64px">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px) 64px;align-items:flex-start">
+        <div data-rv="" data-sticky="" style="flex:1 1 260px;max-width:360px;display:flex;flex-direction:column;gap:20px;align-self:flex-start;position:sticky;top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8"><span style="color:#00b894">02</span><span>Founding Partner</span></div>
+          <div data-photo="" style="aspect-ratio:4/5;overflow:hidden;background:#e8f0fb"><img src="images/headshot-bill-emery.jpg" alt="Willard Emery" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:grayscale(1) contrast(1.05);transition:filter .6s" class="hv7"></div>
+          <div style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8">Global Supply Chain · M&amp;A · Greenfield Startups</div>
+        </div>
+        <div style="flex:2 1 440px;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:400 clamp(48px,6vw,88px)/.92 'Bebas Neue',sans-serif;color:#152035">Willard Emery</h2>
+            <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#00b894">International Commercial Aerospace &amp; Manufacturing</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:64ch">
+            <p style="margin:0;font:300 clamp(17px,1.4vw,19px)/1.65 'Barlow',sans-serif;color:#152035">With more than 40 years owning and operating international commercial aerospace and manufacturing businesses, Willard is OKA's most seasoned voice on what it takes to build, buy, and scale manufacturing organizations that last.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">He has led acquisitions and integrations across North America — building companies in the US, Canada, and Mexico — and negotiated defense and commercial aerospace component deals across Europe and Asia. He's launched greenfield manufacturing startups from the ground up on multiple continents, which means he understands both the beginning of the journey and the institutional gravity of mature operations.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Willard's network spans decades of relationships with global aerospace primes, MRO operators, and defense contractors — relationships that OKA is uniquely positioned to activate on behalf of Oklahoma manufacturers.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 48px;border-top:1px solid #152035;padding-top:28px">
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Highlights</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>40+ years owning and operating international commercial aerospace businesses</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Acquisitions and integrations across US, Canada, and Mexico</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Negotiated defense and commercial aerospace component deals across North America, Europe, and Asia</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Launched greenfield manufacturing startups on multiple continents</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Deep expertise in global supply chains, contract negotiations, and scaling operations</li>
+                
+              </ul>
+            </div>
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Global Footprint</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">North America</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Acquisitions, integrations, and operations across US, Canada, and Mexico</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Europe</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Defense and commercial aerospace component negotiations and supplier relationships</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Asia</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Supply chain development and component sourcing for aerospace programs</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Greenfield Startups</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Built manufacturing operations from the ground up across multiple regions</div></li>
+                
+              </ul>
+            </div>
           </div>
         </div>
-
-        <div class="partner-timeline">
-          <div class="tl-header">Career Background</div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">OK Autonomous</div><div class="tl-desc">Co-Founder & Partner — Primary contact, Tulsa, OK</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Aerospace Manufacturing Companies (Tulsa)</div><div class="tl-desc">Owner/Operator — CNC precision machining and aerospace components</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Board of Directors — Multiple Aerospace Firms</div><div class="tl-desc">Strategic oversight for $100M+ revenue operations</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Tech & Manufacturing Investor</div><div class="tl-desc">Active portfolio in NE Oklahoma innovation ecosystem</div></div></div>
+      </div>
+    </article>
+  
+    <article id="brian-emery" style="border-bottom:1px solid #d0daea;scroll-margin-top:64px">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px) 64px;align-items:flex-start">
+        <div data-rv="" data-sticky="" style="flex:1 1 260px;max-width:360px;display:flex;flex-direction:column;gap:20px;align-self:flex-start;position:sticky;top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8"><span style="color:#00b894">03</span><span>Founding Partner · Primary Contact</span></div>
+          <div data-photo="" style="aspect-ratio:4/5;overflow:hidden;background:#e8f0fb"><img src="images/headshot-brian-emery.jpg" alt="Brian Emery" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:grayscale(1) contrast(1.05);transition:filter .6s" class="hv8"></div>
+          <div style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8">Aerospace MRO · CNC Machining · Supply Chain</div>
+        </div>
+        <div style="flex:2 1 440px;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:400 clamp(48px,6vw,88px)/.92 'Bebas Neue',sans-serif;color:#152035">Brian Emery</h2>
+            <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#00b894">Commercial Aerospace, Precision Machining &amp; Manufacturing</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:64ch">
+            <p style="margin:0;font:300 clamp(17px,1.4vw,19px)/1.65 'Barlow',sans-serif;color:#152035">Brian brings over 15 years of direct ownership and operation in commercial aerospace, CNC machining, and advanced manufacturing. He has built and run businesses that supply precision components to some of the world's most demanding aerospace programs.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">His board director roles at aerospace firms exceeding $100M in annual revenue gave him deep insight into supply chain strategy, operational efficiency, and what buyers actually need from their manufacturing partners. He knows both sides of the table — and uses that to OKA's advantage.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Brian is also an active investor in tech and manufacturing startups in Northeast Oklahoma, with a particular focus on companies that can accelerate the region's emergence in autonomous and advanced manufacturing sectors. He is the primary contact for OKA partnerships.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 48px;border-top:1px solid #152035;padding-top:28px">
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Highlights</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Secured multimillion-dollar contracts with Lufthansa, KLM, United Airlines, Boeing, and Bell Helicopter</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Board director roles at aerospace firms exceeding $100M annual revenue</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>20% YoY revenue growth contribution through supply chain and engineering developments</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Active investor in tech and manufacturing startups in Northeast Oklahoma</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Expertise spanning US-based and international supply chain and production operations</li>
+                
+              </ul>
+            </div>
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Background</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">OK Autonomous</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Co-Founder &amp; Partner — Primary contact, Tulsa, OK</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Aerospace Manufacturing Companies (Tulsa)</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Owner/Operator — CNC precision machining and aerospace components</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Board of Directors — Multiple Aerospace Firms</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Strategic oversight for $100M+ revenue operations</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Tech &amp; Manufacturing Investor</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Active portfolio in NE Oklahoma innovation ecosystem</div></li>
+                
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+    </article>
+  
+    <article id="grant-morris" style="border-bottom:1px solid #d0daea;scroll-margin-top:64px">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px) 64px;align-items:flex-start">
+        <div data-rv="" data-sticky="" style="flex:1 1 260px;max-width:360px;display:flex;flex-direction:column;gap:20px;align-self:flex-start;position:sticky;top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8"><span style="color:#00b894">04</span><span>Business Partnerships</span></div>
+          <div data-photo="" style="aspect-ratio:4/5;overflow:hidden;background:#e8f0fb"><img src="images/headshot-grant-morris.jpg" alt="Grant Morris" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:grayscale(1) contrast(1.05);transition:filter .6s" class="hv9"></div>
+          <div style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8">Business Development · Supplier Matchmaking · Commercial Execution</div>
+        </div>
+        <div style="flex:2 1 440px;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:400 clamp(48px,6vw,88px)/.92 'Bebas Neue',sans-serif;color:#152035">Grant Morris</h2>
+            <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#00b894">Director, Business Partnerships</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:64ch">
+            <p style="margin:0;font:300 clamp(17px,1.4vw,19px)/1.65 'Barlow',sans-serif;color:#152035">Grant leads the day-to-day business development and partnership work for OK Autonomous. He works directly with drone OEMs, autonomous systems companies, Oklahoma manufacturers, and economic development partners — turning supply chain needs into qualified commercial opportunities.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Grant brings seven years of experience in client development, recruiting, and talent strategy across technical and industrial markets. His work has centered on understanding complex business needs, identifying the right capabilities, and building the trusted relationships that produce results.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">At OK-AS, Grant applies that experience to supplier matchmaking, business attraction, and commercial follow-through — helping OEMs navigate Oklahoma's manufacturing ecosystem, connecting local suppliers with qualified opportunities, and coordinating the relationships required to move projects from an initial conversation into an active pursuit.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 48px;border-top:1px solid #152035;padding-top:28px">
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Highlights</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Seven years in client development, recruiting, and relationship management across technical and industrial markets</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Leads supplier matchmaking and business development for OK Autonomous</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Supports domestic and international companies evaluating Tulsa for expansion</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Coordinates OEM introductions, facility visits, and pipeline follow-through</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Bachelor of Business Administration — Marketing and Professional Sales</li>
+                
+              </ul>
+            </div>
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Areas of Expertise</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Business Development</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Builds and manages relationships with manufacturers, buyers, and autonomous systems companies</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Supplier Matchmaking</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Translates OEM requirements into targeted connections with qualified Oklahoma manufacturers</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Business Attraction</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Helps companies evaluate Tulsa's manufacturing, workforce, and economic development resources</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Commercial Execution</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Coordinates research, introductions, meetings, and follow-through to keep opportunities moving</div></li>
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  
+    <article id="kevin-toews" style="border-bottom:1px solid #d0daea;scroll-margin-top:64px">
+      <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px) 64px;align-items:flex-start">
+        <div data-rv="" data-sticky="" style="flex:1 1 260px;max-width:360px;display:flex;flex-direction:column;gap:20px;align-self:flex-start;position:sticky;top:96px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8"><span style="color:#00b894">05</span><span>Founding Partner</span></div>
+          <div data-photo="" style="aspect-ratio:4/5;overflow:hidden;background:#e8f0fb"><img src="images/headshot-kevin-toews.jpg" alt="Kevin Toews" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:grayscale(1) contrast(1.05);transition:filter .6s" class="hv10"></div>
+          <div style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa8">Process Optimization · Heavy Industry · Market Expansion</div>
+        </div>
+        <div style="flex:2 1 440px;display:flex;flex-direction:column;gap:clamp(24px,3vw,40px)">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:400 clamp(48px,6vw,88px)/.92 'Bebas Neue',sans-serif;color:#152035">Kevin Toews</h2>
+            <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#00b894">Industrial Operations, Process Optimization &amp; Market Expansion</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px;max-width:64ch">
+            <p style="margin:0;font:300 clamp(17px,1.4vw,19px)/1.65 'Barlow',sans-serif;color:#152035">Kevin is an owner-operator with deep roots in industrial and manufacturing businesses. His work spans process optimization, equipment integration, and scaling operations for clients entering new and technically demanding markets — including autonomous technology.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">He brings a pragmatic, operational lens to OKA's work — understanding not just what buyers want to purchase, but what it actually takes for a manufacturer to be ready to deliver it. That operational credibility matters enormously in conversations with sophisticated procurement teams.</p>
+            <p style="margin:0;font:300 17px/1.65 'Barlow',sans-serif;color:#3a4f6e">Kevin is also an active investor in technology and real estate in the Tulsa region, with a track record of identifying high-growth opportunities and helping businesses position themselves to capture them. His approach is direct, data-informed, and grounded in years of running real operations.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px 48px;border-top:1px solid #152035;padding-top:28px">
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Career Highlights</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Owner-operator across multiple industrial and manufacturing businesses</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Process optimization and equipment integration for heavy industry clients</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Supported rapid scaling for clients entering autonomous technology markets</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Active tech and real estate investor in the Tulsa innovation ecosystem</li>
+                
+                  <li style="display:grid;grid-template-columns:20px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid #d0daea;font:300 15px/1.5 'Barlow',sans-serif;color:#152035"><span style="width:8px;height:1px;background:#00b894;margin-top:11px"></span>Focus on market expansion in high-growth industrial sectors</li>
+                
+              </ul>
+            </div>
+            <div>
+              <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#7a8fa8;margin-bottom:8px">Areas of Expertise</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Industrial Manufacturing</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Owner and operator of multiple industrial businesses focused on process efficiency</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Equipment Integration</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Technology-driven equipment upgrades to support scaling and new market entry</div></li>
+                
+                  <li style="padding:11px 0;border-bottom:1px solid #d0daea"><div style="font:400 22px/1 'Bebas Neue',sans-serif;color:#152035">Technology Investments</div><div style="font:300 14px/1.5 'Barlow',sans-serif;color:#3a4f6e;margin-top:4px">Active portfolio in Tulsa-area tech and real estate ventures</div></li>
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  
+</section>
+
+<!-- CTA -->
+<section id="work" data-screen-label="Work With Us" style="background:#152035">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,120px) clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:40px 64px;align-items:flex-end;justify-content:space-between">
+    <div data-rv="" style="flex:1 1 320px;display:flex;flex-direction:column;gap:24px">
+      <div style="font:400 12px 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#00b894">Work With Us</div>
+      <h2 style="margin:0;font:400 clamp(48px,6.5vw,96px)/.92 'Bebas Neue',sans-serif;color:#fff">Ready to Put This Team to Work for <span style="color:#00b894">Your Business?</span></h2>
+      <p style="margin:0;font:300 17px/1.6 'Barlow',sans-serif;color:rgba(255,255,255,.72);max-width:56ch">Whether you're a drone OEM looking for Oklahoma supply chain access, a manufacturer ready to break into autonomous systems markets, or a partner in Oklahoma's growing aerospace ecosystem — this team has the network, the experience, and the drive to make it happen.</p>
     </div>
-  </div>
-
-  <!-- ── Grant Morris ── -->
-  <div class="partner-section">
-    <div class="partner-inner">
-      <div class="partner-photo-col">
-        <div class="partner-num">04</div>
-        <div class="partner-photo-wrap">
-          <img src="images/headshot-grant-morris.jpg"
-               alt="Grant Morris">
-        </div>
-        <div class="partner-contact-chip">
-          <span class="pcc-label">Role</span>
-          <span class="pcc-role">Director, Business Partnerships</span>
-          <div class="pcc-tags">
-            <span class="pcc-tag">Business Development</span>
-            <span class="pcc-tag">Supplier Matchmaking</span>
-            <span class="pcc-tag">Commercial Execution</span>
-          </div>
-        </div>
-      </div>
-      <div class="partner-bio-col">
-        <div class="partner-eyebrow">Business Partnerships</div>
-        <h2 class="partner-name">Grant Morris</h2>
-        <div class="partner-title">Director, Business Partnerships</div>
-        <p class="partner-body">Grant leads the <strong>day-to-day business development and partnership work</strong> for OK Autonomous. He works directly with drone OEMs, autonomous systems companies, Oklahoma manufacturers, and economic development partners — turning supply chain needs into qualified commercial opportunities.</p>
-        <p class="partner-body">Grant brings seven years of experience in <strong>client development, recruiting, and talent strategy</strong> across technical and industrial markets. His work has centered on understanding complex business needs, identifying the right capabilities, and building the trusted relationships that produce results.</p>
-        <p class="partner-body">At OK-AS, Grant applies that experience to <strong>supplier matchmaking, business attraction, and commercial follow-through</strong> — helping OEMs navigate Oklahoma's manufacturing ecosystem, connecting local suppliers with qualified opportunities, and coordinating the relationships required to move projects from an initial conversation into an active pursuit.</p>
-
-        <div class="partner-highlights">
-          <div class="ph-label">Key Career Highlights</div>
-          <div class="ph-items">
-            <div class="ph-item">Seven years in client development, recruiting, and relationship management across technical and industrial markets</div>
-            <div class="ph-item">Leads supplier matchmaking and business development for OK Autonomous</div>
-            <div class="ph-item">Supports domestic and international companies evaluating Tulsa for expansion</div>
-            <div class="ph-item">Coordinates OEM introductions, facility visits, and pipeline follow-through</div>
-            <div class="ph-item">Bachelor of Business Administration — Marketing and Professional Sales</div>
-          </div>
-        </div>
-
-        <div class="partner-timeline">
-          <div class="tl-header">Areas of Expertise</div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Business Development</div><div class="tl-desc">Builds and manages relationships with manufacturers, buyers, and autonomous systems companies</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Supplier Matchmaking</div><div class="tl-desc">Translates OEM requirements into targeted connections with qualified Oklahoma manufacturers</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Business Attraction</div><div class="tl-desc">Helps companies evaluate Tulsa's manufacturing, workforce, and economic development resources</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Commercial Execution</div><div class="tl-desc">Coordinates research, introductions, meetings, and follow-through to keep opportunities moving</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Kevin Toews ── -->
-  <div class="partner-section">
-    <div class="partner-inner">
-      <div class="partner-photo-col">
-        <div class="partner-num">05</div>
-        <div class="partner-photo-wrap">
-          <img src="images/headshot-kevin-toews.jpg"
-               alt="Kevin Toews">
-        </div>
-        <div class="partner-contact-chip">
-          <span class="pcc-label">Role</span>
-          <span class="pcc-role">Partner — Industrial & Process Ops</span>
-          <div class="pcc-tags">
-            <span class="pcc-tag">Process Optimization</span>
-            <span class="pcc-tag">Heavy Industry</span>
-            <span class="pcc-tag">Market Expansion</span>
-          </div>
-        </div>
-      </div>
-      <div class="partner-bio-col">
-        <div class="partner-eyebrow">Founding Partner</div>
-        <h2 class="partner-name">Kevin Toews</h2>
-        <div class="partner-title">Industrial Operations, Process Optimization & Market Expansion</div>
-        <p class="partner-body">Kevin is an owner-operator with deep roots in <strong>industrial and manufacturing businesses</strong>. His work spans process optimization, equipment integration, and scaling operations for clients entering new and technically demanding markets — including autonomous technology.</p>
-        <p class="partner-body">He brings a <strong>pragmatic, operational lens</strong> to OKA's work — understanding not just what buyers want to purchase, but what it actually takes for a manufacturer to be ready to deliver it. That operational credibility matters enormously in conversations with sophisticated procurement teams.</p>
-        <p class="partner-body">Kevin is also an active investor in <strong>technology and real estate</strong> in the Tulsa region, with a track record of identifying high-growth opportunities and helping businesses position themselves to capture them. His approach is direct, data-informed, and grounded in years of running real operations.</p>
-
-        <div class="partner-highlights">
-          <div class="ph-label">Key Career Highlights</div>
-          <div class="ph-items">
-            <div class="ph-item">Owner-operator across multiple industrial and manufacturing businesses</div>
-            <div class="ph-item">Process optimization and equipment integration for heavy industry clients</div>
-            <div class="ph-item">Supported rapid scaling for clients entering autonomous technology markets</div>
-            <div class="ph-item">Active tech and real estate investor in the Tulsa innovation ecosystem</div>
-            <div class="ph-item">Focus on market expansion in high-growth industrial sectors</div>
-          </div>
-        </div>
-
-        <div class="partner-timeline">
-          <div class="tl-header">Areas of Expertise</div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Industrial Manufacturing</div><div class="tl-desc">Owner and operator of multiple industrial businesses focused on process efficiency</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Equipment Integration</div><div class="tl-desc">Technology-driven equipment upgrades to support scaling and new market entry</div></div></div>
-          <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><div class="tl-co">Technology Investments</div><div class="tl-desc">Active portfolio in Tulsa-area tech and real estate ventures</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- end team-bios -->
-
-<!-- ═══ COLLECTIVE CTA ═══ -->
-<section id="collective">
-  <div class="collective-orb"></div>
-  <div class="collective-inner">
-    <div class="collective-left">
-      <div class="collective-eyebrow">Work With Us</div>
-      <h2 class="collective-h2">Ready to Put This<br>Team to Work for<br><span class="teal">Your Business?</span></h2>
-      <p class="collective-body">Whether you're a drone OEM looking for Oklahoma supply chain access, a manufacturer ready to break into autonomous systems markets, or a partner in Oklahoma's growing aerospace ecosystem — this team has the network, the experience, and the drive to make it happen.</p>
-    </div>
-    <div class="collective-right">
-      <a href="index.html#contact" class="coll-btn-primary">Partner With Us →</a>
-      <a href="index.html#report" class="coll-btn-secondary">Get the 2026 UAS Report</a>
-      <div class="coll-contact">Or email us directly at <a href="mailto:info@ok-as.com">info@ok-as.com</a></div>
+    <div data-rv="" style="flex:0 1 320px;display:flex;flex-direction:column;gap:14px;transition-delay:120ms">
+      <a href="/#contact" style="font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;background:#00b894;color:#0e1624;padding:18px 28px;text-align:center;transition:background .3s" class="hv16">Partner With Us →</a>
+      <a href="/#report" style="font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.6);color:#fff;padding:17px 28px;text-align:center;transition:border-color .3s,background .3s" class="hv17">Get the 2026 UAS Report</a>
+      <div style="font:400 12px/1.6 'Space Mono',monospace;letter-spacing:.04em;color:rgba(255,255,255,.45);text-align:center">Or email <a href="mailto:info@ok-as.com" style="color:rgba(255,255,255,.85)" class="hv18">info@ok-as.com</a></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <div class="ft-logo">
-    <div class="ft-wordmark"><span>OK</span> AUTONOMOUS</div>
-    <div class="ft-tagline">Oklahoma's commercial engine for autonomous systems</div>
+<footer data-screen-label="Footer" style="background:#152035;color:#fff;border-top:1px solid rgba(255,255,255,.12)">
+  <div data-footer="" style="max-width:1280px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,5vw,64px) 32px;display:flex;flex-direction:column;gap:32px">
+    <div data-footer-grid="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px 48px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:10px"><div style="font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.08em"><span style="color:#00b894">OK</span> AUTONOMOUS</div><div style="font:300 15px/1.5 'Barlow',sans-serif;color:rgba(255,255,255,.6);max-width:30ch">Oklahoma's commercial engine for autonomous systems.</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;font:400 12px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;max-width:360px">
+        <a href="/#doors" style="color:rgba(255,255,255,.7)" class="hv19">Who We Serve</a><a href="/team" style="color:rgba(255,255,255,.7)" class="hv20">Team</a><a href="/#services" style="color:rgba(255,255,255,.7)" class="hv21">Services</a><a href="/#shows" style="color:rgba(255,255,255,.7)" class="hv22">Events</a><a href="/#tiers" style="color:rgba(255,255,255,.7)" class="hv23">Engagement</a><a href="/#contact" style="color:rgba(255,255,255,.7)" class="hv24">Contact</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;font:300 15px/1.5 'Barlow',sans-serif;color:rgba(255,255,255,.7)"><span>The Gradient · 12 N Cheyenne Ave<br>Tulsa, Oklahoma</span><a href="mailto:info@ok-as.com" style="color:#fff;width:fit-content" class="hv25">info@ok-as.com</a></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);padding-top:20px;font:400 11px/1.6 'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4)"><span>© 2026 OK Autonomous</span><span>Tulsa, Oklahoma</span></div>
   </div>
-  <div class="ft-links">
-    <a href="/#doors">Who We Serve</a>
-    <a href="/#services">Services</a>
-    <a href="/#tiers">Engagement</a>
-    <a href="/team">Team</a>
-    <a href="/#shows">Events</a>
-    <a href="/#contact">Contact</a>
-  </div>
-  <div class="ft-hq"><span class="ft-hq-line">The Gradient <span class="ft-dot">·</span> 12 N Cheyenne Ave</span><span class="ft-hq-line">Tulsa, Oklahoma <span class="ft-dot">·</span> <a href="mailto:info@ok-as.com">info@ok-as.com</a></span></div>
-  <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
+</div>
+
+
 <script>
-/* ─── MOBILE MENU ─── */
-const burger=document.getElementById('burger');
-const mobileMenu=document.getElementById('mobileMenu');
-burger.addEventListener('click',()=>{
-  burger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
-function closeMobile(){
-  burger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-}
-
-/* ─── CURSOR ─── */
-const cur=document.getElementById('cur'), cur2=document.getElementById('cur2');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function raf(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur2.style.left=rx+'px';cur2.style.top=ry+'px';requestAnimationFrame(raf);})();
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-big'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-big'));
-});
-
-/* ─── CURSOR INVERSION ON DARK SECTIONS ── */
-const darkSections = document.querySelectorAll('#collective, footer');
-function checkCursorZone(){
-  let inDark = false;
-  darkSections.forEach(sec => {
-    const r = sec.getBoundingClientRect();
-    if(my >= r.top && my <= r.bottom) inDark = true;
-  });
-  document.body.classList.toggle('cursor-light', inDark);
-}
-document.addEventListener('mousemove', checkCursorZone);
-window.addEventListener('scroll', checkCursorZone, {passive:true});
-
-/* ─── PARTICLES ─── */
-function mkP(){
-  const p=document.createElement('div'); p.className='particle';
-  const sz=Math.random()*3+1;
-  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-10px;background:${Math.random()>.5?'rgba(0,184,148,':'rgba(21,32,53,'}${.3+Math.random()*.3});animation-duration:${10+Math.random()*12}s;animation-delay:${Math.random()*3}s;`;
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),(22+Math.random()*5)*1000);
-}
-setInterval(mkP,900);
-
-/* ─── SCROLL REVEAL ─── */
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealEls = document.querySelectorAll('.partner-section');
-if (prefersReduced) {
-  revealEls.forEach(el=>el.classList.add('vis'));
-} else {
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
-  },{threshold:.08});
-  revealEls.forEach(el=>io.observe(el));
-}
-setTimeout(()=>revealEls.forEach(el=>el.classList.add('vis')), 3000);
-
-/* ─── BACK TO TOP ─── */
-const btt=document.getElementById('backToTop');
-window.addEventListener('scroll',()=>{
-  btt.classList.toggle('show', window.scrollY > 600);
-},{ passive:true });
+(function(){
+  var burger=document.querySelector('[data-burger]'),menu=document.querySelector('[data-if="menuOpen"]');
+  if(burger&&menu){burger.addEventListener('click',function(){menu.hidden=!menu.hidden;});menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.hidden=true;});});}
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var counted=false;
+  function count(){var t0=performance.now(),dur=1600,E=function(t){return 1-Math.pow(1-t,3)};var els={c1:document.querySelector('[data-c1]'),c2:document.querySelector('[data-c2]'),c3:document.querySelector('[data-c3]'),c4:document.querySelector('[data-c4]')};
+    (function step(now){var t=Math.min(1,(now-t0)/dur),e=E(t);if(els.c1)els.c1.textContent='$'+(1.28*e).toFixed(2)+'B';if(els.c2)els.c2.textContent=Math.round(40*e)+'+';if(els.c3)els.c3.textContent=Math.round(40*e)+'%';if(els.c4)els.c4.textContent='$'+Math.round(15*e)+'M+';if(t<1)requestAnimationFrame(step);})(t0);}
+  var targets=document.querySelectorAll('[data-rv],svg[data-chart],[data-chart-words],#stats');
+  if(reduce||!('IntersectionObserver' in window)){targets.forEach(function(el){el.classList.add('on');el.querySelectorAll('[data-draw],[data-pop],[data-word]').forEach(function(x){x.classList.add('on');});});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;en.target.classList.add('on');en.target.querySelectorAll('[data-draw],[data-pop],[data-word]').forEach(function(x){x.classList.add('on');});if(en.target.id==='stats'&&!counted){counted=true;count();}io.unobserve(en.target);});},{threshold:.12});
+  targets.forEach(function(el){io.observe(el);});
+  document.querySelectorAll('form[data-netlify]').forEach(function(f){f.addEventListener('submit',function(ev){ev.preventDefault();var btn=f.querySelector('button[type=submit]');if(btn){btn.disabled=true;btn.textContent='Sending…';}
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()}).catch(function(){}).then(function(){
+      var key=f.getAttribute('data-form')==='sendReport'?'report':'contact';
+      var open=document.querySelector('[data-if="'+key+'Open"]'),sent=document.querySelector('[data-if="'+key+'Sent"]');if(open)open.hidden=true;if(sent)sent.hidden=false;});});});
+})();
 </script>
 </body>
 </html>
