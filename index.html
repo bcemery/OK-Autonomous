@@ -1945,6 +1945,218 @@
     #hero .hero-sub-new { font-size:clamp(30px, 6.5vw, 46px) !important; line-height:1 !important; }
   }
 
+  /* ═══════════════════════════════════════════════════════════════════
+     MOBILE OPTIMIZATION PASS — Apple-tier density (<=640px)
+     Goal: cut page height ~25%, kill oversized ghosts + icon columns,
+     tighten rhythm, keep desktop untouched.
+     ═══════════════════════════════════════════════════════════════════ */
+  @media (max-width:640px) {
+
+    /* ── Global rhythm: tighter section padding ─────────────────── */
+    #doors, #mission, #services, #team, #how-it-works, #tiers,
+    #pipeline, #shows, #references, #report, #contact {
+      padding-top:72px !important;
+      padding-bottom:72px !important;
+    }
+    .sec-h2 { font-size:clamp(36px, 9vw, 48px) !important; line-height:1.02 !important; }
+    .sec-eyebrow { margin-bottom:16px !important; }
+    .sec-body { font-size:15px !important; line-height:1.6 !important; }
+
+    /* ── SERVICES: inline chip numeral, kill icon column ─────────── */
+    #services .services-inner { padding:0 20px !important; }
+    .svc.v21 {
+      grid-template-columns:1fr !important;
+      gap:10px !important;
+      padding:28px 0 !important;
+      align-items:flex-start !important;
+    }
+    .svc.v21 .svc-num-v21 {
+      font-family:'Space Mono', monospace !important;
+      font-size:11px !important;
+      font-weight:400 !important;
+      letter-spacing:2.5px !important;
+      color:var(--teal) !important;
+      -webkit-text-stroke:0 !important;
+      text-stroke:0 !important;
+      opacity:1 !important;
+      line-height:1 !important;
+      margin:0 0 4px !important;
+    }
+    .svc.v21 .svc-body-v21 { gap:10px !important; }
+    .svc.v21 .svc-title-v21 { font-size:26px !important; line-height:1.05 !important; }
+    .svc.v21 .svc-text-v21 { font-size:15px !important; line-height:1.55 !important; }
+    .svc.v21 .svc-tags-v21 { margin-top:4px !important; font-size:9px !important; letter-spacing:1.5px !important; }
+    .svc.v21 .svc-tags-v21 .tag { font-size:9px !important; letter-spacing:1.5px !important; }
+    .svc.v21 .svc-tags-v21 .tag + .tag::before { margin:0 6px !important; }
+
+    /* ── DOORS v2.5: inline chip numeral, hide door icon ─────────── */
+    #doors .doors-inner { padding:0 20px !important; }
+    #doors .doors-head { margin-bottom:40px !important; }
+    .doors-grid.v25 { margin-top:40px !important; }
+    .door-v25 {
+      padding:0 0 40px !important;
+      text-align:left !important;
+    }
+    .door-v25:last-child { padding-bottom:0 !important; }
+    .door-v25 + .door-v25 { padding-top:40px !important; }
+    .door-v25-num {
+      font-family:'Space Mono', monospace !important;
+      font-size:11px !important;
+      font-weight:400 !important;
+      letter-spacing:2.5px !important;
+      color:var(--teal) !important;
+      -webkit-text-stroke:0 !important;
+      opacity:1 !important;
+      line-height:1 !important;
+      margin:0 0 12px !important;
+    }
+    .door-v25-icon { display:none !important; }
+    .door-v25-audience { margin-bottom:10px !important; font-size:10px !important; letter-spacing:2px !important; }
+    .door-v25-name { font-size:32px !important; line-height:1.02 !important; margin-bottom:12px !important; }
+    .door-v25-desc { font-size:15px !important; line-height:1.55 !important; max-width:none !important; margin:0 0 20px !important; }
+    .door-v25-cta { font-size:11px !important; letter-spacing:1.5px !important; padding-bottom:6px !important; }
+
+    /* ── HOW IT WORKS (A/P/W): inline chip numeral, hide icon ────── */
+    .hiw-v21 { padding:72px 0 !important; }
+    .hiw-v21-inner { padding:0 20px !important; }
+    .hiw-v21-grid { gap:36px !important; }
+    .hiw-v21-step {
+      text-align:left !important;
+      padding-bottom:36px !important;
+    }
+    .hiw-v21-num {
+      font-family:'Space Mono', monospace !important;
+      font-size:11px !important;
+      font-weight:400 !important;
+      letter-spacing:2.5px !important;
+      color:var(--teal) !important;
+      -webkit-text-stroke:0 !important;
+      line-height:1 !important;
+      margin:0 0 12px !important;
+    }
+    .hiw-v21-icon { display:none !important; }
+    .hiw-v21-name { font-size:28px !important; margin-bottom:10px !important; }
+    .hiw-v21-desc { font-size:15px !important; line-height:1.55 !important; max-width:none !important; margin:0 !important; }
+
+    /* ── TWO WAYS IN: horizontal snap carousel with dots ─────────── */
+    #tiers { padding:72px 0 !important; }
+    #tiers .tiers-inner { padding:0 !important; }
+    #tiers .tiers-head { margin-bottom:40px !important; padding:0 20px !important; }
+    .tiers-v25-grid {
+      grid-template-columns:none !important;
+      display:flex !important;
+      overflow-x:auto !important;
+      overflow-y:hidden !important;
+      scroll-snap-type:x mandatory !important;
+      scroll-behavior:smooth !important;
+      -webkit-overflow-scrolling:touch !important;
+      scrollbar-width:none !important;
+      padding:0 20px 8px !important;
+      gap:16px !important;
+      scroll-padding:20px !important;
+    }
+    .tiers-v25-grid::-webkit-scrollbar { display:none !important; }
+    .tier-v25 {
+      flex:0 0 calc(100vw - 60px) !important;
+      scroll-snap-align:start !important;
+      padding:28px 24px !important;
+      background:var(--sky) !important;
+      border:1px solid var(--rule) !important;
+      border-radius:6px !important;
+      display:flex !important;
+      flex-direction:column !important;
+    }
+    .tier-v25:first-child {
+      border-right:1px solid var(--rule) !important;
+      border-bottom:1px solid var(--rule) !important;
+      padding-bottom:28px !important;
+      margin-bottom:0 !important;
+    }
+    .tier-v25-num {
+      font-family:'Space Mono', monospace !important;
+      font-size:11px !important;
+      font-weight:400 !important;
+      letter-spacing:2.5px !important;
+      color:var(--teal) !important;
+      -webkit-text-stroke:0 !important;
+      opacity:1 !important;
+      line-height:1 !important;
+      margin:0 0 10px !important;
+    }
+    .tier-v25-kicker { margin-bottom:12px !important; font-size:10px !important; letter-spacing:2px !important; }
+    .tier-v25-kicker::before { width:16px !important; }
+    .tier-v25-h { font-size:32px !important; line-height:1.02 !important; margin-bottom:14px !important; }
+    .tier-v25-lede { font-size:15px !important; line-height:1.5 !important; margin-bottom:20px !important; max-width:none !important; }
+    .tier-v25-spec { font-size:10px !important; letter-spacing:1.2px !important; padding-bottom:16px !important; margin-bottom:18px !important; }
+    .tier-v25-list { margin:0 0 24px !important; }
+    .tier-v25-list li { font-size:14px !important; line-height:1.45 !important; padding:10px 0 !important; }
+    .tier-v25-fine { font-size:10px !important; letter-spacing:0.5px !important; line-height:1.55 !important; margin-bottom:20px !important; }
+    .tier-v25-cta { font-size:10px !important; letter-spacing:1.5px !important; padding-bottom:6px !important; }
+
+    /* Carousel dots (rendered by JS) */
+    .tiers-dots {
+      display:flex !important;
+      justify-content:center !important;
+      gap:8px !important;
+      margin-top:20px !important;
+      padding:0 20px !important;
+    }
+    .tiers-dot {
+      width:6px; height:6px; border-radius:50%;
+      background:var(--rule);
+      border:none; padding:0; cursor:pointer;
+      transition:background .3s, transform .3s;
+    }
+    .tiers-dot.active { background:var(--teal); transform:scale(1.4); }
+    .tiers-hint {
+      display:block !important;
+      text-align:center !important;
+      font-family:'Space Mono', monospace !important;
+      font-size:9px !important;
+      letter-spacing:2px !important;
+      text-transform:uppercase !important;
+      color:var(--muted) !important;
+      margin-top:12px !important;
+    }
+
+    /* ── TEAM: tighter cards, smaller headshot ratio ─────────────── */
+    #team .team-inner { padding:0 20px !important; }
+    .team-header { margin-bottom:32px !important; }
+    .team-grid { grid-template-columns:repeat(2,1fr) !important; gap:12px !important; }
+    .tcard-img { aspect-ratio:1/1.05 !important; }
+    .tcard-body { padding:14px 12px 16px !important; }
+    .tcard-name { font-size:17px !important; margin-bottom:2px !important; }
+    .tcard-role { font-size:8px !important; letter-spacing:1.5px !important; margin-bottom:8px !important; padding-bottom:8px !important; }
+    .tcard-bio { font-size:12px !important; line-height:1.5 !important; margin-bottom:8px !important; }
+    .tcard-prev { font-size:8px !important; letter-spacing:0.5px !important; line-height:1.5 !important; }
+
+    /* ── MISSION: tighter ────────────────────────────────────────── */
+    #mission .mission-inner, .mission-inner { padding:0 20px !important; }
+    .mission-grid { gap:24px !important; }
+
+    /* ── REFERENCES, REPORT, CONTACT, SHOWS: trim padding ─────────── */
+    #references .refs-inner, .refs-inner,
+    #report .report-inner,
+    #contact .contact-inner,
+    #shows .shows-inner { padding-left:20px !important; padding-right:20px !important; }
+    #contact { padding-bottom:56px !important; }
+    .contact-grid { gap:32px !important; }
+    .report-includes { gap:8px !important; }
+    .report-h2 { font-size:36px !important; line-height:1.02 !important; }
+
+    /* ── PIPELINE (bars): tighten ────────────────────────────────── */
+    #pipeline { padding-top:64px !important; padding-bottom:64px !important; }
+    .pipeline-inner { padding:0 20px !important; }
+    .dam-bars { height:180px !important; margin-top:40px !important; }
+    .dam-rev { font-size:14px !important; top:-22px !important; }
+    .dam-yr { font-size:8px !important; }
+  }
+
+  /* Hide carousel accessories on desktop */
+  @media (min-width:641px) {
+    .tiers-dots, .tiers-hint { display:none !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -2434,6 +2646,11 @@
       </div>
 
     </div>
+    <div class="tiers-dots" role="tablist" aria-label="Two Ways In selector">
+      <button class="tiers-dot active" data-tier="0" aria-label="Ecosystem Services"></button>
+      <button class="tiers-dot" data-tier="1" aria-label="Growth Partnerships"></button>
+    </div>
+    <div class="tiers-hint">Swipe →</div>
   </div>
 </section>
 
@@ -2989,6 +3206,46 @@ document.querySelectorAll('.tcard').forEach(card=>{
     }
   });
 });
+
+/* Two Ways In — mobile snap carousel dot sync */
+(function(){
+  const grid = document.querySelector('.tiers-v25-grid');
+  const dots = document.querySelectorAll('.tiers-dot');
+  const hint = document.querySelector('.tiers-hint');
+  if(!grid || !dots.length) return;
+
+  function activeIndex(){
+    const cards = grid.querySelectorAll('.tier-v25');
+    if(!cards.length) return 0;
+    const gridRect = grid.getBoundingClientRect();
+    let best = 0, bestDist = Infinity;
+    cards.forEach((c,i)=>{
+      const r = c.getBoundingClientRect();
+      const dist = Math.abs(r.left - gridRect.left);
+      if(dist < bestDist){ bestDist = dist; best = i; }
+    });
+    return best;
+  }
+  function syncDots(){
+    const i = activeIndex();
+    dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+    if(hint && i > 0) hint.style.opacity = '0';
+  }
+  let raf = null;
+  grid.addEventListener('scroll', ()=>{
+    if(raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(syncDots);
+  }, {passive:true});
+
+  dots.forEach((dot, idx)=>{
+    dot.addEventListener('click', ()=>{
+      const cards = grid.querySelectorAll('.tier-v25');
+      if(cards[idx]) cards[idx].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+    });
+  });
+
+  syncDots();
+})();
 </script>
 </body>
 </html>
