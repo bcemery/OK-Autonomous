@@ -2139,10 +2139,86 @@
     #report .report-inner,
     #contact .contact-inner,
     #shows .shows-inner { padding-left:20px !important; padding-right:20px !important; }
-    #contact { padding-bottom:56px !important; }
-    .contact-grid { gap:32px !important; }
     .report-includes { gap:8px !important; }
     .report-h2 { font-size:36px !important; line-height:1.02 !important; }
+    .report-body { font-size:14px !important; line-height:1.6 !important; }
+
+    /* ── CONTACT: stacked label/value, editorial rhythm ────────── */
+    #contact { padding-top:64px !important; padding-bottom:48px !important; }
+    .contact-grid { gap:40px !important; }
+    .contact-big { font-size:44px !important; line-height:1.02 !important; margin-bottom:16px !important; letter-spacing:.3px !important; }
+    .contact-blurb { font-size:15px !important; line-height:1.55 !important; margin-bottom:32px !important; }
+    .contact-details { gap:0 !important; }
+    .cdet {
+      flex-direction:column !important;
+      align-items:flex-start !important;
+      gap:6px !important;
+      padding:16px 0 !important;
+    }
+    .cdet-l {
+      font-size:9px !important;
+      letter-spacing:2.5px !important;
+      color:var(--muted) !important;
+    }
+    .cdet-r {
+      font-size:15px !important;
+      line-height:1.5 !important;
+      color:var(--navy) !important;
+      font-family:'Barlow', sans-serif !important;
+      font-weight:400 !important;
+    }
+    /* Contact form: kill heavy card, feel inline and editorial */
+    .contact-form {
+      padding:32px 20px !important;
+      box-shadow:none !important;
+      border-radius:6px !important;
+      background:var(--sky) !important;
+    }
+    .cf-title { font-size:22px !important; margin-bottom:2px !important; }
+    .cf-sub { font-size:9px !important; letter-spacing:2px !important; margin-bottom:22px !important; padding-bottom:16px !important; }
+    .cf-row { margin-bottom:14px !important; }
+    .cf-label { font-size:9px !important; letter-spacing:2.5px !important; margin-bottom:6px !important; }
+    .cf-input { padding:12px 14px !important; font-size:15px !important; }
+    .cf-submit { padding:14px !important; font-size:11px !important; letter-spacing:2px !important; }
+
+    /* ── FOOTER: elegant stack with breathing room ───────────── */
+    footer {
+      padding:44px 24px 40px !important;
+      gap:24px !important;
+    }
+    .ft-logo { gap:6px !important; }
+    .ft-wordmark { font-size:20px !important; letter-spacing:2.5px !important; }
+    .ft-tagline { font-size:8.5px !important; letter-spacing:1.8px !important; line-height:1.5 !important; max-width:280px !important; }
+    .ft-links {
+      gap:0 !important;
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      row-gap:14px !important;
+      column-gap:12px !important;
+      width:100% !important;
+      max-width:280px !important;
+      padding:20px 0 !important;
+      border-top:1px solid rgba(255,255,255,.08) !important;
+      border-bottom:1px solid rgba(255,255,255,.08) !important;
+    }
+    .ft-links a {
+      font-size:10px !important;
+      letter-spacing:2px !important;
+      text-align:center !important;
+      padding:2px 0 !important;
+    }
+    .ft-hq {
+      font-size:9px !important;
+      letter-spacing:1.8px !important;
+      line-height:1.9 !important;
+    }
+    .ft-hq-line { display:block !important; }
+    .ft-dot { color:rgba(0,184,148,.5) !important; margin:0 4px !important; }
+    .ft-copy {
+      font-size:8.5px !important;
+      letter-spacing:1.5px !important;
+      opacity:.6 !important;
+    }
 
     /* ── PIPELINE (bars): tighten ────────────────────────────────── */
     #pipeline { padding-top:64px !important; padding-bottom:64px !important; }
@@ -2954,7 +3030,7 @@
     <a href="#shows">Events</a>
     <a href="#contact">Contact</a>
   </div>
-  <div class="ft-hq">The Gradient · 12 N Cheyenne Ave · Tulsa, Oklahoma · <a href="mailto:info@ok-as.com">info@ok-as.com</a></div>
+  <div class="ft-hq"><span class="ft-hq-line">The Gradient <span class="ft-dot">·</span> 12 N Cheyenne Ave</span> <span class="ft-hq-line">Tulsa, Oklahoma <span class="ft-dot">·</span> <a href="mailto:info@ok-as.com">info@ok-as.com</a></span></div>
   <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 

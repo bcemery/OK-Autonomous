@@ -536,6 +536,47 @@
     }
     * { animation-duration:.01ms !important; transition-duration:.01ms !important; }
   }
+
+  /* ═══ MOBILE OPTIMIZATION (<=640px) ═══ */
+  @media (max-width:640px) {
+    footer {
+      padding:44px 24px 40px !important;
+      gap:24px !important;
+    }
+    .ft-logo { gap:6px !important; }
+    .ft-wordmark { font-size:20px !important; letter-spacing:2.5px !important; }
+    .ft-tagline { font-size:8.5px !important; letter-spacing:1.8px !important; line-height:1.5 !important; max-width:280px !important; }
+    .ft-links {
+      gap:0 !important;
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      row-gap:14px !important;
+      column-gap:12px !important;
+      width:100% !important;
+      max-width:280px !important;
+      padding:20px 0 !important;
+      border-top:1px solid rgba(255,255,255,.08) !important;
+      border-bottom:1px solid rgba(255,255,255,.08) !important;
+    }
+    .ft-links a {
+      font-size:10px !important;
+      letter-spacing:2px !important;
+      text-align:center !important;
+      padding:2px 0 !important;
+    }
+    .ft-hq {
+      font-size:9px !important;
+      letter-spacing:1.8px !important;
+      line-height:1.9 !important;
+    }
+    .ft-hq-line { display:block !important; }
+    .ft-dot { color:rgba(0,184,148,.5) !important; margin:0 4px !important; }
+    .ft-copy {
+      font-size:8.5px !important;
+      letter-spacing:1.5px !important;
+      opacity:.6 !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -890,7 +931,7 @@
     <a href="/#shows">Events</a>
     <a href="/#contact">Contact</a>
   </div>
-  <div class="ft-hq">The Gradient · 12 N Cheyenne Ave · Tulsa, Oklahoma · <a href="mailto:info@ok-as.com">info@ok-as.com</a></div>
+  <div class="ft-hq"><span class="ft-hq-line">The Gradient <span class="ft-dot">·</span> 12 N Cheyenne Ave</span> <span class="ft-hq-line">Tulsa, Oklahoma <span class="ft-dot">·</span> <a href="mailto:info@ok-as.com">info@ok-as.com</a></span></div>
   <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
