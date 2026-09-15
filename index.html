@@ -458,6 +458,9 @@
     display:flex; align-items:center; gap:10px;
   }
   .sec-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+  .sec-eyebrow .eyebrow-note { color:rgba(0,184,148,.55); font-weight:400; }
+  .sec-eyebrow.report-eyebrow::before { display:none; }
+  .sec-eyebrow.report-eyebrow .report-badge-dot { width:6px; height:6px; background:var(--teal); border-radius:50%; display:inline-block; animation:pulse-dot 2s infinite; }
 
   .sec-h2 {
     font-family:'Bebas Neue', sans-serif;
@@ -1696,7 +1699,8 @@
     font-size:10px; letter-spacing:2px;
     padding:0;
     text-transform:uppercase;
-    display:inline;
+    display:inline-block;
+    white-space:nowrap;
   }
   .svc.v21 .svc-tags-v21 .tag + .tag::before {
     content:'·';
@@ -2188,7 +2192,7 @@
     }
     .ft-logo { gap:6px !important; }
     .ft-wordmark { font-size:20px !important; letter-spacing:2.5px !important; }
-    .ft-tagline { font-size:8.5px !important; letter-spacing:1.8px !important; line-height:1.5 !important; max-width:280px !important; }
+    .ft-tagline { font-size:8px !important; letter-spacing:1.4px !important; line-height:1.5 !important; max-width:none !important; padding:0 8px !important; white-space:nowrap !important; }
     .ft-links {
       gap:0 !important;
       display:grid !important;
@@ -2226,7 +2230,36 @@
     .dam-bars { height:180px !important; margin-top:40px !important; }
     .dam-rev { font-size:14px !important; top:-22px !important; }
     .dam-yr { font-size:8px !important; }
+    .pipeline-note { text-align:center !important; }
+
+    /* ── SERVICE TAGS: flex-wrap so multi-word tags never orphan a word ── */
+    .svc.v21 .svc-tags-v21 {
+      display:flex !important;
+      flex-wrap:wrap !important;
+      align-items:center !important;
+      gap:0 !important;
+      row-gap:4px !important;
+    }
+    .svc.v21 .svc-tags-v21 .tag { white-space:nowrap !important; }
+    .svc.v21 .svc-tags-v21 .tag + .tag::before { margin:0 8px !important; color:var(--rule) !important; }
+
+    /* ── TIER micro-spec: keep pill line short + centered ── */
+    .tier-v25-spec { font-size:9px !important; letter-spacing:1.8px !important; line-height:1.6 !important; }
+
+    /* ── DOORS: keep headline pairs together (e.g. 'One Network.') ── */
+    .door-v25-name { font-size:30px !important; line-height:1.05 !important; letter-spacing:.5px !important; }
+
+    /* ── REPORT eyebrow: match other section eyebrows on mobile ── */
+    .sec-eyebrow.report-eyebrow { font-size:10px !important; letter-spacing:3px !important; }
+    .sec-eyebrow.report-eyebrow::before { display:none !important; }
+
+    /* ── SHOWS eyebrow-note: subtle sibling text ── */
+    .sec-eyebrow .eyebrow-note { letter-spacing:2.5px !important; }
+
+    /* ── Explicit mobile line breaks so titles stack at intended clause ── */
+    br.mobile-br { display:initial !important; }
   }
+  @media (min-width:641px) { br.mobile-br { display:none; } }
 
   /* Hide carousel accessories on desktop */
   @media (min-width:641px) {
@@ -2355,7 +2388,7 @@
   <div class="doors-inner">
     <div class="doors-head">
       <div class="sec-eyebrow" style="justify-content:center;">Who We Serve</div>
-      <h2 class="sec-h2">Two Sides. One Network.</h2>
+      <h2 class="sec-h2">Two Sides. <br class="mobile-br">One Network.</h2>
     </div>
     <div class="doors-grid v25">
 
@@ -2693,7 +2726,7 @@
         <div class="tier-v25-kicker">Ecosystem Services</div>
         <h3 class="tier-v25-h">Connect.<br>Match.<br>Introduce.</h3>
         <p class="tier-v25-lede">The front door for Oklahoma manufacturers looking to enter the autonomous supply chain.</p>
-        <div class="tier-v25-spec">Grant-supported · No cost to qualified companies</div>
+        <div class="tier-v25-spec">Grant-supported · Free for qualified Oklahoma cos.</div>
         <ul class="tier-v25-list">
           <li>Supplier matching &amp; supply-chain mapping</li>
           <li>Warm intros to buyers, primes, and partners</li>
@@ -2765,7 +2798,7 @@
       </div>
     </div>
 
-    <p class="pipeline-note">US DoD + Commercial UAS Total Addressable Market · Source: OKA 2026 UAS Supply Chain Report</p>
+    <p class="pipeline-note">US DoD + Commercial UAS Total Addressable Market<br>Source: OKA 2026 UAS Supply Chain Report</p>
   </div>
 </section>
 
@@ -2774,8 +2807,7 @@
   <div class="shows-inner">
     <div class="shows-intro">
       <div>
-        <span class="change-tag">Updated List</span>
-        <div class="sec-eyebrow">Market Presence</div>
+        <div class="sec-eyebrow">Market Presence <span class="eyebrow-note">· Updated</span></div>
         <h2 class="sec-h2">On the Ground<br>Where It Matters</h2>
       </div>
       <p class="shows-intro-right">
@@ -2883,10 +2915,7 @@
   <div class="report-inner">
 
     <div class="report-left reveal">
-      <div class="report-badge">
-        <div class="report-badge-dot"></div>
-        <span class="report-badge-text">Free Report · 2026</span>
-      </div>
+      <div class="sec-eyebrow report-eyebrow"><span class="report-badge-dot"></span>Free Report · 2026</div>
       <h2 class="report-h2">Get the<br><span class="teal">2026 UAS</span><br>Supply Chain<br>Opportunity<br>Report</h2>
       <p class="report-body">Oklahoma is positioned to capture a significant share of the domestic drone manufacturing supply chain. We've mapped the landscape — the gaps, the buyers, the certifications, and the opportunity — so you don't have to.</p>
       <div class="report-includes">
@@ -2933,7 +2962,7 @@
             <span>Send Me the Report</span>
             <span>→</span>
           </button>
-          <p class="rfc-privacy">We respect your privacy. Your information is never shared or sold.<br>Unsubscribe anytime.</p>
+          <p class="rfc-privacy">Your info is never shared or sold. Unsubscribe anytime.</p>
         </form>
         <div class="rfc-success" id="rfc-success">
           <div class="rfc-success-icon">&#128760;</div>
@@ -3030,7 +3059,7 @@
     <a href="#shows">Events</a>
     <a href="#contact">Contact</a>
   </div>
-  <div class="ft-hq"><span class="ft-hq-line">The Gradient <span class="ft-dot">·</span> 12 N Cheyenne Ave</span> <span class="ft-hq-line">Tulsa, Oklahoma <span class="ft-dot">·</span> <a href="mailto:info@ok-as.com">info@ok-as.com</a></span></div>
+  <div class="ft-hq"><span class="ft-hq-line">The Gradient <span class="ft-dot">·</span> 12 N Cheyenne Ave</span><span class="ft-hq-line">Tulsa, Oklahoma <span class="ft-dot">·</span> <a href="mailto:info@ok-as.com">info@ok-as.com</a></span></div>
   <div class="ft-copy">© 2026 OK Autonomous · Tulsa, OK</div>
 </footer>
 
